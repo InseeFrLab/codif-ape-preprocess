@@ -10,8 +10,8 @@ from core.decorators import rule
 )
 def lmnp_rule_rev2(df):
     pattern = r"lmnp|loueur en meuble.*non professionnel"
-    mask = df["libelle"].str.contains(pattern, case=False, na=False) & (
-        df["liasse_type"].isin(["E", "L", "S", "X", "I"]) | df["liasse_type"].isnull()
+    mask = df["LIB_CLEAN"].str.contains(pattern, case=False, na=False) & (
+        df["AUTO"].isin(["E", "L", "S", "X", "I"]) | df["AUTO"].isnull()
     )
-    df["nace2025"] = np.where(mask, "6820B", df["nace2025"])
+    df["APE_SICORE"] = np.where(mask, "6820B", df["APE_SICORE"])
     return df
