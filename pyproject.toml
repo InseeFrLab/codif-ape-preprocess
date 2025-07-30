@@ -1,0 +1,18 @@
+[project]
+name = "codif-ape-preprocess"
+version = "0.1.0"
+description = "Hello world"
+readme = "README.md"
+authors = [
+    { name = "nrandriamanana", email = "nathan.randriamanana@eleve.ensai.fr" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "importlib>=1.0.4",
+    "numpy>=2.3.2",
+    "pandas>=2.3.1",
+    "pathlib>=1.0.1",
+    "pyarrow>=21.0.0",
+    "s3fs>=2025.7.0",
+    "tqdm>=4.67.1",
+]
