@@ -5,7 +5,7 @@ from core.decorators import rule
 
 
 @rule(
-    name="lmnp_rev2",
+    name="lmnp_assignment_2025",
     tags=["naf_2025"],
     description="Règle LMNP version NAF 2025",
 )
