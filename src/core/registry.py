@@ -1,3 +1,11 @@
+"""
+registry.py
+
+Holds the central registry `RULES_REGISTRY`, a global list used to track all rule functions
+registered via the `@rule` decorator. This allows dynamic filtering and application of rules
+by name, tag, or description.
+"""
+
 from typing import Callable, List
 
 
@@ -15,9 +23,9 @@ class Rule:
 
 
 # Le registre global
-RULE_REGISTRY: List[Rule] = []
+RULES_REGISTRY: List[Rule] = []
 
 
 def register_rule(func: Callable, name: str, tags: List[str], description: str = ""):
     rule = Rule(func, name, tags, description)
-    RULE_REGISTRY.append(rule)
+    RULES_REGISTRY.append(rule)
