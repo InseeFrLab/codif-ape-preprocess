@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from core.decorators import rule
+from core.audit import track_changes
 
 
 @rule(
@@ -9,6 +10,7 @@ from core.decorators import rule
     tags=["naf_2025"],
     description="Règle LMNP version NAF 2025",
 )
+@track_changes(column="nace2025")
 def lmnp_rule_rev2(df: pd.DataFrame) -> pd.DataFrame:
     pattern = r"lmnp|loueur en meuble non professionnel| \
                 loueur bailleur non professionnel| \

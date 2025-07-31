@@ -10,8 +10,9 @@ Outputs:
 - Audit journal: outputs/log_rules_applied.parquet
 """
 
-import argparse
+import os
 import sys
+import argparse
 
 import pandas as pd
 from tqdm import tqdm
@@ -29,14 +30,14 @@ def load_dataset(path):
 def apply_rules(training_data, tag):
     print("🔍 Loading and filtering rules...")
     load_rules()
-    rules_to_apply = [r for r in RULES_REGISTRY if tag in r["tags"]]
+    rules_to_apply = [r for r in RULES_REGISTRY if tag in r.tags]
     print(f"🧩 {len(rules_to_apply)} rule(s) matched with tag '{tag}'")
 
     all_journals = []
 
     print("⚙️  Applying rules...")
     for rule in tqdm(rules_to_apply, desc="Processing rules", unit="rule"):
-        df, journal = rule["apply"](training_data)
+        df, journal = rule.apply(training_data)
         all_journals.append(journal)
 
     return df, pd.concat(all_journals, ignore_index=True)
@@ -44,14 +45,17 @@ def apply_rules(training_data, tag):
 
 def save_outputs(training_data, log_rules_applied_training_data):
     print("💾 Saving outputs...")
-    io.upload_data(training_data, "outputs/data_with_naf.parquet")
+    io.upload_data(training_data, "./outputs/fixed_training_data.parquet")
     io.upload_data(log_rules_applied_training_data, "outputs/log_rules_applied.parquet")
     print("✅ All done!")
 
 
 def main(df_path=None, tag="naf_2025", dry_run=False):
+    # Create directories
+    os.makedirs('./data', exist_ok=True)
+    os.makedirs('./outputs', exist_ok=True)
     df = load_dataset(df_path)
-    df, log_df = apply_rules(df, tag)
+    (df, mask), log_df = apply_rules(df, tag)
     if dry_run:
         print("🚫 Dry run enabled — no output files will be saved.")
     else:
