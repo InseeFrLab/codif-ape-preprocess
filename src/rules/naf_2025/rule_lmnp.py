@@ -11,7 +11,7 @@ from core.audit import track_changes
     description="Règle LMNP version NAF 2025",
 )
 @track_changes(column="nace2025")
-def lmnp_rule_rev2(df: pd.DataFrame) -> pd.DataFrame:
+def lmnp_rule_2025(df: pd.DataFrame) -> pd.DataFrame:
     pattern = r"lmnp|loueur en meuble non professionnel| \
                 loueur bailleur non professionnel| \
                 location meublee non professionnelle| \
@@ -21,9 +21,9 @@ def lmnp_rule_rev2(df: pd.DataFrame) -> pd.DataFrame:
                 loueur en meubles non professionnel"
     mask = df["libelle"].str.contains(pattern, case=False, na=False)
 
-    is_S = df["activ_perm_et"] == "S"
-    is_P_or_null = df["activ_perm_et"].isin(["P"]) | df["activ_perm_et"].isnull()
+    mask_5590Y = df["activ_perm_et"] == "S"
+    mask_6820G = df["activ_perm_et"].isin(["P"]) | df["activ_perm_et"].isnull()
 
-    df["nace2025"] = np.where(mask & is_S, "5590Y", df["nace2025"])
-    df["nace2025"] = np.where(mask & is_P_or_null, "6820G", df["nace2025"])
+    df["nace2025"] = np.where(mask & mask_5590Y, "5590Y", df["nace2025"])
+    df["nace2025"] = np.where(mask & mask_6820G, "6820G", df["nace2025"])
     return df, mask

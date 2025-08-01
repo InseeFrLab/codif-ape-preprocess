@@ -56,6 +56,7 @@ def main(df_path=None, tag="naf_2025", dry_run=False):
     os.makedirs('./outputs', exist_ok=True)
     df = load_dataset(df_path)
     (df, mask), log_df = apply_rules(df, tag)
+    print(log_df)
     if dry_run:
         print("🚫 Dry run enabled — no output files will be saved.")
     else:
@@ -72,7 +73,7 @@ if __name__ == "__main__":
         description="Apply NAF enrichment rules to dataset."
     )
     parser.add_argument(
-        "df_path",
+        "--df_path",
         type=str,
         default=default_df,
         nargs="?",
