@@ -1,4 +1,4 @@
-# Preprocessing toolkit for training data applied to business classification
+# Domain-specific data cleaning rules for business classification
 
 ## Gestionnaire des règles métiers
 

@@ -1,0 +1,21 @@
+from core.registry import register_rule
+from core.audit import track_changes
+import pandas as pd
+
+@register_rule(name="{{ name }}", tags={{ tags }}, description="{{ description }}")
+@track_changes(column="{{ target_column }}")
+def rule_{{ name }}(df: pd.DataFrame):
+    text_mask = pd.Series(False, index=df.index)
+{% for col in text_columns %}
+    text_mask |= df["{{ col }}"].str.contains(r"{{ regex }}", case=False, na=False)
+{% endfor %}
+
+{% for rule in rules %}
+    cond_mask = pd.Series(True, index=df.index)
+{% for col, val in rule.conditions.items() %}
+    cond_mask &= df["{{ col }}"].{{ 'isnull()' if val is none else 'eq("' ~ val ~ '")' }}
+{% endfor %}
+    df.loc[text_mask & cond_mask, "{{ target_column }}"] = "{{ rule.code }}"
+{% endfor %}
+
+    return df

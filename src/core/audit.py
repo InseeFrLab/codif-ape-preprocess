@@ -21,12 +21,16 @@ def track_changes(column: str, extra_cols=["liasse_numero", "libelle"]):
             result = func(df, *args, **kwargs)
             after = df[column]
 
-            # changed = before != after
-            # Handle NaNs properly with fillna() for comparison as None is not equal to None
-            changed = before.fillna("__nan__") != after.fillna("__nan__")
+            if isinstance(result, tuple):
+                df_out, mask = result
+            else:
+                raise ValueError("Rule must return (df, mask)")
+
+            changed = mask
             journal = df.loc[changed, extra_cols].copy()
             journal["APE_BEFORE"] = before[changed]
             journal["APE_AFTER"] = after[changed]
+            journal["_change_type"] = "modification"
             journal["_log_rules_applied"] = func.__name__
 
             return result, journal
@@ -36,16 +40,37 @@ def track_changes(column: str, extra_cols=["liasse_numero", "libelle"]):
     return decorator
 
 
-def track_new(column: str, extra_cols=["liasse_numero", "libelle"]):
+def track_new(extra_cols=["liasse_numero", "libelle", "cj"], column: str = "nace2025"):
+    """
+    Decorator to track newly added rows.
+    Assumes the wrapped function returns (df_out, new_mask) where new_mask
+    is a boolean Series marking the newly created rows.
+    """
     def decorator(func):
         @wraps(func)
         def wrapper(df: pd.DataFrame, *args, **kwargs):
-            result = func(df, *args, **kwargs)
-            journal = df.loc[column, extra_cols].copy()
-            journal["_log_rules_applied"] = func.__name__
+            old_len = len(df)
 
-            return result, journal
+            # Exécution de la règle (qui ne retourne que df_modifié)
+            df_out = func(df, *args, **kwargs)
 
+            # Les nouvelles lignes sont celles dont l'index >= old_len
+            new_idx = list(range(old_len, len(df_out)))
+
+            # 4) On construit le journal
+            if not new_idx:
+                journal = pd.DataFrame(columns=extra_cols +
+                                       ["APE_BEFORE",
+                                        "APE_AFTER",
+                                        "_log_rules_applied",
+                                        "_change_type"])
+            else:
+                journal = df_out.loc[list(new_idx), extra_cols].copy()
+                journal["APE_BEFORE"] = None
+                journal["APE_AFTER"] = df_out.loc[list(new_idx), column]
+                journal["_log_rules_applied"] = func.__name__
+                journal["_change_type"] = "creation"
+
+            return df_out, journal
         return wrapper
-
     return decorator

@@ -1,0 +1,8 @@
+- name: ensure_modalite_x
+  description: "Assure la présence de la modalité X"
+  tags: [naf_rev2]
+  target_column: "modalite_var"
+  modality_value: "ModaliteX"
+  extra_columns:
+    libelle: "Libellé générique pour ModaliteX"
+    liasse_numero: "synthetic"

@@ -1,0 +1,23 @@
+- name: lmnp_rev2
+  description: Classifie LMNP selon activ_perm_et et forme_juridique combinés
+  tags: [naf_2025]
+  text_columns: [libelle, objet_social]
+  regex: "lmnp|loueur en meuble.*non professionnel"
+  target_column: nace2025
+  rules:
+    - conditions:
+        activ_perm_et: S
+        forme_juridique: "5710"
+      code: "5590Y"
+    - conditions:
+        activ_perm_et: P
+      code: "6820G"
+- name: ensure_modality
+  description: "Assure la présence d'une modalité dans une variable catégorielle"
+  tags: [naf_rev2]
+  action_type: "add_row"
+  target_column: "modalite_var"
+  modality_value: "ModaliteX"
+  extra_columns:
+    libelle: "Libellé générique pour ModaliteX"
+    liasse_numero: "synthetic"
