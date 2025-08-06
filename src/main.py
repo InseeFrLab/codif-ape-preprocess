@@ -45,7 +45,7 @@ def apply_rules(training_data, tag):
 
 def save_outputs(training_data, log_rules_applied_training_data, s3=True):
     print("💾 Saving outputs...")
-    prefix = "./data/"
+    prefix = "./outputs/"
     s3_prefix = "s3://projet-ape/data/domain_specific_cleaned/"
     df_filename = "full_dataset_20241027_sirene4_nace2025.parquet"
     log_filename = "delta_report_20241027_sirene4_nace2025.parquet"
