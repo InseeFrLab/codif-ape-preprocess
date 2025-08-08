@@ -2,6 +2,7 @@ import time
 from tqdm import tqdm
 import numpy as np
 import faiss
+import torch
 from sklearn.preprocessing import normalize
 from sentence_transformers import SentenceTransformer
 
@@ -30,8 +31,15 @@ libelles = [
 # Phrase requête à comparer
 query = "lmnp"
 
+# Choix du périphérique
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f'🚀 Using device: {device}')
+
 # ⚙️ Charger un modèle pré-entraîné
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model = SentenceTransformer(
+    "all-MiniLM-L6-v2",
+    device=str(device)          # <-- important pour inference GPU
+)
 
 # 🔄 Embedding + Normalisation
 print("🔎 Encodage des libellés...")
@@ -41,7 +49,7 @@ corpus_embeddings = normalize(corpus_embeddings, axis=1)  # Normalisation L2
 end = time.time()
 print(f"✅ Embedding terminé en {end - start:.2f} sec")
 
-# 🏗️ FAISS index avec Inner Product (cosine si normalisé)
+# FAISS index avec Inner Product (cosine si normalisé)
 index = faiss.IndexFlatIP(corpus_embeddings.shape[1])
 index.add(corpus_embeddings)
 
@@ -56,12 +64,15 @@ D, I = index.search(query_vec.astype(np.float32), k)
 # 📊 Affichage des résultats
 print(f"\n📝 Résultats pour : \"{query}\"")
 for idx, score in tqdm(zip(I[0], D[0])):
-    print(f"  - {libelles[idx]:35s} → Similarité = {score:.4f}")
+    print(f"  - {libelles[idx]:35s} → Similarité = {score:.2f}")
 
 # ✅ Seuil suggéré pour test de variantes
 THRESHOLD = 0.75
+start = time.time()
 matches = [(libelles[i], s) for i, s in zip(I[0], D[0]) if s >= THRESHOLD]
+end = time.time()
 print(f"\n🎯 Candidats avec similarité ≥ {THRESHOLD}:")
+print(f"✅ Matching des paires similaires terminés en {end - start:.4f} sec")
 for label, score in matches:
     print(f"  - {label:35s} → {score:.4f}")
 no_matches = [(libelles[i], s) for i, s in zip(I[0], D[0]) if s < THRESHOLD]

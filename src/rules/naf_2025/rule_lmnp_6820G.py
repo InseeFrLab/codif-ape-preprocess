@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from core.decorators import rule
-from core.audit import track_changes
+from core.decorators import rule, track_changes
 
 
 @rule(
@@ -19,7 +18,7 @@ def lmnp_rule_2025(df: pd.DataFrame) -> pd.DataFrame:
                 loueurs en meubles non professionnels| \
                 loueur en meubl non professionnel| \
                 loueur en meubles non professionnel"
-    mask = df["libelle"].str.contains(pattern, case=False, na=False)
+    mask = df["libelle_clean"].str.contains(pattern, case=False, na=False)
 
     mask_5590Y = df["activ_perm_et"] == "S"
     mask_6820G = df["activ_perm_et"].isin(["P"]) | df["activ_perm_et"].isnull()

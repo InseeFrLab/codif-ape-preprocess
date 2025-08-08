@@ -1,6 +1,5 @@
 import pandas as pd
-from core.decorators import rule
-from core.audit import track_new
+from core.decorators import rule, track_new
 
 
 @rule(

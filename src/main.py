@@ -14,12 +14,14 @@ import os
 import sys
 import argparse
 
-import pandas as pd
-from tqdm import tqdm
-
-from core import io
-from core.loader import load_rules
-from core.registry import RULES_REGISTRY
+from utils import io, file
+from core.rule_engine import apply_rules
+from cleaning.clean_for_rules import cleaning_pipeline
+from constants.paths import (
+    URL_SIRENE4_NAF2025,
+    URL_OUTPUT_NAF2025,
+    URL_REPORT_NAF2025,
+)
 
 
 def load_dataset(path):
@@ -27,62 +29,63 @@ def load_dataset(path):
     return io.download_data(path)
 
 
-def apply_rules(training_data, tag):
-    print("🔍 Loading and filtering rules...")
-    load_rules()
-    rules_to_apply = [r for r in RULES_REGISTRY if tag in r.tags]
-    print(f"🧩 {len(rules_to_apply)} rule(s) matched with tag '{tag}'")
+def save_outputs(training_data, log_rules_applied_training_data, methods):
+    """
+    Save training data and logs on S3 with dynamic file names based on methods.
 
-    all_journals = []
-
-    print("⚙️  Applying rules...")
-    for rule in tqdm(rules_to_apply, desc="Processing rules", unit="rule"):
-        df, journal = rule.apply(training_data)
-        all_journals.append(journal)
-
-    return df, pd.concat(all_journals, ignore_index=True)
-
-
-def save_outputs(training_data, log_rules_applied_training_data, s3=True):
+    Args:
+        training_data (DataFrame): The transformed dataset.
+        log_rules_applied_training_data (DataFrame): Audit logs.
+        methods (list of str): List of matching methods to save outputs for.
+    """
     print("💾 Saving outputs...")
-    prefix = "./outputs/"
-    s3_prefix = "s3://projet-ape/data/domain_specific_cleaned/"
-    df_filename = "full_dataset_20241027_sirene4_nace2025.parquet"
-    log_filename = "delta_report_20241027_sirene4_nace2025.parquet"
-    dataset_path = s3_prefix + df_filename if s3 else prefix + df_filename
-    report_path = s3_prefix + log_filename if s3 else prefix + log_filename
-    io.upload_data(training_data, dataset_path)
-    io.upload_data(log_rules_applied_training_data, report_path)
+    base_data_name, ext_data = os.path.splitext(URL_OUTPUT_NAF2025)
+    base_log_name, ext_log = os.path.splitext(URL_REPORT_NAF2025)
+
+    suffix = file.get_suffix(methods)
+
+    data_path = f"{base_data_name}{suffix}{ext_data}"
+    log_path = f"{base_log_name}{suffix}{ext_log}"
+
+    print(f"💾 Saving outputs with suffix '{suffix}':")
+    print(f"  - data -> {data_path}")
+    print(f"  - log  -> {log_path}")
+
+    io.upload_data(training_data, data_path)
+    io.upload_data(log_rules_applied_training_data, log_path)
+
     print("✅ All done!")
 
 
-def main(input_data=None, tag="naf_2025", dry_run=False):
+def main(input_data, methods, naf_tag="naf_2025", dry_run=False):
     # Create directories
-    os.makedirs('./data', exist_ok=True)
-    os.makedirs('./outputs', exist_ok=True)
     df = load_dataset(input_data)
-    (df_out, mask), log_df = apply_rules(df, tag)
+    df["libelle_clean"] = cleaning_pipeline(df["libelle"])
+    (df_out, mask), log_df = apply_rules(df, naf_tag)
     print(df_out)
     print(log_df)
     if dry_run:
         print("🚫 Dry run enabled — no output files will be saved.")
     else:
-        save_outputs(df_out, log_df)
+        save_outputs(df_out, log_df, methods)
 
 
 if __name__ == "__main__":
-    default_df = (
-        "s3://projet-ape/NAF-revision/relabeled-data/20241027_sirene4_nace2025.parquet"
-    )
     parser = argparse.ArgumentParser(
         description="Apply NAF enrichment rules to dataset."
     )
     parser.add_argument(
         "--input_data",
         type=str,
-        default=default_df,
+        default=URL_SIRENE4_NAF2025,
         nargs="?",
         help="Path to the input Parquet file",
+    )
+    parser.add_argument(
+        "--methods",
+        nargs="+",
+        default=["regex"],
+        help="List of matching methods to apply and save outputs for, e.g., regex fuzzy similarity",
     )
     parser.add_argument(
         "--naf-version",
@@ -96,9 +99,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if not args.df_path:
+    if not args.input_data:
         print("❌ Error: You must provide the path to the input Parquet file.")
         parser.print_help()
         sys.exit(1)
-    # main(df_path, tag)
-    main(args.input_data, args.naf_version, args.dry_run)
+
+    main(args.input_data, args.methods, args.naf_version, args.dry_run)
