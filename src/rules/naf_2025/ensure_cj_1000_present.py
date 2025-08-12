@@ -8,9 +8,10 @@ from core.decorators import rule, track_new
     description="Règle présence modalité 1000 de la cj version NAF 2025",
 )
 @track_new(column='nace2025')
-def add_cj_1000_modality_2025(df: pd.DataFrame) -> pd.DataFrame:
+def add_cj_1000_modality_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
     # Create a new row with default / placeholder values
     new_row = {
+        "liasse_numero": "J00addCJ1000",
         "cj": "1000",
         "libelle": "LMNP",
         "nace2025": "6820G",

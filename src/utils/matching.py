@@ -3,7 +3,8 @@ import torch
 from rapidfuzz import fuzz
 from sklearn.preprocessing import normalize
 from sentence_transformers import SentenceTransformer
-from constants.thresholds import SENTENCE_MODEL_NAME, FUZZY_THRESHOLD, SIM_THRESHOLD
+from constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
+from constants.models import SENTENCE_MODEL_NAME
 
 # Set to None initially and loaded only once by _get_model()
 _MODEL: SentenceTransformer | None = None

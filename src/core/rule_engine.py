@@ -5,7 +5,7 @@ from .loader import load_rules
 from .registry import RULES_REGISTRY
 
 
-def apply_rules(training_data, tag):
+def apply_rules(training_data, tag, methods=None, methods_params=None):
     """
     Apply all rules tagged with `tag` to the dataset.
 
@@ -15,6 +15,13 @@ def apply_rules(training_data, tag):
     Args:
         training_data (pd.DataFrame): Data to process.
         tag (str): Tag used to select which rules to apply.
+        methods (list[str] or None): Matching methods to inject into rules.
+        methods_params (dict): global parameters for each method
+            ex: {
+                "regex": {"terms": [...], ...},
+                "fuzzy": {"terms": [...], "threshold": 85},
+                ...
+            }
 
     Returns:
         tuple:
@@ -31,7 +38,7 @@ def apply_rules(training_data, tag):
 
     print("⚙️  Applying rules...")
     for rule in tqdm(rules_to_apply, desc="Processing rules", unit="rule"):
-        df, journal = rule.apply(training_data)
+        df, journal = rule.apply(training_data, methods=methods, methods_params=methods_params)
         all_journals.append(journal)
 
     return df, pd.concat(all_journals, ignore_index=True)

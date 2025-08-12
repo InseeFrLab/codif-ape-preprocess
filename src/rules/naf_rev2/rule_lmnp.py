@@ -1,7 +1,7 @@
 import numpy as np
 
 from core.decorators import rule
-from core.audit import track_changes
+from core.decorators import track_changes
 
 
 @rule(
@@ -10,7 +10,7 @@ from core.audit import track_changes
     description="Attribue APE 6820B si LMNP détecté dans le libellé selon NAF Rev. 2",
 )
 @track_changes(column="APE_SICORE")
-def lmnp_rule_rev2(df):
+def lmnp_rule_rev2(df, methods=None, methods_params=None):
     pattern = r"lmnp|loueur en meuble non professionnel| \
                 loueur bailleur non professionnel| \
                 location meublee non professionnelle| \

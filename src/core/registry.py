@@ -11,15 +11,20 @@ from typing import Callable, List
 
 class Rule:
     def __init__(
-        self, func: Callable, name: str, tags: List[str], description: str = ""
+        self, func: Callable,
+        name: str,
+        tags: List[str],
+        methods: List[str],
+        description: str = ""
     ):
         self.func = func
         self.name = name
         self.tags = tags
+        self.methods = methods
         self.description = description
 
-    def apply(self, df):
-        return self.func(df)
+    def apply(self, df, **kwargs):
+        return self.func(df, **kwargs)
 
 
 # Le registre global

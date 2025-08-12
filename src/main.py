@@ -16,12 +16,17 @@ import argparse
 
 from utils import io, file
 from core.rule_engine import apply_rules
-from cleaning.clean_for_rules import cleaning_pipeline
+from cleaning.clean_for_rules import pattern_cleaning_pipeline
 from constants.paths import (
     URL_SIRENE4_NAF2025,
     URL_OUTPUT_NAF2025,
     URL_REPORT_NAF2025,
 )
+from constants.regex_patterns import (
+    STEP1_RULE_PATTERNS,
+    STEP2_RULE_PATTERNS
+)
+from constants.matchers import DEFAULT_METHOD_PARAMS
 
 
 def load_dataset(path):
@@ -58,14 +63,18 @@ def save_outputs(training_data, log_rules_applied_training_data, methods):
 
 
 def main(input_data, methods, naf_tag="naf_2025", dry_run=False):
-    # Create directories
     df = load_dataset(input_data)
-    df["libelle_clean"] = cleaning_pipeline(df["libelle"])
-    (df_out, mask), log_df = apply_rules(df, naf_tag)
-    print(df_out)
-    print(log_df)
+    df["libelle_clean"] = pattern_cleaning_pipeline(
+        df["libelle"],
+        step1=STEP1_RULE_PATTERNS,
+        step2=STEP2_RULE_PATTERNS
+    )
+    (df_out, mask), log_df = apply_rules(df, naf_tag, methods, DEFAULT_METHOD_PARAMS)
+
     if dry_run:
         print("🚫 Dry run enabled — no output files will be saved.")
+        print(df_out)
+        print(log_df)
     else:
         save_outputs(df_out, log_df, methods)
 
@@ -88,7 +97,7 @@ if __name__ == "__main__":
         help="List of matching methods to apply and save outputs for, e.g., regex fuzzy similarity",
     )
     parser.add_argument(
-        "--naf-version",
+        "--naf_version",
         type=str,
         default="naf_2025",
         help="Which NAF ruleset to apply (default: naf_2025)",

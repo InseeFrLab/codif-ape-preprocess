@@ -23,7 +23,8 @@ def is_s3_path(path: str) -> bool:
     return path.startswith("s3://")
 
 
-def download_parquet(path: str, use_arrow: bool = False, in_local_dir: bool = True) -> pd.DataFrame:
+def download_parquet(path: str, use_arrow: bool = False,
+                     in_local_dir: bool = False) -> pd.DataFrame:
     """
     Load Parquet from local or S3 (based on path), using pandas or Arrow.
     """
@@ -32,7 +33,7 @@ def download_parquet(path: str, use_arrow: bool = False, in_local_dir: bool = Tr
         path = path.removeprefix("s3://")
         data = ds.dataset(path, format="parquet", filesystem=fs).to_table().to_pandas()
         if in_local_dir:
-            pq.write_table(pa.Table.from_pandas(data), "./data/training_data.parquet")
+            pq.write_table(pa.Table.from_pandas(data), path)
         return ds.dataset(path, format="parquet", filesystem=fs).to_table().to_pandas()
     else:
         print(path)
@@ -85,7 +86,7 @@ def download_data(path: str, in_local_dir: bool = True) -> pd.DataFrame:
     """
 
     if path.endswith(".parquet"):
-        return download_parquet(path, use_arrow=True, in_local_dir=True)
+        return download_parquet(path, use_arrow=True, in_local_dir=False)
     elif path.endswith(".csv"):
         return download_csv(path)
     else:
