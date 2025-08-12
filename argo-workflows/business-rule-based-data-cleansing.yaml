@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: run-relabel-naf08-to-naf25
+  generateName: run-rule-based-data-cleansing
 spec:
   serviceAccountName: workflow
   volumes:
@@ -14,32 +14,30 @@ spec:
     parameters:
       - name: params-conf-list
         value: '[
-          {"LLM_NAME": "Qwen/Qwen3-0.6B", "THIRD": 1, "STRATEGY": "cag"},
-          {"LLM_NAME": "Qwen/Qwen3-0.6B", "THIRD": 2, "STRATEGY": "cag"},
-          {"LLM_NAME": "Qwen/Qwen3-0.6B", "THIRD": 3, "STRATEGY": "cag"}
+          {"NAF": "naf_2025", "METHODS": ["regex"]},
+          {"NAF": "naf_2025", "METHODS": ["fuzzy"]},
+          {"NAF": "naf_2025", "METHODS": ["similarity"]},
+          {"NAF": "naf_2025", "METHODS": ["regex", "fuzzy", "similarity"]}
           ]'
 
   templates:
     - name: main
       dag:
         tasks:
-          - name: relabel-naf08-to-naf25
-            template: run-relabel
+          - name: rule-based-data-cleansing
+            template: run-cleansing
             arguments:
               parameters:
-                - name: LLM_NAME
-                  value: "{{item.LLM_NAME}}"
-                - name: THIRD
-                  value: "{{item.THIRD}}"
-                - name: STRATEGY
-                  value: "{{item.STRATEGY}}"
+                - name: NAF
+                  value: "{{item.NAF}}"
+                - name: METHODS
+                  value: "{{item.METHODS}}"
             withParam: "{{workflow.parameters.params-conf-list}}"
-    - name: run-relabel
+    - name: run-cleansing
       inputs:
         parameters:
-          - name: LLM_NAME
-          - name: THIRD
-          - name: STRATEGY
+          - name: NAF
+          - name: METHODS
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -48,8 +46,7 @@ spec:
                   - key: nvidia.com/gpu.product
                     operator: In
                     values:
-                      - NVIDIA-H100-NVL
-                      - NVIDIA-H100-PCIe
+                      - NVIDIA-A2
       container:
         image: inseefrlab/onyxia-vscode-pytorch:py3.12.11-gpu
         imagePullPolicy: IfNotPresent
@@ -60,9 +57,9 @@ spec:
         args:
           - |
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
-            cd codif-ape-nace-revision/
+            cd codif-ape-preprocess/
             uv sync
-            uv run src/main.py --naf {{inputs.parameters.STRATEGY}} --experiment_name NACE2025_DATASET --llm_name {{inputs.parameters.LLM_NAME}} --third {{inputs.parameters.THIRD}}
+            uv run src/main.py --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}} 
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm
@@ -82,37 +79,3 @@ spec:
             value: us-east-1
           - name: AWS_S3_ENDPOINT
             value: minio.lab.sspcloud.fr
-          - name: HF_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: hf-token
-                key: token
-          - name: QDRANT_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: qdrant-apikey
-                key: api-key
-          - name: LANGFUSE_PUBLIC_KEY
-            valueFrom:
-              secretKeyRef:
-                name: langfuse-secrets
-                key: publicKey
-          - name: LANGFUSE_SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: langfuse-secrets
-                key: secretKey
-          - name: MLFLOW_S3_ENDPOINT_URL
-            value: https://minio.lab.sspcloud.fr
-          - name: MLFLOW_TRACKING_URI
-            value: https://projet-ape-mlflow.user.lab.sspcloud.fr/
-          - name: LANGFUSE_HOST
-            value: https://langfuse.lab.sspcloud.fr
-          - name: QDRANT_URL
-            value: https://projet-ape-qdrant.user.lab.sspcloud.fr/
-          - name: COLLECTION_NAME
-            value: embeddings_qwen
-          - name: TORCH_CUDA_ARCH_LIST
-            value: "9.0"
-          - name: VLLM_USE_FLASHINFER_SAMPLER
-            value: "1"
