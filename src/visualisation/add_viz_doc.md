@@ -1,4 +1,3 @@
-Got it — here’s everything in **English**, plus the extra “internal doc” on how to add new visualizations without breaking the structure.
 
 ---
 
@@ -144,9 +143,3 @@ Ensure your plot is generated without errors.
 
 ```
 
----
-
-If you want, I can now rewrite your **before/after distribution** function so that it produces a **dual-bar histogram in one chart** (input vs output), fully matching your earlier request. This would slot right into `plots.py`.  
-
-Do you want me to prepare that?
-```
