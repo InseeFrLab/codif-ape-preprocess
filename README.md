@@ -125,7 +125,7 @@ This repository runs perfectly in a local environment. For users of the datalab 
 
 **Contribute** 🙏
 
-This is an open-source project aimed at standardizing statistical practices across Europe. We welcome contributions, feedback, and collaboration from other statistical institutes. Feel free to open an issue or submit a pull request!
+This is an open-source project aimed at standardizing statistical practices across Europe and beyond. We believe in the power of collaboration and welcome contributions, feedback, and partnerships from other statistical institutes worldwide. Feel free to open an issue or submit a pull request!
 
 **License** 📝
 

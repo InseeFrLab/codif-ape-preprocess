@@ -28,6 +28,7 @@ from constants.regex_patterns import (
     STEP2_RULE_PATTERNS
 )
 from constants.matchers import DEFAULT_METHOD_PARAMS
+from visualisation import run_plot
 
 
 def load_dataset(path):
@@ -63,7 +64,7 @@ def save_outputs(training_data, log_rules_applied_training_data, methods):
     print("✅ All done!")
 
 
-def main(input_data, methods, naf_tag="naf_2025", dry_run=False):
+def main(input_data, methods, naf_tag="naf_2025", dry_run=False, show=False):
     df = load_dataset(input_data)
     for raw_col, clean_col in zip(TEXTUAL_INPUTS, TEXTUAL_INPUTS_CLEANED):
         df[clean_col] = pattern_cleaning_pipeline(
@@ -79,6 +80,9 @@ def main(input_data, methods, naf_tag="naf_2025", dry_run=False):
         print(log_df)
     else:
         save_outputs(df_out, log_df, methods)
+
+    if show:
+        run_plot()
 
 
 if __name__ == "__main__":
@@ -107,6 +111,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dry-run", action="store_true", help="Run the process without saving outputs"
     )
+    parser.add_argument(
+        "--show",
+        action="store_true",
+        help="Plot dataviz to compare methods",
+    )
 
     args = parser.parse_args()
 
@@ -115,4 +124,4 @@ if __name__ == "__main__":
         parser.print_help()
         sys.exit(1)
 
-    main(args.input_data, args.methods, args.naf_version, args.dry_run)
+    main(args.input_data, args.methods, args.naf_version, args.dry_run, args.show)
