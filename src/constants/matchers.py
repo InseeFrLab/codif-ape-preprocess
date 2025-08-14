@@ -10,7 +10,7 @@ DEFAULT_METHOD_PARAMS = {
     "similarity": {
         "threshold": SIM_THRESHOLD,
         "terms": [],
-        "sentence_model": SENTENCE_MODEL_NAME
+        "model_name": SENTENCE_MODEL_NAME
     },
     "regex": {
         "pattern": "",

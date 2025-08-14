@@ -14,10 +14,10 @@ spec:
     parameters:
       - name: params-conf-list
         value: '[
-          {"NAF": "naf_2025", "METHODS": ["regex"]},
-          {"NAF": "naf_2025", "METHODS": ["fuzzy"]},
-          {"NAF": "naf_2025", "METHODS": ["similarity"]},
-          {"NAF": "naf_2025", "METHODS": ["regex", "fuzzy", "similarity"]}
+          {"NAF": "naf_2025", "METHODS": "regex"},
+          {"NAF": "naf_2025", "METHODS": "fuzzy"},
+          {"NAF": "naf_2025", "METHODS": "similarity"},
+          {"NAF": "naf_2025", "METHODS": "regex fuzzy similarity"}
           ]'
 
   templates:
@@ -59,9 +59,7 @@ spec:
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
             cd codif-ape-preprocess/
             uv sync
-            # "['regex', 'fuzzy']" becomes "regex fuzzy"
-            METHODS_ARGS=$(echo "{{inputs.parameters.METHODS}}" | jq -r 'join(" ")')
-            uv run src/main.py --naf_version {{inputs.parameters.NAF}} --methods $METHODS_ARGS
+            uv run python src/main.py --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm
