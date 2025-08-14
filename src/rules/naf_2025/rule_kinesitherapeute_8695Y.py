@@ -25,27 +25,23 @@ from constants.targets import NACE_REV2_1_COLUMN
 def lmnp_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "KINE",
-        "KINESITHERAPEUTE"
-        "MASSEUR KINE",
-        "MASSEUR KINE EN COLLABORATION",
-        "MASSEUR KINESI",
-        "MASSEUR KINESITHERAPEUTE",
-        "MASSEUR KINESITHERAPEUTE ASSISTANT",
-        "MASSEUR KINESITHERAPEUTE ASSISTANTE",
-        "MASSEUR KINESITHERAPEUTE LIBERAL",
-        "MASSEUR KINESITHERAPEUTE LIBERALE",
-        "MASSEUR KINESITHERAPEUTE OSTEOPATHE",
-        "MASSEUR KINESITHERAPEUTE REMPLACANT",
-        "MASSEUR KINESITHERAPEUTE REMPLACANTE",
-        "MASSEUR KINESITHERAPEUTHE",
-        "MASSEUR KINESITHERAPEUTE LIBERAL",
-        "MASSEUR KINESITHERAPEUTE REMPLACANT",
-        "MASSER KINESI"
-        "MASSEUR KINESI"
-        "MASSO KINESITHERAPIE"
-        "MASSEUR PHYSIOTHERAPEUTE"
-        "PHYSIOTHERAPIE"
+        "masseur kine",
+        "masseuse kine",
+        "masseur kine en collaboration",
+        "masseur kinesi",
+        "masseuse kinesi",
+        "masseuse kinesitherapeute",
+        "masseur kinesitherapeute assistant",
+        "masseur kinesitherapeute assistante",
+        "masseur kinesitherapeute liberal",
+        "masseur kinesitherapeute liberale",
+        "masseur kinesitherapeute osteopathe",
+        "masseur kinesitherapeute remplacant",
+        "masseur kinesitherapeute remplacante",
+        "masseur kinesitherapeute",
+        "masseur kinesitherapeute liberal",
+        "masso kinesitherapie"
+        "masseur physiotherapeute"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

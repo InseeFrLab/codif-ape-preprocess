@@ -40,7 +40,6 @@ def build_matcher_kwargs(methods, methods_params, terms, pattern_builder=None):
             params["terms"] = terms
 
         kwargs[m] = params
-    print(methods)
     print(kwargs)
     return kwargs
 

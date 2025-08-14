@@ -243,6 +243,7 @@ def plot_methods_overlap(base_report_path=URL_REPORT_NAF2025,
     fig.update_layout(height=600, width=200*num_tables, title_text="Overlap of Labels Across Methods")
     fig.show()
 
+
 def plot_methods_overlap_by_rule(base_report_path=URL_REPORT_NAF2025,
                                  methods=("regex", "fuzzy"),
                                  target_column="libelle"):
