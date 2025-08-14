@@ -16,7 +16,7 @@ import argparse
 
 from utils import io, file
 from core.rule_engine import apply_rules
-from cleaning.clean_for_rules import pattern_cleaning_pipeline
+from cleaning.cleaner import clean_dataset
 from constants.inputs import TEXTUAL_INPUTS, TEXTUAL_INPUTS_CLEANED
 from constants.paths import (
     URL_SIRENE4_NAF2025,
@@ -66,12 +66,11 @@ def save_outputs(training_data, log_rules_applied_training_data, methods):
 
 def main(input_data, methods, naf_tag="naf_2025", dry_run=False, show=False):
     df = load_dataset(input_data)
-    for raw_col, clean_col in zip(TEXTUAL_INPUTS, TEXTUAL_INPUTS_CLEANED):
-        df[clean_col] = pattern_cleaning_pipeline(
-            df[raw_col],
-            step1=STEP1_RULE_PATTERNS,
-            step2=STEP2_RULE_PATTERNS
-        )
+    df = clean_dataset(df,
+                       TEXTUAL_INPUTS,
+                       TEXTUAL_INPUTS_CLEANED,
+                       STEP1_RULE_PATTERNS,
+                       STEP2_RULE_PATTERNS)
     (df_out, mask), log_df = apply_rules(df, naf_tag, methods, DEFAULT_METHOD_PARAMS)
 
     if dry_run:

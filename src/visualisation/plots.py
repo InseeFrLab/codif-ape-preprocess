@@ -176,7 +176,8 @@ def plot_methods_overlap_0(base_report_path=URL_REPORT_NAF2025,
 def plot_methods_overlap(base_report_path=URL_REPORT_NAF2025,
                          methods=("regex", "fuzzy"), target_column="libelle"):
     """
-    Visualize the overlap of target column values across multiple methods in a single interactive Plotly figure.
+    Visualize the overlap of target column values across multiple methods in a single interactive
+    Plotly figure.
 
     For each method, loads the corresponding report (base_report_path suffixed by method),
     filters only rows with _change_type='modification', and compares the target_column values.

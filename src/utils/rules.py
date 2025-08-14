@@ -37,10 +37,11 @@ def build_matcher_kwargs(methods, methods_params, terms, pattern_builder=None):
             builder = pattern_builder or build_regex_pattern
             params = {"pattern": builder(params["terms"])}
         else:
-            params["terms"] = params.get("terms", terms)
+            params["terms"] = terms
 
         kwargs[m] = params
-
+    print(methods)
+    print(kwargs)
     return kwargs
 
 
