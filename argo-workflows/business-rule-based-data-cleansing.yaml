@@ -59,7 +59,9 @@ spec:
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
             cd codif-ape-preprocess/
             uv sync
-            uv run src/main.py --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}} 
+            # "['regex', 'fuzzy']" becomes "regex fuzzy"
+            METHODS_ARGS=$(echo "{{inputs.parameters.METHODS}}" | jq -r 'join(" ")')
+            uv run src/main.py --naf_version {{inputs.parameters.NAF}} --methods $METHODS_ARGS
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm
