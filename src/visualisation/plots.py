@@ -243,6 +243,87 @@ def plot_methods_overlap(base_report_path=URL_REPORT_NAF2025,
     fig.update_layout(height=600, width=200*num_tables, title_text="Overlap of Labels Across Methods")
     fig.show()
 
+def plot_methods_overlap_by_rule(base_report_path=URL_REPORT_NAF2025,
+                                 methods=("regex", "fuzzy"),
+                                 target_column="libelle"):
+    """
+    Visualize the overlap of target column values across multiple methods **for each rule**.
+
+    For each rule (_log_rules_applied value), loads the corresponding reports for each method,
+    filters only rows with _change_type='modification', and compares the target_column values.
+
+    Displays one Plotly figure per rule.
+    """
+    from itertools import combinations
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+
+    # Charger toutes les méthodes
+    dfs = {}
+    for method in methods:
+        path = base_report_path.replace(".parquet", f"_{method}.parquet")
+        df = download_data(path)
+        df = df[df["_change_type"] == "modification"]
+        dfs[method] = df
+
+    # Lister toutes les règles
+    all_rules = sorted(set().union(*(df["_log_rules_applied"].dropna().unique() for df in dfs.values())))
+
+    for rule in all_rules:
+        # Labels par méthode pour cette règle
+        labels_per_method = {}
+        for method in methods:
+            subset = dfs[method][dfs[method]["_log_rules_applied"] == rule]
+            labels_per_method[method] = set(subset[target_column].dropna().unique())
+
+        # Intersections
+        intersections = {}
+        for r in range(2, len(methods)+1):
+            for combo in combinations(methods, r):
+                combo_set = set.intersection(*(labels_per_method[m] for m in combo))
+                if combo_set:
+                    intersections[combo] = combo_set
+
+        # Labels uniques
+        all_intersection_labels = set().union(*intersections.values()) if intersections else set()
+        uniques = {m: list(labels_per_method[m] - all_intersection_labels) for m in methods}
+
+        # Création du subplot
+        num_tables = len(methods) + len(intersections)
+        fig = make_subplots(
+            rows=1,
+            cols=num_tables,
+            specs=[[{"type": "table"}] * num_tables],
+            horizontal_spacing=0.05,
+        )
+
+        # Uniques
+        for i, m in enumerate(methods):
+            fig.add_trace(
+                go.Table(
+                    header=dict(values=[f"Unique to {m}"], fill_color="lightgray", align="left"),
+                    cells=dict(values=[uniques[m]], align="left")
+                ),
+                row=1, col=i+1
+            )
+
+        # Intersections
+        for j, (combo, labels) in enumerate(intersections.items(), start=len(methods)):
+            fig.add_trace(
+                go.Table(
+                    header=dict(values=[f"Shared: {', '.join(combo)}"], fill_color="lightblue", align="left"),
+                    cells=dict(values=[list(labels)], align="left")
+                ),
+                row=1, col=j+1
+            )
+
+        fig.update_layout(
+            height=600,
+            width=200 * num_tables,
+            title_text=f"Overlap of '{target_column}' for rule: {rule}"
+        )
+        fig.show()
+
 
 def plot_heatmap_code_method(base_report_path=URL_REPORT_NAF2025, methods=("regex", "fuzzy")):
     """Affiche une heatmap : lignes = codes, colonnes = méthodes,
@@ -256,8 +337,8 @@ def plot_heatmap_code_method(base_report_path=URL_REPORT_NAF2025, methods=("rege
     df_all = pd.concat(dfs, ignore_index=True)
 
     pivot_table = (
-        df_all.groupby([URL_OUTPUT_NAF2025, "method"]).size().reset_index(name="count")
-        .pivot(index=URL_OUTPUT_NAF2025, columns="method", values="count")
+        df_all.groupby(["APE_AFTER", "method"]).size().reset_index(name="count")
+        .pivot(index="APE_AFTER", columns="method", values="count")
         .fillna(0)
     )
 
@@ -296,19 +377,20 @@ def show_changed_labels_by_code(
     df_all = pd.concat(dfs, ignore_index=True)
 
     # On garde les colonnes pertinentes
-    cols_to_keep = [NACE_REV2_1_COLUMN, URL_OUTPUT_NAF2025, "rule_name", label_column, "method"]
+    cols_to_keep = ["APE_AFTER", "_log_rules_applied", label_column, "method"]
     cols_present = [c for c in cols_to_keep if c in df_all.columns]
     df_all = df_all[cols_present]
 
     # Groupement par code/méthode/règle
     grouped = (
-        df_all.groupby([URL_OUTPUT_NAF2025, "method", "rule_name"])[label_column]
-        .apply(lambda x: list(x.unique())[:max_examples])
+        df_all.groupby(["APE_AFTER", "method", "_log_rules_applied"])[label_column]
+        .apply(lambda x: list(x.nunique())[:max_examples])
         .reset_index()
     )
 
     for _, row in grouped.iterrows():
-        print(f"--- Code : {row['code']} | Méthode : {row['method']} | Règle : {row['rule_name']}")
+        print(f"--- Code : {row['"APE_AFTER"']} |\
+         Méthode : {row['method']} | Règle : {row['_log_rules_applied']}")
         for label in row[label_column]:
             print(f"   • {label}")
         print()

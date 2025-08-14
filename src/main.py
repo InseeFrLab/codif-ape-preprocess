@@ -78,6 +78,7 @@ def main(input_data, methods, naf_tag="naf_2025", dry_run=False, show=False):
         print(df_out)
         print(log_df)
     else:
+        df_out.drop(columns=TEXTUAL_INPUTS_CLEANED)
         save_outputs(df_out, log_df, methods)
 
     if show:

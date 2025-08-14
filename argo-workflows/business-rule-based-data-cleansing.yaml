@@ -17,6 +17,9 @@ spec:
           {"NAF": "naf_2025", "METHODS": "regex"},
           {"NAF": "naf_2025", "METHODS": "fuzzy"},
           {"NAF": "naf_2025", "METHODS": "similarity"},
+          {"NAF": "naf_2025", "METHODS": "regex fuzzy"},
+          {"NAF": "naf_2025", "METHODS": "fuzzy similarity"},
+          {"NAF": "naf_2025", "METHODS": "regex similarity"},
           {"NAF": "naf_2025", "METHODS": "regex fuzzy similarity"}
           ]'
 
