@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for LMNP (Loueur Meublé Non Professionnel).
+    Assign NAF 2025 codes for touristic rental.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,12 +17,12 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="lmnp_assignment_2025",
+    name="touristic_rental_assignment_2025",
     tags=["naf_2025"],
-    description="Règle LMNP version NAF 2025",
+    description="Règle hébergement touristique version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def lmnp_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def touristic_rental_5520Y_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
         "location d une residence secondaire",

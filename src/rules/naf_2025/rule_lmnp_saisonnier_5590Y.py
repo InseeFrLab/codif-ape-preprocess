@@ -17,12 +17,12 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="lmnp_assignment_2025",
+    name="seasonal_lmnp_assignment_2025",
     tags=["naf_2025"],
-    description="Règle LMNP version NAF 2025",
+    description="Règle LMNP saisonnier version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def lmnp_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def lmnp_rule_5590Y_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
         "loueur de meuble saisonnier",

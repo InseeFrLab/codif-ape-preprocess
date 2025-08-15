@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for Livreur de repas.
+    Assign NAF 2025 codes for meal delivery.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,12 +17,12 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="physiotherapist_assignment_2025",
+    name="meal_delivery_assignment_2025",
     tags=["naf_2025"],
     description="Règle LMNP version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def lmnp_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def meal_delivery_4933H_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
         "livraison de repas",

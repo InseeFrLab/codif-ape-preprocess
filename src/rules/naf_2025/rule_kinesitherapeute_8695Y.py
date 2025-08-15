@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for Masseur-kinésithérapeute.
+    Assign NAF 2025 codes for physiotherapists.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
