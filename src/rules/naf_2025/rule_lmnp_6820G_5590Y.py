@@ -26,13 +26,36 @@ def lmnp_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.Da
 
     terms = [
         "lmnp",
+        "lmnp au regime reel simplifie d imposition",
         "loueur en meuble non professionnel",
         "loueur bailleur non professionnel",
         "location meublee non professionnelle",
         "loueur meuble non professionnel",
         "loueurs en meubles non professionnels",
         "loueur en meubl non professionnel",
-        "loueur en meubles non professionnel"
+        "loueur en meubles non professionnel",
+        "location d un logement meuble",
+        "location de logements meubles",
+        "location de logements meubles non professionelle de longue duree",
+        "location d un meuble",
+        "location en meuble",
+        "location immobiliere en meuble",
+        "location meublee",
+        "location meublee 6820A"
+        "location meublee en residence de services avec bail commercial",
+        "location meublee non professionel",
+        "location meublee non professionnelle",
+        "location meubles",
+        "locations meublees",
+        "loueur de meuble",
+        "loueur de meuble dans le cadre de l'economie collaborative",
+        "loueur en meuble",
+        "loueur en meuble non profesionnel",
+        "loueur en meuble non professionnel",
+        "loueur en meuble non professionnel - code APE 6820A",
+        "loueur en meublee non professionnel",
+        "loueur en meublee non professionnel en residence de services",
+        "loueur meuble non professionnel"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

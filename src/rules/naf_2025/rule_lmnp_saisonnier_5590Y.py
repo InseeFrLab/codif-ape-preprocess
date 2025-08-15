@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for Masseur-kinésithérapeute.
+    Assign NAF 2025 codes for LMNP **saisonnier** (Loueur Meublé Non Professionnel).
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,7 +17,7 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="physiotherapist_assignment_2025",
+    name="lmnp_assignment_2025",
     tags=["naf_2025"],
     description="Règle LMNP version NAF 2025",
 )
@@ -25,27 +25,14 @@ from constants.targets import NACE_REV2_1_COLUMN
 def lmnp_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "masseur kine",
-        "masseuse kine",
-        "masseur kine en collaboration",
-        "masseur kinesi",
-        "masseuse kinesi",
-        "masseuse kinesitherapeute",
-        "masseur kinesitherapeute assistant",
-        "masseur kinesitherapeute assistante",
-        "masseur kinesitherapeute liberal",
-        "masseur kinesitherapeute liberale",
-        "masseur kinesitherapeute osteopathe",
-        "masseur kinesitherapeute remplacant",
-        "masseur kinesitherapeute remplacante",
-        "masseur kinesitherapeute",
-        "masseur kinesitherapeute liberal",
-        "masso kinesitherapie"
-        "masseur physiotherapeute"
+        "loueur de meuble saisonnier",
+        "lmnp saisonnier"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8695Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask & (df["activ_perm_et"] == "S") |
+                                      df["activ_perm_et"].isnull(),
+                                      "5590Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask
