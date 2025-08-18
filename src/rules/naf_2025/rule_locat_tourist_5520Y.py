@@ -22,7 +22,9 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle hébergement touristique version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def touristic_rental_5520Y_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def touristic_rental_rule_5520Y_2025(df: pd.DataFrame,
+                                     methods=None,
+                                     methods_params=None) -> pd.DataFrame:
 
     terms = [
         "location d une residence secondaire",

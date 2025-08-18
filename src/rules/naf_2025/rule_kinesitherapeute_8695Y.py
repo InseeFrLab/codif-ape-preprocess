@@ -19,12 +19,16 @@ from constants.targets import NACE_REV2_1_COLUMN
 @rule(
     name="physiotherapist_assignment_2025",
     tags=["naf_2025"],
-    description="Règle LMNP version NAF 2025",
+    description="Règle masseur-kinésithérapeute version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def lmnp_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def physiotherapist_rule_8695Y_2025(df: pd.DataFrame,
+                                    methods=None,
+                                    methods_params=None) -> pd.DataFrame:
 
     terms = [
+        "activite de masseur kinesitherapeute",
+        "activite de masseur kinesotherapeute liberal"
         "masseur kine",
         "masseuse kine",
         "masseur kine en collaboration",

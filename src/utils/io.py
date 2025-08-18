@@ -1,5 +1,6 @@
 import os
 
+import json
 import pandas as pd
 import pyarrow as pa
 import pyarrow.dataset as ds
@@ -72,6 +73,22 @@ def upload_csv(df: pd.DataFrame, path: str):
             df.to_csv(f, index=False)
     else:
         df.to_csv(path, index=False)
+
+
+def download_json(path: str):
+    """
+    Load a JSON file from local or S3 (based on path).
+    Returns Python objects (dict or list).
+
+    """
+    fs = get_filesystem() if is_s3_path(path) else None
+
+    if fs:
+        with fs.open(path, mode="rb") as f:
+            return json.load(f)
+    else:
+        with open(path, "r", encoding="utf-8") as f:
+            return pd.json_normalize(json.load(f))
 
 
 def download_data(path: str, in_local_dir: bool = True) -> pd.DataFrame:

@@ -1,0 +1,17 @@
+import pandas as pd
+from core.decorators import rule, track_new
+
+@rule(
+    name="cj_6535_record_2025",
+    tags=["naf_2025"],
+    description="Ensure presence of CJ modality 6535 (NAF 2025)",
+)
+@track_new(column='nace2025')
+def add_cj_6535_modality_2025(df: pd.DataFrame,methods=None, methods_params=None) -> pd.DataFrame:
+    new_row = {
+        "liasse_numero": "J00addCJ6535",
+        "cj": "6535",
+        "libelle": "LMNP",
+        "nace2025": "6820G",
+    }
+    return pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)

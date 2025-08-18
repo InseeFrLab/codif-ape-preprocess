@@ -22,7 +22,9 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle LMNP version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def meal_delivery_4933H_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def meal_delivery_rule_4933H_2025(df: pd.DataFrame,
+                                  methods=None,
+                                  methods_params=None) -> pd.DataFrame:
 
     terms = [
         "livraison de repas",

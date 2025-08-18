@@ -22,7 +22,7 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle maçonnerie version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def masonry_8695Y_rule_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def masonry_rule_8695Y_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
         "macon",
