@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for meal delivery.
+    Assign NAF 2025 codes for retailing of food products with surface area < 120m2.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,19 +17,19 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="meal_delivery_assignment_2025",
+    name="retailing_food_2025",
     tags=["naf_2025"],
-    description="Règle LMNP version NAF 2025",
+    description="Règle commerce détail prédominance alimentaire moins de 120 m2 version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def meal_delivery_rule_5320H_2025(df: pd.DataFrame,
-                                  methods=None,
-                                  methods_params=None) -> pd.DataFrame:
+def retailing_food_120m2_4711G_2025(df: pd.DataFrame,
+                                    methods=None,
+                                    methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "livraison de repas",
-        "livraison de repas a domicile",
-        "livraison de repas a domicile a velo",
+        "achat vente de produits alimentaires",
+        "commerce de detail en magasin specialise et sur un site de vente en ligne de produits alimentaires et menagers",
+        "epicerie solidaire",
         "livreur de repas",
         "livreur uber eat"
     ]
@@ -37,5 +37,6 @@ def meal_delivery_rule_5320H_2025(df: pd.DataFrame,
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "5320H", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask & (df["activ_surf_et"] == 1),
+                                      "4711G", df[NACE_REV2_1_COLUMN])
     return df, match_mask

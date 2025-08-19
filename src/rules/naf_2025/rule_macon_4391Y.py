@@ -22,7 +22,7 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle maçonnerie version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def masonry_rule_8695Y_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def masonry_rule_4391Y_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
         "macon",
@@ -34,5 +34,5 @@ def masonry_rule_8695Y_2025(df: pd.DataFrame, methods=None, methods_params=None)
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8695Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "4391Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

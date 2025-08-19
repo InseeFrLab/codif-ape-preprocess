@@ -62,7 +62,9 @@ spec:
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
             cd codif-ape-preprocess/
             uv sync
-            uv run python src/main.py --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
+            cd src/
+            uv run python -m tools.generate_cj_rules
+            uv run python main.py --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm

@@ -25,6 +25,7 @@ from constants.targets import NACE_REV2_1_COLUMN
 def vtc_rule_4933H_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
+        "artisan taxi"
         "conducteur de voiture de tourisme avec chauffeur (vtc)",
         "conducteur de voiture de transport avec chauffeur",
         "vtc"

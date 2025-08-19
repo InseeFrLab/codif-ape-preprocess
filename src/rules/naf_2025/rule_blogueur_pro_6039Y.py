@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for meal delivery.
+    Assign NAF 2025 codes for pro bloggers.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,25 +17,22 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="meal_delivery_assignment_2025",
+    name="pro_bloggers_assignment_2025",
     tags=["naf_2025"],
-    description="Règle LMNP version NAF 2025",
+    description="Règle blogueurs professionnels version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def meal_delivery_rule_5320H_2025(df: pd.DataFrame,
-                                  methods=None,
-                                  methods_params=None) -> pd.DataFrame:
+def architecture_rule_6039Y_2025(df: pd.DataFrame,
+                                 methods=None,
+                                 methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "livraison de repas",
-        "livraison de repas a domicile",
-        "livraison de repas a domicile a velo",
-        "livreur de repas",
-        "livreur uber eat"
+        "blogueur professionnel",
+        "blogueurs professionnels"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "5320H", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "6039Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask
