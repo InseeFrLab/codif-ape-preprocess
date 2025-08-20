@@ -22,9 +22,9 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle service animaux de compagnie version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def home_hairdresser_rule_9699G_2025(df: pd.DataFrame,
-                                     methods=None,
-                                     methods_params=None) -> pd.DataFrame:
+def pet_services_rule_9699G_2025(df: pd.DataFrame,
+                                 methods=None,
+                                 methods_params=None) -> pd.DataFrame:
 
     terms = [
         "coach pour animaux de compagnie",

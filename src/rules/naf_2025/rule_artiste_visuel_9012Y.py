@@ -34,8 +34,7 @@ def visual_artists_rule_9012Y_2025(df: pd.DataFrame,
         "creation plastique tout medium dont installations performances etc",
         "illustration dessin peinture photo tous supports libre objet web",
         "restauration d affiches lithographies gravures",
-        "sculpture",
-        ""
+        "sculpture"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

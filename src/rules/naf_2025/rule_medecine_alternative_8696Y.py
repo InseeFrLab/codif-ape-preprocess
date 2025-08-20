@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for not household appliances.
+    Assign NAF 2025 codes for alternative therapy.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,21 +17,26 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="household_appliances_assignment_2025",
+    name="alternative_therapy_assignment_2025",
     tags=["naf_2025"],
-    description="Règle électro-ménager version NAF 2025",
+    description="Règle médecine alternative version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def household_appliances_rule_4754Y_2025(df: pd.DataFrame,
-                                         methods=None,
-                                         methods_params=None) -> pd.DataFrame:
+def alternative_therapy_rule_8696Y_2025(df: pd.DataFrame,
+                                        methods=None,
+                                        methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "achat et vente de cafetiere sur internet"
+        "energeticien",
+        "enertigicienne",
+        "hypnotherapeute",
+        "kinesiologie"
+        "psycho energeticien",
+        "reflexologie"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "4754Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8696Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

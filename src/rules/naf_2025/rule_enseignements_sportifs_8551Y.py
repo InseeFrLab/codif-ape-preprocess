@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for authors-composers.
+    Assign NAF 2025 codes for sports instruction.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,24 +17,27 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="authors_composers_assignment_2025",
+    name="sports_instruction_assignment_2025",
     tags=["naf_2025"],
-    description="Règle auteur compositeur version NAF 2025",
+    description="Règle enseignement sportif version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def authors_composers_rule_9011Y_2025(df: pd.DataFrame,
+def sport_instruction_rule_8551Y_2025(df: pd.DataFrame,
                                       methods=None,
                                       methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "auteur",
-        "auteurs",
-        "autrice",
-        "autrices"
+        "professeur de natation",
+        "professeur de yoga",
+        "coaching sportif",
+        "moniteur d equitation",
+        "monitateur equitation"
+        "moniteur de ski",
+        "service de coaching conseil sportifs et nutritionnels individuel ou collectif vente de programmes sportifs et alimentaires personnalises"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "9011Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8551Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

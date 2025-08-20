@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for not household appliances.
+    Assign NAF 2025 codes for audiovisual production.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:
@@ -17,21 +17,20 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="household_appliances_assignment_2025",
+    name="audiovisual_production_assignment_2025",
     tags=["naf_2025"],
-    description="Règle électro-ménager version NAF 2025",
+    description="Règle production autovisuelle version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def household_appliances_rule_4754Y_2025(df: pd.DataFrame,
-                                         methods=None,
-                                         methods_params=None) -> pd.DataFrame:
+def audiovisual_production_rule_5911G_2025(df: pd.DataFrame,
+                                           methods=None,
+                                           methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "achat et vente de cafetiere sur internet"
-    ]
-
+        "production audiovisuelle"
+]
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "4754Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "5911G", df[NACE_REV2_1_COLUMN])
     return df, match_mask

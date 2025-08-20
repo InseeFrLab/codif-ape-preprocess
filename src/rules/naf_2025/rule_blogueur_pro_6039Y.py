@@ -22,7 +22,7 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle blogueurs professionnels version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def architecture_rule_6039Y_2025(df: pd.DataFrame,
+def pro_bloggers_rule_6039Y_2025(df: pd.DataFrame,
                                  methods=None,
                                  methods_params=None) -> pd.DataFrame:
 

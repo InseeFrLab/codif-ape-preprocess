@@ -28,7 +28,10 @@ def masonry_rule_4391Y_2025(df: pd.DataFrame, methods=None, methods_params=None)
         "macon",
         "maconnerie",
         "maconnerie generale",
-        "maconnerie generale renovation"
+        "maconnerie generale renovation",
+        "travaux de maconnerie",
+        "travaux de maconnerie generale",
+        "la realisation de travaux de maconnerie generale"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
