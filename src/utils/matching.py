@@ -30,7 +30,7 @@ def _get_model(name=SENTENCE_MODEL_NAME) -> SentenceTransformer:
             device=str(device),
             model_kwargs={"attn_implementation": attn, "torch_dtype": dtype}
         )
-        
+
     return _MODEL
 
 
