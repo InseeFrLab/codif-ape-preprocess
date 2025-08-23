@@ -18,10 +18,19 @@ def _get_model(name=SENTENCE_MODEL_NAME) -> SentenceTransformer:
     variable `_MODEL` to avoid reloading it on every function call.
     """
     global _MODEL
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f'🚀 Using device: {device}')
     if _MODEL is None:
-        _MODEL = SentenceTransformer(name, device=str(device))
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(f'🚀 Using device: {device}')
+
+        attn = "flash_attention_2" if device.type == "cuda" else "sdpa"
+        dtype = "float16" if device.type == "cuda" else "float32"
+
+        _MODEL = SentenceTransformer(
+            name,
+            device=str(device),
+            model_kwargs={"attn_implementation": attn, "torch_dtype": dtype}
+        )
+        
     return _MODEL
 
 
