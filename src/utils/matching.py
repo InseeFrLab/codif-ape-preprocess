@@ -10,7 +10,7 @@ from constants.models import SENTENCE_MODEL_NAME
 _MODEL: SentenceTransformer | None = None
 
 
-def get_model(name):
+def _get_model(name):
     global _MODEL
     if _MODEL is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
