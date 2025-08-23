@@ -22,7 +22,7 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle commerce de détails fleurs version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def other_independant_teaching_rule_4776Y_2025(df: pd.DataFrame,
+def retailing_flowers_rule_4776Y_2025(df: pd.DataFrame,
                                                methods=None,
                                                methods_params=None) -> pd.DataFrame:
 

@@ -17,9 +17,9 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(
-    name="home_hairdresser_assignment_2025",
+    name="it_programming_assignment_2025",
     tags=["naf_2025"],
-    description="Règle coiffure à domicile version NAF 2025",
+    description="Règle programmation informatique version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
 def it_programming_rule_6210Y_2025(df: pd.DataFrame,

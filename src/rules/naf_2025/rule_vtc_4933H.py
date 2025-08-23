@@ -22,7 +22,7 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle VTC version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def vtc_rule_4933H_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
+def tourists_driver_rule_4933H_2025(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
 
     terms = [
         "artisan taxi",

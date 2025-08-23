@@ -22,7 +22,7 @@ from constants.targets import NACE_REV2_1_COLUMN
     description="Règle guide touristique version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def metal_manufacturing_rule_7990Y_2025(df: pd.DataFrame,
+def touristic_guides_rule_7990Y_2025(df: pd.DataFrame,
                                         methods=None,
                                         methods_params=None) -> pd.DataFrame:
 
