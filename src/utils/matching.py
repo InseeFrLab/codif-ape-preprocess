@@ -10,27 +10,20 @@ from constants.models import SENTENCE_MODEL_NAME
 _MODEL: SentenceTransformer | None = None
 
 
-def _get_model(name=SENTENCE_MODEL_NAME) -> SentenceTransformer:
-    """
-    Retrieves a cached instance of the SentenceTransformer model.
-
-    This function implements memoization by storing the model in the global
-    variable `_MODEL` to avoid reloading it on every function call.
-    """
+def get_model(name):
     global _MODEL
     if _MODEL is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f'🚀 Using device: {device}')
+        print(f"🚀 Using device: {device}")
 
-        attn = "flash_attention_2" if device.type == "cuda" else "sdpa"
         dtype = "float16" if device.type == "cuda" else "float32"
+        attn = "sdpa"  # fallback sûr, fonctionne sur CPU comme sur GPU
 
         _MODEL = SentenceTransformer(
             name,
             device=str(device),
             model_kwargs={"attn_implementation": attn, "torch_dtype": dtype}
         )
-
     return _MODEL
 
 
