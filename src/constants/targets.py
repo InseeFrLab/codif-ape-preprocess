@@ -1,2 +1,2 @@
-NACE_REV2_COLUMN = "naf_rev2"
+NACE_REV2_COLUMN = "apet_finale"
 NACE_REV2_1_COLUMN = "nace2025"

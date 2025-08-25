@@ -22,6 +22,9 @@ from constants.paths import (
     URL_SIRENE4_NAF2025,
     URL_OUTPUT_NAF2025,
     URL_REPORT_NAF2025,
+    URL_SIRENE4_NAFREV2,
+    URL_OUTPUT_NAFREV2,
+    URL_REPORT_NAFREV2,
 )
 from constants.regex_patterns import (
     STEP1_RULE_PATTERNS,
@@ -36,7 +39,7 @@ def load_dataset(path):
     return io.download_data(path)
 
 
-def save_outputs(training_data, log_rules_applied_training_data, methods):
+def save_outputs(training_data, log_rules_applied_training_data, naf_tag, methods):
     """
     Save training data and logs on S3 with dynamic file names based on methods.
 
@@ -46,8 +49,12 @@ def save_outputs(training_data, log_rules_applied_training_data, methods):
         methods (list of str): List of matching methods to save outputs for.
     """
     print("💾 Saving outputs...")
-    base_data_name, ext_data = os.path.splitext(URL_OUTPUT_NAF2025)
-    base_log_name, ext_log = os.path.splitext(URL_REPORT_NAF2025)
+    if naf_tag == 'naf_rev2':
+        base_data_name, ext_data = os.path.splitext(URL_OUTPUT_NAFREV2)
+        base_log_name, ext_log = os.path.splitext(URL_REPORT_NAFREV2)
+    else:
+        base_data_name, ext_data = os.path.splitext(URL_OUTPUT_NAF2025)
+        base_log_name, ext_log = os.path.splitext(URL_REPORT_NAF2025)
 
     suffix = file.get_suffix(methods)
 
@@ -65,6 +72,9 @@ def save_outputs(training_data, log_rules_applied_training_data, methods):
 
 
 def main(input_data, methods, naf_tag="naf_2025", dry_run=False, show=False):
+    if input_data == "default":
+        input_data = URL_SIRENE4_NAFREV2 if naf_tag == 'naf_rev2' else URL_SIRENE4_NAF2025
+
     df = load_dataset(input_data)
     df = clean_dataset(df,
                        TEXTUAL_INPUTS,
@@ -79,7 +89,7 @@ def main(input_data, methods, naf_tag="naf_2025", dry_run=False, show=False):
         print(log_df)
     else:
         df_out.drop(columns=TEXTUAL_INPUTS_CLEANED)
-        save_outputs(df_out, log_df, methods)
+        save_outputs(df_out, log_df, naf_tag, methods)
 
     if show:
         run_plot()
@@ -92,7 +102,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--input_data",
         type=str,
-        default=URL_SIRENE4_NAF2025,
+        default="default",
         nargs="?",
         help="Path to the input Parquet file",
     )
