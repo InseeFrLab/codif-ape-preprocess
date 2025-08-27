@@ -23,17 +23,16 @@ from constants.targets import NACE_REV2_1_COLUMN
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
 def graphic_designing_rule_7412Y_2025(df: pd.DataFrame,
-                              methods=None,
-                              methods_params=None) -> pd.DataFrame:
+                                      methods=None,
+                                      methods_params=None) -> pd.DataFrame:
 
     terms = [
         "conseil en creation graphique",
-        "creation d identites visuelles et de supports de communication pour les entreprises et entrepreneurs conception de logos chartes graphique",
         "creation de site internet sans programmation design ergonomie",
         "design graphique",
         "designer graphique",
         "graphisme",
-        "graphiste multimedia et diffusion par des procedes et des techniques autres que relevant de l artisanat"
+        "graphiste"
         "graphiste conception de supports",
         "infographiste",
         "web designer"

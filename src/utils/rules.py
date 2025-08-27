@@ -64,3 +64,17 @@ def build_match_mask(df, columns, methods, matcher_kwargs):
         mask |= mm.match(df[col].fillna(""))
 
     return mask
+
+
+def filter_methods(methods: list[str], exclude: list[str]) -> list[str]:
+    """
+    Filter out unwanted methods from a given list.
+
+    Args:
+        methods (list[str]): list of method names to be filtered.
+        exclude (list[str]): list of method names to exclude.
+
+    Returns:
+        list[str]: new list containing all methods from `methods` except those in `exclude`.
+    """
+    return [m for m in methods if m not in exclude]

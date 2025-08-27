@@ -27,7 +27,6 @@ def exterior_cleaning_rule_8122Y_2025(df: pd.DataFrame,
                                       methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "nettoyage de chantier",
         "nettoyage des exterieurs d une maison a la vapeur basse pression",
         "nettoyage des toitures et des facades",
         "nettoyage exterieur des batiments",

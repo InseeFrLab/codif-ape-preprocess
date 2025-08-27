@@ -33,10 +33,7 @@ def real_estate_agent_rule_6831Y_2025(df: pd.DataFrame,
         "mandataire en immobilier inscrit au rsac",
         "mandataire en immobilier",
         "mandataire immobilier",
-        "negociateur immobilier independant",
-        "transaction immobiliere",
-        "transaction sur immeubles et fonds de commerce",
-        "transactions sur immeubles et fonds de commerce"
+        "negociateur immobilier independant"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

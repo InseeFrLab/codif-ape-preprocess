@@ -27,7 +27,6 @@ def specialty_medicine_rule_8622Y_2025(df: pd.DataFrame,
                                        methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "medecin",
         "activite de medecine specialtye",
         "medecin specialtyiste",
         "medecin specialty"

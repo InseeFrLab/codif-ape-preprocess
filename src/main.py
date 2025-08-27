@@ -39,7 +39,7 @@ def load_dataset(path):
     return io.download_data(path)
 
 
-def save_outputs(training_data, log_rules_applied_training_data, naf_tag, methods):
+def save_outputs(training_data, log_rules_applied_training_data, naf_tag, methods, add_suffix=False):
     """
     Save training data and logs on S3 with dynamic file names based on methods.
 
@@ -58,8 +58,8 @@ def save_outputs(training_data, log_rules_applied_training_data, naf_tag, method
 
     suffix = file.get_suffix(methods)
 
-    data_path = f"{base_data_name}{suffix}{ext_data}"
-    log_path = f"{base_log_name}{suffix}{ext_log}"
+    data_path = f"{base_data_name}{suffix}{ext_data}" if add_suffix else f"{base_data_name}{ext_data}"
+    log_path = f"{base_log_name}{suffix}{ext_log}" if add_suffix else f"{base_log_name}{ext_log}"
 
     print(f"💾 Saving outputs with suffix '{suffix}':")
     print(f"  - data -> {data_path}")

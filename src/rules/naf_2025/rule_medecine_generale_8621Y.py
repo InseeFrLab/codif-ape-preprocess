@@ -27,7 +27,6 @@ def medecine_generale_rule_8621Y_2025(df: pd.DataFrame,
                                       methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "medecin",
         "activite de medecine generale",
         "medecin generaliste",
         "medecin general"

@@ -27,8 +27,16 @@ def pet_breeding_0148J_2025(df: pd.DataFrame,
                             methods_params=None) -> pd.DataFrame:
 
     terms = [
-        "energiticien",
-        "energeticienne",
+        "elevage d autres animaux canin",
+        "elevage d autres animaux chats",
+        "elevage d autres animaux canins",
+        "elevage d autres animaux chat",
+        "elevage d autres animaux felin",
+        "elevage d autres animaux chien",
+        "elevage d autres animaux chiot",
+        "elevage d autres animaux chiens",
+        "elevage d autres animaux chiots",
+        "elevage d animaux domestiques"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

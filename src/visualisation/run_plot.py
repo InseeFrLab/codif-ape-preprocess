@@ -32,7 +32,7 @@ from visualisation.plots import (
 
 if __name__ == "__main__":
     print("📊 Distribution of all before/after")
-    plot_distribution_before_after()
+    # plot_distribution_before_after()
 
     print("📊 Comparaison par code et règle")
     plot_rule_report_comparison(methods=("regex", "fuzzy", "similarity"))

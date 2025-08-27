@@ -28,7 +28,7 @@ def it_programming_rule_6210Y_2025(df: pd.DataFrame,
 
     terms = [
         "conception de site web developpement vente de solutions informatiques",
-        "la creation et l hebergement de sites internet",
+        "la creation de sites internet",
         "programmeur",
         "web master"
     ]

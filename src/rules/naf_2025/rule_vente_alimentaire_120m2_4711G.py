@@ -29,9 +29,7 @@ def retailing_food_120m2_4711G_2025(df: pd.DataFrame,
     terms = [
         "achat vente de produits alimentaires",
         "commerce de detail en magasin specialise et sur un site de vente en ligne de produits alimentaires et menagers",
-        "epicerie solidaire",
-        "livreur de repas",
-        "livreur uber eat"
+        "epicerie solidaire"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

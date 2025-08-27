@@ -1,5 +1,5 @@
 """
-    Assign NAF 2025 codes for reatiling of clothes.
+    Assign NAF 2025 codes for retailing of clothes.
 
     Matching configuration and mask logic are delegated to utils/rules.py
     for reusability. See:

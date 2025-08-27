@@ -4,8 +4,9 @@ URL_SIRENE4_NAF2025 = (
 20241027_sirene4_nace2025.parquet"
     )
 
-PREFIX = "s3://projet-ape/extractions/domain_specific_cleaned/"
-URL_OUTPUT_NAF2025 = PREFIX + "full_dataset_20241027_sirene4_nace2025.parquet"
-URL_REPORT_NAF2025 = PREFIX + "delta_report_20241027_sirene4_nace2025.parquet"
-URL_OUTPUT_NAFREV2 = PREFIX + "full_dataset_20241027_sirene4_nacerev2.parquet"
-URL_REPORT_NAFREV2 = PREFIX + "delta_report_20241027_sirene4_nacerev2.parquet"
+PREFIX = "s3://projet-ape/data/"
+DIR = "25032024_26082025"
+URL_OUTPUT_NAF2025 = PREFIX + DIR + "naf2025" + "raw_cleansed.parquet"
+URL_REPORT_NAF2025 = PREFIX + DIR + "naf2025" + "raw_cleansed_report.parquet"
+URL_OUTPUT_NAFREV2 = PREFIX + DIR + "nafrev2" + "raw_cleansed.parquet"
+URL_REPORT_NAFREV2 = PREFIX + DIR + "nafrev2" + "raw_cleansed_report.parquet"

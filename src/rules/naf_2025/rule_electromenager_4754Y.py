@@ -18,7 +18,8 @@ from constants.targets import NACE_REV2_1_COLUMN
 
 @rule(
     name="household_appliances_assignment_2025",
-    tags=["naf_2025"],
+    # Règles à ne pas prendre
+    tags=["bin"],
     description="Règle électro-ménager version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)

@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from core.decorators import rule, track_changes
-from utils.rules import build_matcher_kwargs, build_match_mask
+from utils.rules import build_matcher_kwargs, build_match_mask, filter_methods
 from constants.inputs import TEXTUAL_INPUTS_CLEANED
 from constants.targets import NACE_REV2_1_COLUMN
 
@@ -26,6 +26,7 @@ def pro_bloggers_rule_6039Y_2025(df: pd.DataFrame,
                                  methods=None,
                                  methods_params=None) -> pd.DataFrame:
 
+    methods = filter_methods(methods, exclude=["fuzzy"])
     terms = [
         "blogueur professionnel",
         "blogueurs professionnels"

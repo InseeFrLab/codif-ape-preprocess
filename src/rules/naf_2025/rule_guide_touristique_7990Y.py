@@ -23,8 +23,8 @@ from constants.targets import NACE_REV2_1_COLUMN
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
 def touristic_guides_rule_7990Y_2025(df: pd.DataFrame,
-                                        methods=None,
-                                        methods_params=None) -> pd.DataFrame:
+                                     methods=None,
+                                     methods_params=None) -> pd.DataFrame:
 
     terms = [
         "guide interprete",
