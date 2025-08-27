@@ -71,9 +71,9 @@ def save_outputs(training_data, log_rules_applied_training_data, naf_tag, method
     print("✅ All done!")
 
 
-def main(input_data, methods, naf_tag="naf_2025", dry_run=False, show=False):
+def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
     if input_data == "default":
-        input_data = URL_SIRENE4_NAFREV2 if naf_tag == 'naf_rev2' else URL_SIRENE4_NAF2025
+        input_data = URL_SIRENE4_NAFREV2 if naf_tag == 'naf_rev2' else input_data
 
     df = load_dataset(input_data)
     df = clean_dataset(df,
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--naf_version",
         type=str,
-        default="naf_2025",
+        default="default",
         help="Which NAF ruleset to apply (default: naf_2025)",
     )
     parser.add_argument(
