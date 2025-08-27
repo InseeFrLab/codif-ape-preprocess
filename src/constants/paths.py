@@ -1,3 +1,6 @@
+PREFIX = "s3://projet-ape/data/"
+FOLDER = "25032024_26082025"
+
 URL_SIRENE4_NAFREV2 = PREFIX + FOLDER + "nafrev2" + "raw.parquet"
 URL_SIRENE4_NAF2025 = PREFIX + FOLDER + "naf2025" + "raw.parquet"
 
