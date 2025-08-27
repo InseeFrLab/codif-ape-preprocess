@@ -65,6 +65,6 @@ def lmnp_rule_rev2(df: pd.DataFrame, methods=None, methods_params=None) -> pd.Da
 
     df[NACE_REV2_COLUMN] = np.where(match_mask & df["liasse_type"].isin(["E", "L", "S", "X", "I"])
                                     | df["liasse_type"].isnull(),
-                                    "6820B", df[NACE_REV2_COLUMN])
+                                    "6820A", df[NACE_REV2_COLUMN])
 
     return df, match_mask
