@@ -26,3 +26,8 @@ dependencies = [
     "tqdm>=4.67.1",
     "unidecode>=1.4.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+]
