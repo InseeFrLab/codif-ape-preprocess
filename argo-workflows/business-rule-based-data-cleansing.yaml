@@ -15,8 +15,6 @@ spec:
       - name: params-conf-list
         value: '[
           {"NAF": "naf_rev2", "METHODS": "regex fuzzy similarity"},
-          {"NAF": "naf_2025", "METHODS": "fuzzy similarity"},
-          {"NAF": "naf_2025", "METHODS": "regex similarity"},
           {"NAF": "naf_2025", "METHODS": "regex fuzzy similarity"}
           ]'
 

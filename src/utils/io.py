@@ -107,7 +107,7 @@ def download_data(path: str, in_local_dir: bool = True) -> pd.DataFrame:
     elif path.endswith(".csv"):
         return download_csv(path)
     else:
-        raise ValueError("Only .parquet or .csv files are supported")
+        raise ValueError(f"Only .parquet or .csv files are supported. Incorrect path: {path}")
 
 
 def upload_data(df: pd.DataFrame, path: str):
