@@ -1,0 +1,15 @@
+from core.registry import register_rule
+from core.audit import track_new
+import pandas as pd
+
+@register_rule(name="{{ name }}", tags={{ tags }}, description="{{ description }}")
+@track_new()
+def rule_{{ name }}(df: pd.DataFrame):
+    new_row = {
+{% for col, val in new_row.items() %}
+        "{{ col }}": "{{ val }}",
+{% endfor %}
+    }
+    if not ((df[list(new_row.keys())] == pd.Series(new_row)).all(axis=1)).any():
+        df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+    return df
