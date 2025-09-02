@@ -1,0 +1,5 @@
+revision: "NAF2008"
+_target_: src.pre_tokenization.ngram_tokenizer.ngram_pretokenize
+test_size: 0.2
+remove_stop_words: True
+stem: True
