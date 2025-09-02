@@ -1,6 +1,7 @@
 PREFIX = "s3://projet-ape/data/"
 FOLDER = "08112022_27102024/"
 ARTIFACTS_FOLDER = "artifacts/data_cleaning/"
+PREPROCESSED_FOLDER = "preprocessed/"
 
 URL_SIRENE4_NAFREV2 = PREFIX + FOLDER + "naf2008/" + "raw.parquet"
 URL_SIRENE4_NAF2025 = PREFIX + FOLDER + "naf2025/" + "raw.parquet"

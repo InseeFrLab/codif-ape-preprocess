@@ -20,6 +20,9 @@ from src.pre_tokenization.ngram_tokenizer.utils import (
     clean_text_feature,
 )
 from src.utils.io import download_parquet, get_filesystem
+from src.utils.logger import get_logger
+
+logger = get_logger(name=__name__)
 
 
 def ngram_pretokenize(
@@ -34,6 +37,7 @@ def ngram_pretokenize(
 
     fs = get_filesystem()
 
+    logger.info(f"🔎 Reading raw cleansed data from {path_raw_cleansed}")
     df = pq.read_table(path_raw_cleansed, filesystem=fs).to_pandas()
 
     df = df.rename(columns=COL_RENAMING)
@@ -106,5 +110,8 @@ def ngram_pretokenize(
     df_train = pd.concat([X_train, y_train], axis=1)
     df_train = pd.concat([df_train, df_naf], axis=0)
     df_val = pd.concat([X_val, y_val], axis=1)
+
+    logger.info("✅ Data split into train, val and test sets.")
+    logger.info(f"df_train looks like: {df_train.head()}")
 
     return df_train, df_val, df_test
