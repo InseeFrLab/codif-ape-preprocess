@@ -6,6 +6,7 @@ import pyarrow as pa
 import pyarrow.dataset as ds
 import pyarrow.parquet as pq
 import s3fs
+import yaml
 
 
 def get_filesystem():
@@ -99,6 +100,16 @@ def upload_json(dict_like, path: str):
     fs = get_filesystem() if is_s3_path(path) else None
     with fs.open(path, mode="w") as f:
         json.dump(dict_like, f, indent=3)
+
+
+def upload_yaml(dict_like, path: str):
+    """
+    Save a dictionary or list as a YAML file to local or S3.
+    """
+    fs = get_filesystem() if is_s3_path(path) else None
+
+    with fs.open(path, mode="w") as f:
+        yaml.dump(dict_like, f, indent=3)
 
 
 def download_data(path: str, in_local_dir: bool = True) -> pd.DataFrame:
