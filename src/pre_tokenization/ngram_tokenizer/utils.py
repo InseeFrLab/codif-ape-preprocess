@@ -2,6 +2,7 @@
 PytorchPreprocessor class.
 """
 
+import re
 import string
 from typing import List, Optional
 
@@ -9,43 +10,20 @@ import nltk
 import numpy as np
 import pandas as pd
 import unidecode
-from mappings import SURFACE_COLS, mappings
+from joblib import Parallel, delayed
 from nltk.corpus import stopwords as ntlk_stopwords
 from nltk.stem.snowball import SnowballStemmer
+from tqdm import tqdm
 
-nltk.data.path.append("nltk_data/")
+from src.constants import SURFACE_COLS, URL_MAPPINGS
+from src.utils.io import download_json
 
+mappings = download_json(URL_MAPPINGS)
+# Make sure stopwords are available
+nltk.download("stopwords", quiet=True)
 
-def clean_textual_features(
-    df: pd.DataFrame,
-    textual_features: List[str],
-) -> pd.DataFrame:
-    """
-    Cleans the other textual features for pd.DataFrame `df`.
-    Replacing NaNs by empty string concatenating those additional textual columns to the main description.
-
-    Args:
-        df (pd.DataFrame): DataFrame.
-        textual_features (List[str]): Names of the other textual features.
-        method (str): The method when the function is used (training or
-            evaluation).
-        recase (bool): if True, try applying standard casing.
-
-    Returns:
-        df (pd.DataFrame): DataFrame.
-    """
-    for textual_feature in textual_features:
-        df[textual_feature] = clean_text_feature(
-            df[textual_feature], remove_stop_words=True
-        )
-        df[textual_feature] = df[textual_feature].str.replace(
-            "nan", ""
-        )  # empty string instead of "nan" (nothing will be added to the libelle)
-        df[textual_feature] = df[textual_feature].apply(
-            lambda x: " " + x if x != "" else x
-        )  # add a space before the text because it will be concatenated to the libelle
-
-    return df
+# Preload into a global constant (thread-/process-safe)
+FRENCH_STOPWORDS = set(ntlk_stopwords.words("french")) | set(string.ascii_lowercase)
 
 
 def clean_categorical_features(
@@ -85,56 +63,102 @@ def clean_categorical_features(
     return df
 
 
-def clean_text_feature(text: list[str], remove_stop_words=True):
+def _build_text_preprocessor(text, remove_stop_words=False, stem=False, n_jobs=None):
+    stemmer = SnowballStemmer("french") if stem else None
+    if remove_stop_words:
+        stopwords = FRENCH_STOPWORDS
+    else:
+        stopwords = set()
+
+    def preprocess(doc: str) -> str:
+        # 1. Remove accents (é -> e, ç -> c, etc.)
+        doc = unidecode.unidecode(doc)
+        # 2. Lowercase
+        doc = doc.lower()
+        # 3. Remove punctuation, keep letters (a-z), numbers (0-9), and French chars (àâçéèêëîïôûùüÿñæœ), plus spaces
+        doc = re.sub(r"[^a-z0-9àâçéèêëîïôûùüÿñæœ\s]", " ", doc)
+        # 4. Collapse multiple spaces into one and strip leading/trailing spaces
+        doc = re.sub(r"\s+", " ", doc).strip()
+        # 5. Tokenize
+        words = doc.split()
+        # 6. Remove one-letter tokens (e.g., stray letters)
+        words = [w for w in words if len(w) > 1]
+        # 7. Stopword removal
+        if remove_stop_words:
+            words = [w for w in words if w not in stopwords]
+        # 8. Stemming
+        if stem:
+            words = [stemmer.stem(w) for w in words]
+        return " ".join(words)
+
+    return preprocess
+
+
+def clean_text_feature(
+    text: list[str],
+    remove_stop_words: bool = False,
+    stem: bool = False,
+    n_jobs: int = -1,
+    threshold: int = 50_000,
+) -> list[str]:
     """
-    Cleans a text feature.
+    Hybrid text cleaning for FastText.
+    Uses list comprehension for small corpora,
+    joblib.Parallel for large corpora.
 
     Args:
-        text (list[str]): List of text descriptions.
+        text (list[str]): List of documents.
         remove_stop_words (bool): If True, remove stopwords.
+        stem (bool): If True, apply stemming.
+        n_jobs (int): Number of CPU cores (-1 = all).
+        threshold (int): Switch to parallel if len(text) >= threshold.
 
     Returns:
-        list[str]: List of cleaned text descriptions.
-
+        list[str]: Cleaned text.
     """
-    # Define stopwords and stemmer
-    stopwords = tuple(ntlk_stopwords.words("french")) + tuple(string.ascii_lowercase)
-    stemmer = SnowballStemmer(language="french")
+    preprocess = _build_text_preprocessor(remove_stop_words, stem)
 
-    # Remove of accented characters
-    text = np.vectorize(unidecode.unidecode)(np.array(text))
-
-    # To lowercase
-    text = np.char.lower(text)
-
-    # Remove one letter words
-    def mylambda(x):
-        return " ".join([w for w in x.split() if len(w) > 1])
-
-    text = np.vectorize(mylambda)(text)
-
-    # Remove duplicate words and stopwords in texts
-    # Stem words
-    libs_token = [lib.split() for lib in text.tolist()]
-    libs_token = [
-        sorted(set(libs_token[i]), key=libs_token[i].index)
-        for i in range(len(libs_token))
-    ]
-    if remove_stop_words:
-        text = [
-            " ".join(
-                [stemmer.stem(word) for word in libs_token[i] if word not in stopwords]
-            )
-            for i in range(len(libs_token))
-        ]
+    if len(text) < threshold:
+        # Small corpus → fastest with list comprehension
+        return [preprocess(doc) for doc in tqdm(text, desc="Preprocessing")]
     else:
-        text = [
-            " ".join([stemmer.stem(word) for word in libs_token[i]])
-            for i in range(len(libs_token))
-        ]
+        # Large corpus → parallelize across CPUs
+        return Parallel(n_jobs=n_jobs)(
+            delayed(preprocess)(doc) for doc in tqdm(text, desc="Preprocessing")
+        )
 
-    # Return clean DataFrame
-    return text
+
+def clean_df_naf(
+    df_naf, remove_stop_words, stem, text_feature, Y, categorical_features
+):
+    """
+    Cleans the NAF DataFrame for concatenation with df_train.
+
+    Args:
+        df_naf (pd.DataFrame): NAF DataFrame.
+        remove_stop_words (bool): If True, remove stopwords.
+        stem (bool): If True, apply stemming.
+        text_feature (str): Name of the text feature.
+        Y (str): Name of the variable to predict.
+        categorical_features (List[str]): Names of the categorical features.
+    Returns:
+        df_naf (pd.DataFrame): Cleaned NAF DataFrame.
+    """
+
+    df_naf["LIB_NIV5_cleaned"] = clean_text_feature(
+        df_naf["LIB_NIV5"], remove_stop_words=remove_stop_words, stem=stem
+    )
+    df_naf = df_naf[["APE_NIV5", "LIB_NIV5_cleaned"]]
+    df_naf = df_naf.rename(columns={"LIB_NIV5_cleaned": text_feature, "APE_NIV5": Y})
+    for cat_feat in categorical_features:
+        if cat_feat != "SRF":
+            nan_value = mappings[cat_feat]["NaN"]
+        else:
+            nan_value = 0
+        df_naf[cat_feat] = pd.Series([nan_value] * len(df_naf))
+    df_naf[Y] = df_naf[Y].apply(mappings[Y].get)
+
+    return df_naf
 
 
 def categorize_surface(
