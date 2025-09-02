@@ -1,6 +1,6 @@
+import json
 import os
 
-import json
 import pandas as pd
 import pyarrow as pa
 import pyarrow.dataset as ds
@@ -24,8 +24,9 @@ def is_s3_path(path: str) -> bool:
     return path.startswith("s3://")
 
 
-def download_parquet(path: str, use_arrow: bool = False,
-                     in_local_dir: bool = False) -> pd.DataFrame:
+def download_parquet(
+    path: str, use_arrow: bool = False, in_local_dir: bool = False
+) -> pd.DataFrame:
     """
     Load Parquet from local or S3 (based on path), using pandas or Arrow.
     """
@@ -91,6 +92,15 @@ def download_json(path: str):
             return pd.json_normalize(json.load(f))
 
 
+def upload_json(dict_like, path: str):
+    """
+    Save a dictionary or list as a JSON file to local or S3.
+    """
+    fs = get_filesystem() if is_s3_path(path) else None
+    with fs.open(path, mode="w") as f:
+        json.dump(dict_like, f, indent=3)
+
+
 def download_data(path: str, in_local_dir: bool = True) -> pd.DataFrame:
     """
     Load a Parquet or CSV file from local disk or S3.
@@ -107,7 +117,9 @@ def download_data(path: str, in_local_dir: bool = True) -> pd.DataFrame:
     elif path.endswith(".csv"):
         return download_csv(path)
     else:
-        raise ValueError(f"Only .parquet or .csv files are supported. Incorrect path: {path}")
+        raise ValueError(
+            f"Only .parquet or .csv files are supported. Incorrect path: {path}"
+        )
 
 
 def upload_data(df: pd.DataFrame, path: str):
