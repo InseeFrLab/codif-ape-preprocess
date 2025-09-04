@@ -12,7 +12,13 @@ logger = get_logger(name=__name__)
 def main(cfg):
     # Save config file
     cfg_yaml = OmegaConf.to_yaml(cfg)
-    save_path = PREFIX + FOLDER + f"{cfg.revision.lower()}/" + PREPROCESSED_FOLDER
+    save_path = (
+        PREFIX
+        + FOLDER
+        + f"{cfg.revision.lower()}/"
+        + PREPROCESSED_FOLDER
+        + f"{cfg.name}/"
+    )
     cfg_save_path = save_path + "artifact/hydra_config.yaml"
     upload_yaml(cfg_yaml, cfg_save_path)
     logger.info(f"💾 Saved config file to {cfg_save_path}")
