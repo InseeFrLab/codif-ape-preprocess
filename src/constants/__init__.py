@@ -14,6 +14,12 @@ from .col_renaming import (
     TEXTUAL_FEATURES as TEXTUAL_FEATURES,
 )
 from .paths import (
+    FOLDER as FOLDER,
+)
+from .paths import (
+    PREFIX as PREFIX,
+)
+from .paths import (
     URL_DF_NAF2008 as URL_DF_NAF2008,
 )
 from .paths import (

@@ -128,9 +128,7 @@ def clean_text_feature(
         )
 
 
-def clean_df_naf(
-    df_naf, remove_stop_words, stem, text_feature, Y, categorical_features
-):
+def clean_df_naf(df_naf, text_feature, Y, categorical_features):
     """
     Cleans the NAF DataFrame for concatenation with df_train.
 
@@ -145,18 +143,16 @@ def clean_df_naf(
         df_naf (pd.DataFrame): Cleaned NAF DataFrame.
     """
 
-    df_naf["LIB_NIV5_cleaned"] = clean_text_feature(
-        df_naf["LIB_NIV5"], remove_stop_words=remove_stop_words, stem=stem
-    )
-    df_naf = df_naf[["APE_NIV5", "LIB_NIV5_cleaned"]]
-    df_naf = df_naf.rename(columns={"LIB_NIV5_cleaned": text_feature, "APE_NIV5": Y})
+    # df_naf["LIB_NIV5_cleaned"] = clean_text_feature(
+    #     df_naf["LIB_NIV5"], remove_stop_words=remove_stop_words, stem=stem
+    # )
+    df_naf = df_naf[["APE_NIV5", "LIB_NIV5"]]
+    df_naf = df_naf.rename(columns={"LIB_NIV5": text_feature, "APE_NIV5": Y})
     for cat_feat in categorical_features:
-        if cat_feat != "SRF":
-            nan_value = mappings[cat_feat]["NaN"]
+        if cat_feat not in SURFACE_COLS:
+            df_naf[cat_feat] = pd.Series(["NaN"] * len(df_naf))
         else:
-            nan_value = 0
-        df_naf[cat_feat] = pd.Series([nan_value] * len(df_naf))
-    df_naf[Y] = df_naf[Y].apply(mappings[Y].get)
+            df_naf[cat_feat] = pd.Series([0.0] * len(df_naf))
 
     return df_naf
 
