@@ -2,7 +2,7 @@ import hydra
 from omegaconf import OmegaConf
 
 from src.constants.paths import FOLDER, PREFIX, PREPROCESSED_FOLDER
-from src.utils.io import upload_parquet, upload_yaml
+from src.utils.io import update_latest_path, upload_parquet, upload_yaml
 from src.utils.logger import get_logger
 
 logger = get_logger(name=__name__)
@@ -29,6 +29,12 @@ def main(cfg):
     upload_parquet(df_train, save_path + "df_train.parquet")
     upload_parquet(df_val, save_path + "df_val.parquet")
     upload_parquet(df_test, save_path + "df_test.parquet")
+
+    # Update latest path for preocessed data
+    update_latest_path(
+        cfg.revision.upper(),
+        PREFIX + FOLDER + f"{cfg.revision.lower()}/" + PREPROCESSED_FOLDER,
+    )
 
 
 if __name__ == "__main__":
