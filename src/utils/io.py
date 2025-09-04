@@ -8,6 +8,11 @@ import pyarrow.parquet as pq
 import s3fs
 import yaml
 
+from src.constants.paths import URL_LATEST_PROCESSED_PATH
+from src.utils.logger import get_logger
+
+logger = get_logger(name=__name__)
+
 
 def get_filesystem():
     """
@@ -49,6 +54,36 @@ def upload_parquet(df: pd.DataFrame, path: str):
     """
     fs = get_filesystem() if is_s3_path(path) else None
     return df.to_parquet(path, index=False, filesystem=fs)
+
+
+def update_latest_path(key: str, new_path: str):
+    """Update JSON in S3 with a new path for the given key (NAF2008 or NAF2025).
+    Only if new_path is different from the last one.
+    """
+
+    fs = get_filesystem()
+
+    # Load existing dict if it exists
+    if fs.exists(URL_LATEST_PROCESSED_PATH):
+        with fs.open(URL_LATEST_PROCESSED_PATH, "r") as f:
+            data = json.load(f)
+    else:
+        data = {}
+
+    # Ensure key exists with a list
+    if key not in data:
+        data[key] = []
+
+    # Append only if new_path is different from the last one (or if list is empty)
+    if not data[key] or data[key][-1] != new_path:
+        data[key].append(new_path)
+        logger.info(f"Added {new_path} for {key} in {URL_LATEST_PROCESSED_PATH}")
+    else:
+        logger.info(f"{new_path} is already the latest path for {key}, not adding.")
+
+    # Save back to S3
+    with fs.open(URL_LATEST_PROCESSED_PATH, "w") as f:
+        json.dump(data, f, indent=2)
 
 
 def download_csv(path: str) -> pd.DataFrame:

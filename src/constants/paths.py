@@ -20,3 +20,5 @@ URL_DF_NAF2025 = PREFIX + "naf2025_extended.parquet"
 URL_DF_CJ = PREFIX + "cj.json"
 
 URL_MAPPINGS = PREFIX + "mappings.json"
+
+URL_LATEST_PROCESSED_PATH = PREFIX + "latest_processed_data.json"
