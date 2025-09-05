@@ -20,4 +20,4 @@ URL_DF_CJ = PREFIX + "cj.json"
 
 URL_MAPPINGS = PREFIX + "mappings.json"
 
-URL_LATEST_PROCESSED_PATH = PREFIX + "latest_processed_data.json"
+URL_SHARED_CONSTANTS = PREFIX + "shared_constants.json"

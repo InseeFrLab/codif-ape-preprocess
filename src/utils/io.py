@@ -8,7 +8,17 @@ import pyarrow.parquet as pq
 import s3fs
 import yaml
 
-from src.constants.paths import URL_LATEST_PROCESSED_PATH
+from src.constants import (
+    CATEGORICAL_FEATURES,
+    COL_RENAMING,
+    NACE_REV2_1_COLUMN,
+    NACE_REV2_COLUMN,
+    SURFACE_COLS,
+    TEXT_FEATURE,
+    TEXTUAL_FEATURES,
+    URL_MAPPINGS,
+    URL_SHARED_CONSTANTS,
+)
 from src.utils.logger import get_logger
 
 logger = get_logger(name=__name__)
@@ -56,7 +66,7 @@ def upload_parquet(df: pd.DataFrame, path: str):
     return df.to_parquet(path, index=False, filesystem=fs)
 
 
-def update_latest_path(key: str, new_path: str):
+def update_shared_constants(key: str, new_path: str):
     """Update JSON in S3 with a new path for the given key (NAF2008 or NAF2025).
     Only if new_path is different from the last one.
     """
@@ -64,8 +74,8 @@ def update_latest_path(key: str, new_path: str):
     fs = get_filesystem()
 
     # Load existing dict if it exists
-    if fs.exists(URL_LATEST_PROCESSED_PATH):
-        with fs.open(URL_LATEST_PROCESSED_PATH, "r") as f:
+    if fs.exists(URL_SHARED_CONSTANTS):
+        with fs.open(URL_SHARED_CONSTANTS, "r") as f:
             data = json.load(f)
     else:
         data = {}
@@ -77,12 +87,21 @@ def update_latest_path(key: str, new_path: str):
     # Append only if new_path is different from the last one (or if list is empty)
     if not data[key] or data[key][-1] != new_path:
         data[key].append(new_path)
-        logger.info(f"Added {new_path} for {key} in {URL_LATEST_PROCESSED_PATH}")
+        logger.info(f"Added {new_path} for {key} in {URL_SHARED_CONSTANTS}")
     else:
         logger.info(f"{new_path} is already the latest path for {key}, not adding.")
 
+    data["URL_MAPPINGS"] = URL_MAPPINGS
+    data["TEXT_FEATURE"] = TEXT_FEATURE
+    data["TEXTUAL_FEATURES"] = TEXTUAL_FEATURES
+    data["CATEGORICAL_FEATURES"] = CATEGORICAL_FEATURES
+    data["SURFACE_COLS"] = SURFACE_COLS
+    data["COL_RENAMING"] = COL_RENAMING
+    data["NAF2008_TARGET"] = NACE_REV2_COLUMN
+    data["NAF2025_TARGET"] = NACE_REV2_1_COLUMN
+
     # Save back to S3
-    with fs.open(URL_LATEST_PROCESSED_PATH, "w") as f:
+    with fs.open(URL_SHARED_CONSTANTS, "w") as f:
         json.dump(data, f, indent=2)
 
 
