@@ -15,7 +15,7 @@ from src.constants import (
     URL_OUTPUT_NAF2025,
     URL_OUTPUT_NAFREV2,
 )
-from src.pre_tokenization.ngram_tokenizer.utils import (
+from src.preprocessing.utils import (
     clean_df_naf,
 )
 from src.utils.io import download_parquet, get_filesystem
