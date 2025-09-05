@@ -34,6 +34,9 @@ from .paths import (
 from .paths import (
     URL_OUTPUT_NAFREV2 as URL_OUTPUT_NAFREV2,
 )
+from .paths import (
+    URL_SHARED_CONSTANTS as URL_SHARED_CONSTANTS,
+)
 from .targets import (
     NACE_REV2_1_COLUMN as NACE_REV2_1_COLUMN,
 )
