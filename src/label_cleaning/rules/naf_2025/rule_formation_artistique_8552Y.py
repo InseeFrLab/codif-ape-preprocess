@@ -27,8 +27,8 @@ def art_teaching_rule_8552Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "accompagner developper et valoriser la creation artistique multi techniques\
-            autour des arts visuels par la mise en place d ateliers",
+        ("accompagner developper et valoriser la creation artistique "
+         "multi techniques autour des arts visuels par la mise en place d ateliers"),
         "animation d atelier artistique et pedagogique pour tout publiques",
         "enseignement des arts du spectacle vivant",
         "formation au chant choral pratique en atelier et en spectacle",

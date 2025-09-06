@@ -32,10 +32,14 @@ def tourists_driver_rule_4933H_2025(
         "conducteur de voiture de tourisme avec chauffeur vtc",
         "conducteur de voiture de transport avec chauffeur",
         "location de voiture avec chauffeur",
+        "location privee de voiture avec chauffeur",
         "voiture de tourisme avec chauffeur",
         "voiture de transport avec chauffeur",
         "vehicule de tourisme avec chauffeur",
+        "autre transport de personnes sur demande par véhicule avec chauffeur",
         "vtc",
+        ("voiture avec chauffeur le trajet et "
+         "les conditions tarifaires etant fixees avant la course"),
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

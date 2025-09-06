@@ -31,9 +31,9 @@ def sheep_breeding_rule_0145Y_2025(
         "elevage ovin",
         "elevage ovins",
         "elvage d ovins",
-        ("activite de elevage ovins en prairies"
-         "seconde activite d elevage equin"
-         "preparation et entrainement des equides domestiques"
+        ("activite de elevage ovins en prairies "
+         "seconde activite d elevage equin "
+         "preparation et entrainement des equides domestiques "
          "en vue de leur exploitation secondaire"),
     ]
 

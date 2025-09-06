@@ -32,7 +32,7 @@ def engineering_consulting_rule_7112Y_2025(
         "activite de conseil et metreur de construction batiment",
         "activite de conseil et metreur de construction batiment travaux publics",
         "activite d ingenieurie et de conseil technique connexe",
-        ("etude faisabilite realisation de visuel conseil"
+        ("etude faisabilite realisation de visuel conseil "
          "en choix des materiaux estimation des travaux lors d une renovation immobiliere"),
     ]
 

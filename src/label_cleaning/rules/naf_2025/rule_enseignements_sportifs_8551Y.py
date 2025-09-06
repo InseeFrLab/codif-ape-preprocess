@@ -32,8 +32,8 @@ def sport_instruction_rule_8551Y_2025(
         "coaching sportif",
         "moniteur d equitation",
         "monitateur equitationmoniteur de ski",
-        ("service de coaching conseil sportifs et nutritionnels"
-         "individuel ou collectif vente de programmes sportifs"
+        ("service de coaching conseil sportifs et nutritionnels "
+         "individuel ou collectif vente de programmes sportifs "
          "et alimentaires personnalises"),
     ]
 

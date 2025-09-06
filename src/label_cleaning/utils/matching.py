@@ -51,7 +51,7 @@ def similarity_mask(
     """Mask where max cosine similarity to any term ≥ threshold."""
     model = _get_model(model_name)
     texts = series.fillna("").tolist()
-    term_vecs = normalize(model.encode(terms, convert_to_numpy=True), axis=1)
-    text_vecs = normalize(model.encode(texts, convert_to_numpy=True), axis=1)
+    term_vecs = normalize(model.encode(terms, convert_to_numpy=True, batch_size=4096), axis=1)
+    text_vecs = normalize(model.encode(texts, convert_to_numpy=True, batch_size=4096), axis=1)
     sims = (text_vecs @ term_vecs.T).max(axis=1)
     return pd.Series(sims >= threshold, index=series.index)

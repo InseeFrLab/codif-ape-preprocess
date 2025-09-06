@@ -32,7 +32,8 @@ def graphic_designing_rule_7412Y_2025(
         "design graphique",
         "designer graphique",
         "graphisme",
-        "graphistegraphiste conception de supports",
+        "graphiste",
+        "graphiste conception de supports",
         "infographiste",
         "web designer",
     ]

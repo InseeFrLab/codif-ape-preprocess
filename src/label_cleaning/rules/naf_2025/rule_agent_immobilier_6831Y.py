@@ -33,7 +33,7 @@ def real_estate_agent_rule_6831Y_2025(
         "mandataire en immobilier",
         "mandataire immobilier",
         "negociateur immobilier independant",
-        ("conseil et evaluation en rapport avec l achat la vente"
+        ("conseil et evaluation en rapport avec l achat la vente "
          "la location de biens immobiliers pour le compte de tiers"),
     ]
 

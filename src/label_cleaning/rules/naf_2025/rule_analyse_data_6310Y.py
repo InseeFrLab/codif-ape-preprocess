@@ -31,8 +31,8 @@ def data_analysis_rule_6310Y_2025(
         "data science",
         "infrastructure informatique traitement de donnees hebergement et activites connexes",
         "analyse de donnees",
-        ("prestation de services en analyse de donnees data science"
-         "informatique statistique realisation d etudes developpement"
+        ("prestation de services en analyse de donnees data science "
+         "informatique statistique realisation d etudes developpement "
          "de code activites de recherche"),
     ]
 
