@@ -1,5 +1,5 @@
 import pandas as pd
-from matching.multi_matcher import MultiMatcher
+from src.label_cleaning.matching.multi_matcher import MultiMatcher
 
 
 def merge_method_params(methods, methods_params, terms):

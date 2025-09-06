@@ -39,9 +39,9 @@ import plotly.graph_objects as go
 from matplotlib_venn import venn2
 from plotly.subplots import make_subplots
 
-from constants.paths import URL_OUTPUT_NAF2025, URL_REPORT_NAF2025, URL_SIRENE4_NAF2025
-from constants.targets import NACE_REV2_1_COLUMN
-from utils.io import download_data
+from src.utils.io import download_data
+from src.constants.paths import URL_OUTPUT_NAF2025, URL_REPORT_NAF2025, URL_SIRENE4_NAF2025
+from src.constants.targets import NACE_REV2_1_COLUMN
 
 
 def plot_distribution_before_after(
@@ -209,7 +209,8 @@ def plot_methods_overlap(
     base_report_path : str
         Path to the base report parquet file.
     methods : tuple of str
-        Names of methods to compare. The function will look for files base_report_path suffixed by _{method}.parquet
+        Names of methods to compare.
+        The function will look for files base_report_path suffixed by _{method}.parquet
     target_column : str
         Name of the column containing the labels to compare (e.g., "libelle").
     """

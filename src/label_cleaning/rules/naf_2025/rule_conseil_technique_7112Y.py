@@ -9,11 +9,12 @@ for reusability. See:
 
 import numpy as np
 import pandas as pd
-from core.decorators import rule, track_changes
 
-from constants.inputs import TEXTUAL_INPUTS_CLEANED
-from constants.targets import NACE_REV2_1_COLUMN
-from utils.rules import build_match_mask, build_matcher_kwargs
+from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
+from src.constants.targets import NACE_REV2_1_COLUMN
+
+from src.label_cleaning.core.decorators import rule, track_changes
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
 
 
 @rule(
@@ -26,11 +27,13 @@ def engineering_consulting_rule_7112Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "etude faisabilite realisation de visuel conseil en choix des materiaux estimation des travaux lors d une renovation immobiliere",
         "ingenieur conseil",
         "ingenieur expert",
         "activite de conseil et metreur de construction batiment",
+        "activite de conseil et metreur de construction batiment travaux publics",
         "activite d ingenieurie et de conseil technique connexe",
+        ("etude faisabilite realisation de visuel conseil"
+         "en choix des materiaux estimation des travaux lors d une renovation immobiliere"),
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

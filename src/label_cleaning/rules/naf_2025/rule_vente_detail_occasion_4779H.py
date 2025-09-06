@@ -1,5 +1,5 @@
 """
-Assign NAF 2025 codes for package delivery.
+Assign NAF 2025 codes for retailing of second-hand goods.
 
 Matching configuration and mask logic are delegated to utils/rules.py
 for reusability. See:
@@ -18,21 +18,21 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="package_delivery_assignment_2025",
+    name="retailing_second_hand_goods_assignment_2025",
     tags=["naf_2025"],
-    description="Règle diététicien version NAF 2025",
+    description="Règle vente en ligne sans prédominence alimentaire version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def package_delivery_rule_5320G_2025(
+def retailing_second_hand_goods_4771Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "enlevement et livraison de marchandises non reglemente a velo",
-        "livraison de colis",
+        "achat revente sur internet de livres d occasion",
+        "achat vente de vinyles d'occasion en ligne",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "5320G", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "4779H", df[NACE_REV2_1_COLUMN])
     return df, match_mask

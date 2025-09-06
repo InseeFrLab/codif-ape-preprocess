@@ -9,11 +9,12 @@ for reusability. See:
 
 import numpy as np
 import pandas as pd
-from core.decorators import rule, track_changes
 
-from constants.inputs import TEXTUAL_INPUTS_CLEANED
-from constants.targets import NACE_REV2_1_COLUMN
-from utils.rules import build_match_mask, build_matcher_kwargs
+from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
+from src.constants.targets import NACE_REV2_1_COLUMN
+
+from src.label_cleaning.core.decorators import rule, track_changes
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -25,6 +26,7 @@ from utils.rules import build_match_mask, build_matcher_kwargs
 def it_programming_rule_6210Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "conception de site web developpement vente de solutions informatiques",
         "la creation de sites internet",

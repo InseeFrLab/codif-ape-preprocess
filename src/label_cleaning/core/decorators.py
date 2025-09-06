@@ -16,7 +16,7 @@ from functools import wraps
 
 import pandas as pd
 
-from core.registry import register_rule
+from .registry import register_rule
 
 
 def rule(name=None, tags=None, description=""):
@@ -80,6 +80,9 @@ def track_changes(column: str, extra_cols=None):
 
             df_out, mask = result
             after = df_out[column]
+
+            # ✅ Keep only rows where the value really changed
+            mask = mask & (before != after)
 
             journal = df_out.loc[mask, extra_cols].copy()
             journal["APE_BEFORE"] = before[mask]

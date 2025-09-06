@@ -15,7 +15,7 @@ spec:
       - name: params-conf-list
         value: '[
           {"NAF": "naf_rev2", "METHODS": "regex fuzzy similarity"},
-          {"NAF": "naf_2025", "METHODS": "regex fuzzy similarity"}
+          {"NAF": "naf_2025", "METHODS": "regex fuzzy similarity"},
           ]'
 
   templates:
@@ -57,9 +57,8 @@ spec:
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
             cd codif-ape-preprocess/
             uv sync
-            cd src/
-            uv run python -m tools.generate_cj_rules
-            uv run python main.py --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
+            uv run python -m src.label_cleaning.tools.generate_cj_rules
+            uv run python -m src.label_cleaning.main --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm

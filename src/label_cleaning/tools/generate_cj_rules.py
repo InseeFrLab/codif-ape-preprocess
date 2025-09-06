@@ -12,11 +12,11 @@ import pandas as pd
 from utils.io import download_json
 
 CJ_JSON_PATH = "s3://projet-ape/data/cj.json"
-OUTPUT_DIR = "./rules/naf_2025"
+OUTPUT_DIR = "./src/label_cleaning/rules/naf_2025"
 
 TEMPLATE_2025 = """\
 import pandas as pd
-from core.decorators import rule, track_new
+from .core.decorators import rule, track_new
 
 @rule(
     name="cj_{code}_record_2025",
@@ -36,7 +36,7 @@ def add_cj_{code}_modality_2025(df: pd.DataFrame,methods=None, methods_params=No
 
 TEMPLATE_REV2 = """\
 import pandas as pd
-from core.decorators import rule, track_new
+from .core.decorators import rule, track_new
 
 @rule(
     name="cj_{code}_record_rev2",

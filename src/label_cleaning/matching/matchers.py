@@ -14,7 +14,7 @@ Example:
 """
 
 # Import selected matchers amongst defined in utils.matching.__init__.py
-from utils.matching import fuzzy_mask, regex_mask, similarity_mask
+from src.label_cleaning.utils.matching import fuzzy_mask, regex_mask, similarity_mask
 
 MATCHERS = {
     "regex": regex_mask,

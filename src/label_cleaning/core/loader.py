@@ -12,7 +12,7 @@ Usage:
 import importlib
 import pkgutil
 
-import rules
+import src.label_cleaning.rules as rules
 
 
 def load_rules():

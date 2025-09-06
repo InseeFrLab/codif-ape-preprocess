@@ -1,6 +1,6 @@
 import pandas as pd
 
-from utils.cleaning import apply_replacements
+from ..utils.cleaning import apply_replacements
 
 
 def pattern_cleaning_pipeline(series: pd.Series, **pattern_steps) -> pd.Series:

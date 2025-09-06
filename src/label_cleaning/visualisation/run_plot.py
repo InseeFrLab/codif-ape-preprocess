@@ -20,7 +20,7 @@ Usage:
     (add --naf_version or other parameters if needed)
 """
 
-from visualisation.plots import (
+from .plots import (
     plot_heatmap_code_method,
     plot_methods_overlap,
     plot_methods_overlap_by_rule,

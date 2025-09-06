@@ -4,8 +4,8 @@ from rapidfuzz import fuzz
 from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import normalize
 
-from constants.models import SENTENCE_MODEL_NAME
-from constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
+from src.constants.models import SENTENCE_MODEL_NAME
+from src.constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
 
 # Set to None initially and loaded only once by _get_model()
 _MODEL: SentenceTransformer | None = None

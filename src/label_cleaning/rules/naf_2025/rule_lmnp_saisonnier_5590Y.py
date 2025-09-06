@@ -9,11 +9,12 @@ for reusability. See:
 
 import numpy as np
 import pandas as pd
-from core.decorators import rule, track_changes
 
-from constants.inputs import TEXTUAL_INPUTS_CLEANED
-from constants.targets import NACE_REV2_1_COLUMN
-from utils.rules import build_match_mask, build_matcher_kwargs
+from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
+from src.constants.targets import NACE_REV2_1_COLUMN
+
+from src.label_cleaning.core.decorators import rule, track_changes
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
 
 
 @rule(
@@ -31,7 +32,7 @@ def seasonal_lmnp_rule_5590Y_2025(
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
     df[NACE_REV2_1_COLUMN] = np.where(
-        match_mask & (df["activ_perm_et"] == "S") | df["activ_perm_et"].isnull(),
+        match_mask & ((df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull())),
         "5590Y",
         df[NACE_REV2_1_COLUMN],
     )

@@ -14,13 +14,10 @@ import argparse
 import os
 import sys
 
-from cleaning.cleaner import clean_dataset
-from core.rule_engine import apply_rules
-from visualisation import run_plot
-
-from constants.inputs import TEXTUAL_INPUTS, TEXTUAL_INPUTS_CLEANED
-from constants.matchers import DEFAULT_METHOD_PARAMS
-from constants.paths import (
+from src.utils import io
+from src.constants.inputs import TEXTUAL_INPUTS, TEXTUAL_INPUTS_CLEANED
+from src.constants.matchers import DEFAULT_METHOD_PARAMS
+from src.constants.paths import (
     URL_OUTPUT_NAF2025,
     URL_OUTPUT_NAFREV2,
     URL_REPORT_NAF2025,
@@ -28,8 +25,12 @@ from constants.paths import (
     URL_SIRENE4_NAF2025,
     URL_SIRENE4_NAFREV2,
 )
-from constants.regex_patterns import STEP1_RULE_PATTERNS, STEP2_RULE_PATTERNS
-from utils import file, io
+from src.constants.regex_patterns import STEP1_RULE_PATTERNS, STEP2_RULE_PATTERNS
+
+from .utils import file
+from .cleaning.cleaner import clean_dataset
+from .core.rule_engine import apply_rules
+# from .visualisation import run_plot
 
 
 def load_dataset(path):
@@ -103,8 +104,8 @@ def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
         df_out.drop(columns=TEXTUAL_INPUTS_CLEANED)
         save_outputs(df_out, log_df, naf_tag, methods)
 
-    if show:
-        run_plot()
+    # if show:
+        # run_plot()
 
 
 if __name__ == "__main__":
@@ -127,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--naf_version",
         type=str,
-        default="default",
+        default="naf_2025",
         help="Which NAF ruleset to apply (default: naf_2025)",
     )
     parser.add_argument(
