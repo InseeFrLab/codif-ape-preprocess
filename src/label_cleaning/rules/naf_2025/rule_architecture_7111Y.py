@@ -29,7 +29,9 @@ def architecture_rule_7111Y_2025(
     terms = [
         "architecte d interieur",
         "architecte interieur",
-        "archteture, designarchitecture",
+        "archteture",
+        "design",
+        "architecture",
         "dessinateur projeteur du batiment",
     ]
 
