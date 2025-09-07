@@ -26,7 +26,18 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def touristic_rental_rule_5520Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    terms = ["location d une residence secondaire", "loueur residence secondaire"]
+    terms = ["location d une residence secondaire",
+             "loueur residence secondaire",
+             "hebergement touristique et autre hébergement de courte duree",
+             "appartement de vacances",
+             "maison de vacances",
+             "bungalows",
+             "auberge de jeunesse",
+             "bed and breakfast",
+             "chambre d hote",
+             "refuge de montagne",
+             "refuge de milieux naturels"
+             ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
