@@ -63,6 +63,6 @@ def similarity_mask(
                              convert_to_tensor=True,
                              batch_size=batch_size,
                              normalize_embedding=True).to(device)
-    sims = (text_vecs @ term_vecs.T).max(axis=1)
+    sims = (text_vecs @ term_vecs.T).max(axis=1).values
     torch.cuda.empty_cache()
     return pd.Series(sims.cpu().numpy() >= threshold, index=series.index)
