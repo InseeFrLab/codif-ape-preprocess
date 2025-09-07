@@ -44,8 +44,7 @@ spec:
                   - key: nvidia.com/gpu.product
                     operator: In
                     values:
-                      - NVIDIA-H100-NVL
-                      - NVIDIA-H100-PCIe
+                      
       container:
         image: inseefrlab/onyxia-vscode-pytorch:py3.12.11-gpu
         imagePullPolicy: IfNotPresent
