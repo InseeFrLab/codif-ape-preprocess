@@ -50,6 +50,8 @@ spec:
         resources:
           limits:
             nvidia.com/gpu: 1
+          requests:
+            cpu: "30" 
         command: ["/bin/bash", -c]
         args:
           - |
@@ -85,3 +87,6 @@ spec:
               secretKeyRef:
                 name: qdrant-apikey
                 key: api-key
+          # to avoid cpu conflict
+          - name: TOKENIZERS_PARALLELISM
+            value: "false"

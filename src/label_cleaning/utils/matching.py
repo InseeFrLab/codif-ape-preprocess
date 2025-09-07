@@ -3,12 +3,16 @@ import torch
 from rapidfuzz import fuzz
 from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import normalize
+from pandarallel import pandarallel
 
 from src.constants.models import SENTENCE_MODEL_NAME
 from src.constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
 
 # Set to None initially and loaded only once by _get_model()
 _MODEL: SentenceTransformer | None = None
+
+# Initialize parallelization of pandas df
+pandarallel.initialize()
 
 
 def _get_model(name):
@@ -37,7 +41,7 @@ def fuzzy_mask(
     series: pd.Series, terms: list[str], threshold=FUZZY_THRESHOLD
 ) -> pd.Series:
     """Mask where any term fuzzily matches above threshold."""
-    return series.fillna("").map(
+    return series.fillna("").parallel_map(
         lambda s: any(fuzz.token_sort_ratio(s, t) >= threshold for t in terms)
     )
 
