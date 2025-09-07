@@ -30,8 +30,8 @@ def not_food_based_online_sales_rule_4712H_2025(
         ("la vente et le commerce en ligne des produits neufs "
          "chaussures textiles et accessoires de mode vetements equipements "
          "et accessoires de mode fournitures de bureau jeux et jouets"),
-        "la vente et le commerce en ligne et sur la voie publique de lingerie\
-            maillot de bain produits de confort mensuel vetements",
+        ("la vente et le commerce en ligne et sur la voie publique de lingerie"
+         "maillot de bain produits de confort mensuel vetements"),
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

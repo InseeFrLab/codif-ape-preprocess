@@ -30,7 +30,7 @@ def specialty_medicine_rule_8622Y_2025(
     terms = [
         "activite de medecine specialisee",
         "medecin specialiste",
-        "medecin specialiste secteur 2"
+        "medecin specialiste secteur 2",
         "medecine specialisee",
     ]
 

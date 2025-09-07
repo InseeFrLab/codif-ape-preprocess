@@ -38,7 +38,7 @@ def pet_breeding_0148J_2025(
         "elevage de chiots",
         "elevage d animaux domestiques",
         "elevage d animaux de compagnie",
-        "elevage animaux compagnie"
+        "elevage animaux compagnie",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

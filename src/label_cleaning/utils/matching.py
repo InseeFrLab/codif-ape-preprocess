@@ -37,13 +37,15 @@ def regex_mask(series: pd.Series, pattern: str) -> pd.Series:
     return series.str.contains(pattern, case=False, regex=True, na=False)
 
 
-def fuzzy_mask(
-    series: pd.Series, terms: list[str], threshold=FUZZY_THRESHOLD
-) -> pd.Series:
-    """Mask where any term fuzzily matches above threshold."""
-    return series.fillna("").parallel_map(
-        lambda s: any(fuzz.token_sort_ratio(s, t) >= threshold for t in terms)
-    )
+def fuzzy_mask(series: pd.Series,
+               terms: list[str],
+               threshold=FUZZY_THRESHOLD, parallelize=True) -> pd.Series:
+    # wrapper for parallel_map
+    def wrapper(s):
+        match = any(fuzz.token_sort_ratio(s, t) >= threshold for t in terms)
+        return match
+    res = series.fillna("").parallel_map(wrapper)
+    return res
 
 
 def similarity_mask(
