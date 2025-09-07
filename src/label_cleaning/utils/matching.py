@@ -12,7 +12,7 @@ from src.constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
 _MODEL: SentenceTransformer | None = None
 
 # Initialize parallelization of pandas df
-pandarallel.initialize()
+pandarallel.initialize(nb_workers=30, verbose=2, use_memory_fs=False)
 
 
 def _get_model(name):
