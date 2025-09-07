@@ -15,7 +15,7 @@ pandarallel.initialize(nb_workers=30, verbose=2, use_memory_fs=False)
 
 
 def _get_model(name):
-    global _MODEL
+    global _MODEL, device
     if _MODEL is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"🚀 Using device: {device}")
@@ -58,11 +58,11 @@ def similarity_mask(
     term_vecs = model.encode(terms,
                              convert_to_tensor=True,
                              batch_size=batch_size,
-                             normalize_embedding=True).to_device()
+                             normalize_embedding=True).to(device)
     text_vecs = model.encode(texts,
                              convert_to_tensor=True,
                              batch_size=batch_size,
-                             normalize_embedding=True).to_device()
+                             normalize_embedding=True).to(device)
     sims = (text_vecs @ term_vecs.T).max(axis=1)
     torch.cuda.empty_cache()
     return pd.Series(sims.cpu().numpy() >= threshold, index=series.index)
