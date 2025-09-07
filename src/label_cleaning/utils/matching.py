@@ -42,7 +42,7 @@ def fuzzy_mask(
 ) -> pd.Series:
     """Mask where any term fuzzily matches above threshold."""
     return series.fillna("").parallel_map(
-        lambda s: any(fuzz.token_sort_ratio(s, t) >= threshold for t in terms)
+        lambda s: any(fuzz.qratio(s, t) >= threshold for t in terms)
     )
 
 
