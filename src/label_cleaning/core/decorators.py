@@ -67,7 +67,10 @@ def track_changes(column: str, extra_cols=None):
                                      Defaults to ["liasse_numero", "libelle"].
     """
     if extra_cols is None:
-        extra_cols = ["liasse_numero", "libelle"]
+        extra_cols = ["liasse_numero"
+                      "libelle",
+                      "activ_sec_agri_et",
+                      "activ_nat_lib_et"]
 
     def decorator(func):
         @wraps(func)
@@ -90,7 +93,7 @@ def track_changes(column: str, extra_cols=None):
             journal["_log_rules_applied"] = func.__name__
             journal["_change_type"] = "modification"
 
-            return (df_out, mask), journal
+            return df_out, journal
 
         return wrapper
 

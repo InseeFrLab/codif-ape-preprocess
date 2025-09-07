@@ -1,4 +1,6 @@
+import re
 import pandas as pd
+
 from src.label_cleaning.matching.multi_matcher import MultiMatcher
 
 
@@ -11,8 +13,11 @@ def merge_method_params(methods, methods_params, terms):
 
 
 def build_regex_pattern(terms):
-    """Merge/OR terms into a single regex pattern."""
-    return "|".join(terms)
+    """
+    Build a regex pattern matching whole words/phrases.
+    """
+    escaped_terms = [re.escape(term) for term in terms]
+    return r"\b(?:%s)\b" % "|".join(escaped_terms)
 
 
 def build_matcher_kwargs(methods, methods_params, terms, pattern_builder=None):

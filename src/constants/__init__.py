@@ -43,3 +43,6 @@ from .targets import (
 from .targets import (
     NACE_REV2_COLUMN as NACE_REV2_COLUMN,
 )
+from .vector_db import (
+    COLLECTION_NAME as COLLECTION_NAME,
+)

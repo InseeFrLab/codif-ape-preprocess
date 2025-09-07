@@ -94,7 +94,7 @@ def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
         STEP1_RULE_PATTERNS,
         STEP2_RULE_PATTERNS,
     )
-    (df_out, mask), log_df = apply_rules(df, naf_tag, methods, DEFAULT_METHOD_PARAMS)
+    df_out, log_df = apply_rules(df, naf_tag, methods, DEFAULT_METHOD_PARAMS)
 
     if dry_run:
         print("🚫 Dry run enabled — no output files will be saved.")

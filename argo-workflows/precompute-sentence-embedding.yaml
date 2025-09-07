@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: run-rule-based-data-cleansing
+  generateName: run-precompute-data-embedding
 spec:
   serviceAccountName: workflow
   volumes:
@@ -22,8 +22,8 @@ spec:
     - name: main
       dag:
         tasks:
-          - name: rule-based-data-cleansing
-            template: run-cleansing
+          - name: precompute-sentence-embedding
+            template: run-precompute-embedding
             arguments:
               parameters:
                 - name: NAF
@@ -44,7 +44,8 @@ spec:
                   - key: nvidia.com/gpu.product
                     operator: In
                     values:
-                      - NVIDIA-A2
+                      - NVIDIA-H100-NVL
+                      - NVIDIA-H100-PCIe
       container:
         image: inseefrlab/onyxia-vscode-pytorch:py3.12.11-gpu
         imagePullPolicy: IfNotPresent
@@ -57,8 +58,7 @@ spec:
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
             cd codif-ape-preprocess/
             uv sync
-            uv run python -m src.label_cleaning.tools.generate_cj_rules
-            uv run python -m src.label_cleaning.main --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
+            uv run python -m src.label_cleaning.tools.load_vector_db
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm
@@ -78,11 +78,3 @@ spec:
             value: us-east-1
           - name: AWS_S3_ENDPOINT
             value: minio.lab.sspcloud.fr
-          # env var for s3 connexion
-          - name: QDRANT_URL
-            value: https://projet-ape-qdrant.user.lab.sspcloud.fr/
-          - name: QDRANT_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: qdrant-apikey
-                key: api-key

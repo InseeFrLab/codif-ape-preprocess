@@ -9,8 +9,9 @@ def apply_rules(training_data, tag, methods=None, methods_params=None):
     """
     Apply all rules tagged with `tag` to the dataset.
 
-    Loads the registered rules, filters them by tag, applies each one in turn,
-    and collects all audit journals into a single DataFrame.
+    - Les rules de modification sont appliquées en premier.
+    - Les rules de création sont appliquées ensuite.
+    - Le journal final concatène d'abord les modifications, puis les créations.
 
     Args:
         training_data (pd.DataFrame): Data to process.
@@ -34,13 +35,31 @@ def apply_rules(training_data, tag, methods=None, methods_params=None):
     rules_to_apply = [r for r in RULES_REGISTRY if tag in r.tags]
     print(f"🧩 {len(rules_to_apply)} rule(s) matched with tag '{tag}'")
 
-    all_journals = []
+    mods_journals = []
+    create_journals = []
 
-    print("⚙️  Applying rules...")
-    for rule in tqdm(rules_to_apply, desc="Processing rules", unit="rule"):
-        df, journal = rule.apply(
-            training_data, methods=methods, methods_params=methods_params
-        )
-        all_journals.append(journal)
+    # ⚙️ Appliquer d'abord les règles de modification
+    print("⚙️  Applying modification rules...")
+    for rule in tqdm(rules_to_apply, desc="Modification rules", unit="rule"):
+        result = rule.apply(training_data, methods=methods, methods_params=methods_params)
 
-    return df, pd.concat(all_journals, ignore_index=True)
+        if isinstance(result, tuple) and len(result) == 2:
+            training_data, journal = result
+            if not journal.empty and journal["_change_type"].iloc[0] == "modification":
+                mods_journals.append(journal)
+
+    # ⚙️ Puis les règles de création
+    print("⚙️  Applying creation rules...")
+    for rule in tqdm(rules_to_apply, desc="Creation rules", unit="rule"):
+        result = rule.apply(training_data, methods=methods, methods_params=methods_params)
+
+        if isinstance(result, tuple) and len(result) == 2:
+            training_data, journal = result
+            if not journal.empty and journal["_change_type"].iloc[0] == "creation":
+                create_journals.append(journal)
+
+    # ⏬ Concat journals: modifications first, creations last
+    all_journals = mods_journals + create_journals
+    final_journal = pd.concat(all_journals, ignore_index=True) if all_journals else pd.DataFrame()
+
+    return training_data, final_journal
