@@ -1,5 +1,5 @@
 """
-Assign NAF 2025 codes for retailing of clothes.
+Assign NAF 2025 codes for exterior cleaning of buildings.
 
 Matching configuration and mask logic are delegated to utils/rules.py
 for reusability. See:
@@ -18,28 +18,26 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="retailing_clothes_assignment_2025",
+    name="exterior_cleaning_assignment_2025",
     tags=["naf_2025"],
-    description="Règle vente en ligne sans prédominence alimentaire version NAF 2025",
+    description="Règle nettoyage extérieur version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def retailing_clothers_4771Y_2025(
+def exterior_cleaning_rule_8122Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["similarity"])
+    methods = filter_methods(methods, exclude=["fuzzy, similarity"])
     terms = [
-        "achat revente sur internet habillement accessoires et chaussures",
-        "vente de pret a porter",
-        "vente de pret a porter a domicile",
-        "vente de pret a porter et accessoires",
-        "vente de vetements",
-        "vente de vetements en ligne",
-        "vente de vetements et d objets personnalise",
-        "vente pret a porter et produits de beaute",
+        "nettoyage courant des batiments",
+        "nettoyage des interieur des batiments",
+        "nettoyage interieur de batiments",
+        "nettoyage interieur des batiments",
+        "nettoyage de batiment interieur",
+        ""
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "4771Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8121Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

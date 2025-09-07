@@ -30,7 +30,7 @@ def renewable_energy_production_rule_3512Y_2025(
         "photovoltaique",
         "solaire",
         "eolien",
-        "renouvelable",
+        "energie renouvelable",
         "hydroelectricite",
         "solaire thermique",
         "geothermique",

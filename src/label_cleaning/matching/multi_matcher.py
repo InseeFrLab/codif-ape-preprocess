@@ -4,7 +4,7 @@ multi_matchers.py
 Provides the MultiMatcher class that can apply one or more matching methods
 to a Pandas Series and combine their results with a logical OR.
 """
-
+from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 
 from . import MATCHERS
@@ -42,7 +42,11 @@ class MultiMatcher:
             pd.Series: Boolean mask indicating matching rows.
         """
         mask = pd.Series(False, index=series.index)
-        for m in self.methods:
-            fn = MATCHERS[m]
-            mask |= fn(series, **self.kwargs.get(m, {}))
+        with ThreadPoolExecutor() as executor:
+            futures = {
+                executor.submit(MATCHERS[m], series, **self.kwargs.get(m, {})): m
+                for m in self.methods
+            }
+            for f in futures:
+                mask |= f.result()
         return mask
