@@ -56,8 +56,9 @@ def process_and_import_data(df: pd.DataFrame, client: QdrantClient):
 
     # 2. Calculer les embeddings pour chaque texte unique
     model = get_sentence_model()
-    BATCH_SIZE = 20_000
-    print(f"⏳ Encoding {len(unique_texts_list)} unique documents with a batch size of {BATCH_SIZE}...")
+    BATCH_SIZE = 30_000
+    print(f"⏳ Encoding {len(unique_texts_list)} unique documents"
+          " with a batch size of {BATCH_SIZE}...")
 
     embeddings = model.encode(unique_texts_list, convert_to_numpy=True, batch_size=BATCH_SIZE)
     embeddings = normalize(embeddings, axis=1)

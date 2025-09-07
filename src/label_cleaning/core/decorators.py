@@ -67,7 +67,7 @@ def track_changes(column: str, extra_cols=None):
                                      Defaults to ["liasse_numero", "libelle"].
     """
     if extra_cols is None:
-        extra_cols = ["liasse_numero"
+        extra_cols = ["liasse_numero",
                       "libelle",
                       "activ_sec_agri_et",
                       "activ_nat_lib_et"]
