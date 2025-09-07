@@ -2,10 +2,9 @@ import pandas as pd
 import torch
 from rapidfuzz import fuzz
 from sentence_transformers import SentenceTransformer
-from sklearn.preprocessing import normalize
 from pandarallel import pandarallel
 
-from src.constants.models import SENTENCE_MODEL_NAME
+from src.constants.models import SENTENCE_MODEL_NAME, BATCH_SIZE
 from src.constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
 
 # Set to None initially and loaded only once by _get_model()
@@ -49,13 +48,21 @@ def fuzzy_mask(
 def similarity_mask(
     series: pd.Series,
     terms: list[str],
-    threshold=SIM_THRESHOLD,
-    model_name=SENTENCE_MODEL_NAME,
+    threshold: float = SIM_THRESHOLD,
+    model_name: str = SENTENCE_MODEL_NAME,
+    batch_size: int = BATCH_SIZE,
 ) -> pd.Series:
     """Mask where max cosine similarity to any term ≥ threshold."""
     model = _get_model(model_name)
     texts = series.fillna("").tolist()
-    term_vecs = normalize(model.encode(terms, convert_to_numpy=True, batch_size=35000), axis=1)
-    text_vecs = normalize(model.encode(texts, convert_to_numpy=True, batch_size=35000), axis=1)
+    term_vecs = model.encode(terms,
+                             convert_to_tensor=True,
+                             batch_size=batch_size,
+                             normalize_embedding=True).to_device()
+    text_vecs = model.encode(texts,
+                             convert_to_tensor=True,
+                             batch_size=batch_size,
+                             normalize_embedding=True).to_device()
     sims = (text_vecs @ term_vecs.T).max(axis=1)
-    return pd.Series(sims >= threshold, index=series.index)
+    torch.cuda.empty_cache()
+    return pd.Series(sims.cpu().numpy() >= threshold, index=series.index)
