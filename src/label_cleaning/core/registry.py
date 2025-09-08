@@ -16,7 +16,7 @@ class Rule:
         name: str,
         tags: List[str],
         methods: List[str],
-        description: str = "",
+        description: str,
     ):
         self.func = func
         self.name = name
