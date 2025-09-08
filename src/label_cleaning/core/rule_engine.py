@@ -40,20 +40,18 @@ def apply_rules(training_data, tag, methods=None, methods_params=None):
 
     # ⚙️ Appliquer d'abord les règles de modification
     print("⚙️  Applying rules...")
-    for rule in tqdm(rules_to_apply, desc="Modification rules", unit="rule"):
+    for rule in tqdm(rules_to_apply, desc="Rule applying", unit="rule"):
         result = rule.apply(training_data, methods=methods, methods_params=methods_params)
 
         if isinstance(result, tuple) and len(result) == 2:
-            print(f" ⚙️ Update with {rule.name} i.e {rule.description}")
             training_data, journal = result
-            if not journal.empty and journal["_change_type"].iloc[0] == "modification":
-                mods_journals.append(journal)
-
-        if isinstance(result, tuple) and len(result) == 2:
-            print(f" ⚙️ Update with {rule.name} i.e {rule.description}")
-            training_data, journal = result
-            if not journal.empty and journal["_change_type"].iloc[0] == "creation":
-                create_journals.append(journal)
+            if not journal.empty:
+                if journal["_change_type"].iloc[0] == "modification":
+                    print(f" 🔄 Rows updated by rule {rule.name} i.e {rule.description}")
+                    mods_journals.append(journal)
+                elif journal["_change_type"].iloc[0] == "creation":
+                    print(f" 🆕 Rows added by rule {rule.name} i.e {rule.description}")
+                    create_journals.append(journal)
 
     # ⏬ Concat journals: modifications first, creations last
     all_journals = mods_journals + create_journals
