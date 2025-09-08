@@ -28,6 +28,8 @@ def IT_consulting_rule_6220G_2025(
 ) -> pd.DataFrame:
     terms = [
         "conseil informatique",
+        "conseil en analyse de donnees",
+        "conseil en data science"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

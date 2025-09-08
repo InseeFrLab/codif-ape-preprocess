@@ -30,6 +30,7 @@ def fast_food_rule_5611J_2025(
         "restauration rapide sur place et a emporter",
         "preparation de plats cuisines a emporter",
         "fast food",
+        "deliveroo",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

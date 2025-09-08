@@ -29,6 +29,7 @@ def architecture_rule_7111Y_2025(
     terms = [
         "architecte d interieur",
         "architecte interieur",
+        "architecture interieur",
         "archteture",
         "design architectural",
         "architecture",

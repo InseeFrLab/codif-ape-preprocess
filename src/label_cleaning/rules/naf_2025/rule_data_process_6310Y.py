@@ -28,9 +28,11 @@ def data_analysis_rule_6310Y_2025(
 ) -> pd.DataFrame:
     terms = [
         "activite de service en analyse de données et gestion de programme",
-        "data science",
         "infrastructure informatique traitement de donnees hebergement et activites connexes",
-        "analyse de donnees",
+        "architecture de donnees",
+        "architecture logicielle",
+        "hebergement d applications",
+        "cloud computing",
         ("prestation de services en analyse de donnees data science "
          "informatique statistique realisation d etudes developpement "
          "de code activites de recherche"),
