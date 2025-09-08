@@ -30,7 +30,7 @@ def architecture_rule_7111Y_2025(
         "architecte d interieur",
         "architecte interieur",
         "archteture",
-        "design",
+        "design architectural",
         "architecture",
         "dessinateur projeteur du batiment",
     ]
