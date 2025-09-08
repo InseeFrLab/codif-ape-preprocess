@@ -39,21 +39,18 @@ def apply_rules(training_data, tag, methods=None, methods_params=None):
     create_journals = []
 
     # ⚙️ Appliquer d'abord les règles de modification
-    print("⚙️  Applying modification rules...")
+    print("⚙️  Applying rules...")
     for rule in tqdm(rules_to_apply, desc="Modification rules", unit="rule"):
         result = rule.apply(training_data, methods=methods, methods_params=methods_params)
 
         if isinstance(result, tuple) and len(result) == 2:
+            print(f"⚙️ Update: {rule.description} à appliquer")
             training_data, journal = result
             if not journal.empty and journal["_change_type"].iloc[0] == "modification":
                 mods_journals.append(journal)
 
-    # ⚙️ Puis les règles de création
-    print("⚙️  Applying creation rules...")
-    for rule in tqdm(rules_to_apply, desc="Creation rules", unit="rule"):
-        result = rule.apply(training_data, methods=methods, methods_params=methods_params)
-
         if isinstance(result, tuple) and len(result) == 2:
+            print(f"⚙️ Add: {rule.description} à appliquer")
             training_data, journal = result
             if not journal.empty and journal["_change_type"].iloc[0] == "creation":
                 create_journals.append(journal)
