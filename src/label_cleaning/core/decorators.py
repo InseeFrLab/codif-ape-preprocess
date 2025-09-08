@@ -19,7 +19,7 @@ import pandas as pd
 from .registry import register_rule
 
 
-def rule(name=None, tags=None, description=""):
+def rule(name=None, tags=None, description=None):
     """
     Decorator to register a transformation rule in the central registry.
 

@@ -44,13 +44,13 @@ def apply_rules(training_data, tag, methods=None, methods_params=None):
         result = rule.apply(training_data, methods=methods, methods_params=methods_params)
 
         if isinstance(result, tuple) and len(result) == 2:
-            print(f"⚙️ Update: {rule.description} à appliquer")
+            print(f" ⚙️ Update with {rule.name} i.e {rule.description}")
             training_data, journal = result
             if not journal.empty and journal["_change_type"].iloc[0] == "modification":
                 mods_journals.append(journal)
 
         if isinstance(result, tuple) and len(result) == 2:
-            print(f"⚙️ Add: {rule.description} à appliquer")
+            print(f" ⚙️ Update with {rule.name} i.e {rule.description}")
             training_data, journal = result
             if not journal.empty and journal["_change_type"].iloc[0] == "creation":
                 create_journals.append(journal)

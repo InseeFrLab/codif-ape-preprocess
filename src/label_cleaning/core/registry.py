@@ -15,13 +15,11 @@ class Rule:
         func: Callable,
         name: str,
         tags: List[str],
-        methods: List[str],
         description: str,
     ):
         self.func = func
         self.name = name
         self.tags = tags
-        self.methods = methods
         self.description = description
 
     def apply(self, df, **kwargs):
@@ -32,6 +30,6 @@ class Rule:
 RULES_REGISTRY: List[Rule] = []
 
 
-def register_rule(func: Callable, name: str, tags: List[str], description: str = ""):
+def register_rule(func: Callable, name: str, tags: List[str], description: str):
     rule = Rule(func, name, tags, description)
     RULES_REGISTRY.append(rule)
