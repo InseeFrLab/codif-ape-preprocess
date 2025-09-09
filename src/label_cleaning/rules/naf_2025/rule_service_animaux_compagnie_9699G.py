@@ -34,6 +34,7 @@ def pet_services_rule_9699G_2025(
         "sur le corps des chevaux",
         "promenade d animaux de compagnie",
         "toilettage",
+        "palfrenier soigneur",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

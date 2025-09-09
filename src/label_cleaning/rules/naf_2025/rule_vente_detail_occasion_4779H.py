@@ -23,12 +23,16 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
     description="Règle vente en ligne sans prédominence alimentaire version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def retailing_second_hand_goods_4771Y_2025(
+def retailing_second_hand_goods_4779H_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
         "achat revente sur internet de livres d occasion",
         "achat vente de vinyles d'occasion en ligne",
+        "vente de livres d occasion",
+        "vente de vêtements d occasion",
+        "vente d appareils domestiques d occasion",
+        "vente d autres biens d occasion",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

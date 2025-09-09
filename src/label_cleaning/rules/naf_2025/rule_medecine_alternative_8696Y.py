@@ -27,11 +27,12 @@ def alternative_therapy_rule_8696Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "energeticien",
-        "enertigicienne",
         "hypnotherapeute",
-        "kinesiologiepsycho energeticien",
+        "kinesiologie",
         "reflexologie",
+        # "psycho energeticien",
+        # "energeticien",
+        # "enertigicienne",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

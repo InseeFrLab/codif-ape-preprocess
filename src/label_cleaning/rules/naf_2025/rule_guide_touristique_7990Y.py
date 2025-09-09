@@ -26,7 +26,10 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def touristic_guides_rule_7990Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    terms = ["guide interprete", "guide touristique"]
+    terms = ["guide interprete",
+             "guide touristique",
+             "promotion du tourisme",
+             "informations pratiques aux visiteurs",]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)

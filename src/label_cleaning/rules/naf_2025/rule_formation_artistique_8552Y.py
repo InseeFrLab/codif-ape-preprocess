@@ -14,18 +14,19 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
     name="art_teaching_assignment_2025",
-    tags=["naf_2025"],
+    tags=["INVALIDE: règle inapplicable dans data"],
     description="Règle ensignement culturel version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
 def art_teaching_rule_8552Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["fuzzy"])
     terms = [
         ("accompagner developper et valoriser la creation artistique "
          "multi techniques autour des arts visuels par la mise en place d ateliers"),
@@ -33,9 +34,9 @@ def art_teaching_rule_8552Y_2025(
         "enseignement des arts du spectacle vivant",
         "formation au chant choral pratique en atelier et en spectacle",
         "professeur de musique",
-        "professeur independant de danse",
-        "professeur independant de musique",
-        "professeur independant de piano",
+        "professeur de danse",
+        "professeur de musique",
+        "professeur de piano",
         "repetition de theatre hebdomadaire",
     ]
 

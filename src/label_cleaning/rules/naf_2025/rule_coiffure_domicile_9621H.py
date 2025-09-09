@@ -27,9 +27,10 @@ def home_hairdresser_rule_9621H_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "coiffure mixte à domicile",
-        "coiffeur mixte à domicile",
-        "coiffeuse mixte à domicile",
+        "coiffure mixte a domicile",
+        "coiffeur mixte a domicile",
+        "coiffeuse mixte a domicile",
+        "coiffure hors salons",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

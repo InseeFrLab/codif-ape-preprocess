@@ -27,11 +27,12 @@ def meal_delivery_rule_5320H_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "livraison de repas",
         "livraison de repas a domicile",
-        "livraison de repas a domicile a velo",
         "livreur de repas",
         "livreur uber eat",
+        "ubereat",
+        "ubereats",
+        "deliveroo",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

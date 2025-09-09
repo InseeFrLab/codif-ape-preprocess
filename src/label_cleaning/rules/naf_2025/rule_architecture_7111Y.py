@@ -30,10 +30,15 @@ def architecture_rule_7111Y_2025(
         "architecte d interieur",
         "architecte interieur",
         "architecture interieur",
-        "archteture",
         "design architectural",
-        "architecture",
+        "architecte",
+        "architectural",
         "dessinateur projeteur du batiment",
+        "conseil architechtural en conception de batiments",
+        "conseil architechtural en elaboration de plans de construction",
+        "conseil architechtural en urbanisme",
+        "conseil en architecture paysagère",
+        "architecte urbaniste",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

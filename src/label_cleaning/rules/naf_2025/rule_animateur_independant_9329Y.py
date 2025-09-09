@@ -36,5 +36,5 @@ def independant_facilitator_rule_9392Y_2025(
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "9392Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "9329Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

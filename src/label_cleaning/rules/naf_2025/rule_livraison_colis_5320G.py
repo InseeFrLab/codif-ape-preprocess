@@ -27,7 +27,7 @@ def package_delivery_rule_5320G_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "enlevement et livraison de marchandises non reglemente a velo",
+        "enlevement et livraison de marchandises non reglemente",
         "livraison de colis",
     ]
 

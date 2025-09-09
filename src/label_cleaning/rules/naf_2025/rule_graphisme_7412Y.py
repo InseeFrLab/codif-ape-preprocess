@@ -31,11 +31,22 @@ def graphic_designing_rule_7412Y_2025(
         "creation de site internet sans programmation design ergonomie",
         "design graphique",
         "designer graphique",
-        "graphisme",
+        "design ergonomie",
+        "designer graphiste",
         "graphiste",
         "graphiste conception de supports",
         "infographiste",
         "web designer",
+        "logo",
+        "charte graphique",
+        "identite graphique",
+        "pictogramme",
+        "conception graphique",
+        "concepteurs en communication",
+        "corporate design",
+        "design d images visuelles",
+        "conception de la marque",
+        ""
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

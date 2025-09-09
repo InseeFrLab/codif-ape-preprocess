@@ -26,11 +26,12 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def authors_composers_rule_9011Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    terms = ["artiste auteur",
-             "artiste auteurs",
-             " artiste autrice",
-             "artiste autrices",
-             "compositeur"]
+    terms = ["ecrivains independants",
+             "ecriture de scenarios",
+             "redaction technique",
+             "composition musicale",
+             "compositeur",
+             ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)

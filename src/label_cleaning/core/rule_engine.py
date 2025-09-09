@@ -47,10 +47,10 @@ def apply_rules(training_data, tag, methods=None, methods_params=None):
             training_data, journal = result
             if not journal.empty:
                 if journal["_change_type"].iloc[0] == "modification":
-                    print(f" 🔄 Rows updated by rule {rule.name} i.e {rule.description}")
+                    print(f"🔄 Rows updated by rule {rule.name} i.e {rule.description}")
                     mods_journals.append(journal)
                 elif journal["_change_type"].iloc[0] == "creation":
-                    print(f" 🆕 Rows added by rule {rule.name} i.e {rule.description}")
+                    print(f"🆕 Rows added by rule {rule.name} i.e {rule.description}")
                     create_journals.append(journal)
 
     # ⏬ Concat journals: modifications first, creations last

@@ -27,15 +27,15 @@ def sport_instruction_rule_8551Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "professeur de natation",
         "professeur de yoga",
         "coaching sportif",
-        "moniteur d equitation",
-        "monitateur equitation",
-        "moniteur de ski",
         ("service de coaching conseil sportifs et nutritionnels "
          "individuel ou collectif vente de programmes sportifs "
          "et alimentaires personnalises"),
+        # "moniteur d equitation",
+        # "monitateur equitation",
+        # "moniteur de ski",
+        # "professeur de natation",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

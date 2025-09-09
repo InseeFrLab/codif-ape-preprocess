@@ -33,6 +33,7 @@ def visual_artists_rule_9012Y_2025(
         "conception et creation d oeuvres originales au sens de la propriete intellectuelle",
         "creation artistique relevant des arts plastiques",
         "creation plastique tout medium dont installations performances etc",
+        "creation plastique",
         "illustration dessin peinture photo tous supports libre objet web",
         "restauration d affiches lithographies gravures",
         "sculpture",

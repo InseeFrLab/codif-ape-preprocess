@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,10 +26,11 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def IT_consulting_rule_6220G_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
         "conseil informatique",
         "conseil en analyse de donnees",
-        "conseil en data science"
+        "conseil en data science",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

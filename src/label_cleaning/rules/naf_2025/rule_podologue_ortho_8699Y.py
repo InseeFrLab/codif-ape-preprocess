@@ -23,7 +23,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
     description="Règle podologue version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def chiropodist_rule_8622Y_2025(
+def chiropodist_rule_8699Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
@@ -31,10 +31,11 @@ def chiropodist_rule_8622Y_2025(
         "pedicure podologue remplacant",
         "pedicure podologue remplacante",
         "podologue",
+        "orthophoniste remplacante",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8622Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8699Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,9 +26,10 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def retailing_food_120m2_4711G_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "achat vente de produits alimentaires",
-        "epicerie solidaire",
+        # "epicerie solidaire",
         ("commerce de detail en magasin specialise"
          "et sur un site de vente en ligne"
          "de produits alimentaires et menagers"),

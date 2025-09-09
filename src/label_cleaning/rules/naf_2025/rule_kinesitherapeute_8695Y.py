@@ -28,7 +28,8 @@ def physiotherapist_rule_8695Y_2025(
 ) -> pd.DataFrame:
     terms = [
         "activite de masseur kinesitherapeute",
-        "activite de masseur kinesotherapeute liberalmasseur kine",
+        "activite de masseur kinesotherapeute liberal",
+        "masseur kine",
         "masseuse kine",
         "masseur kine en collaboration",
         "masseur kinesi",
@@ -43,7 +44,13 @@ def physiotherapist_rule_8695Y_2025(
         "masseur kinesitherapeute remplacante",
         "masseur kinesitherapeute",
         "masseur kinesitherapeute liberal",
-        "masso kinesitherapiemasseur physiotherapeute",
+        "masso kinesitherapie",
+        "masseur physiotherapeute",
+        "physiotherapie",
+        "physiotherapeute",
+        "massotherapeutes medicaux",
+        "ergotherapeutes",
+        "praxitherapeutes",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

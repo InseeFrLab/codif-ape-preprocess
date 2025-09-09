@@ -32,11 +32,13 @@ def touristic_rental_rule_5520Y_2025(
              "appartement de vacances",
              "maison de vacances",
              "bungalows",
+             "location d un gite",
+             "location de gite",
              "auberge de jeunesse",
              "bed and breakfast",
              "chambre d hote",
              "refuge de montagne",
-             "refuge de milieux naturels"
+             "refuge de milieux naturels",
              ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
