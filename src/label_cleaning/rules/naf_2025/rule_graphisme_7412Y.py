@@ -46,7 +46,7 @@ def graphic_designing_rule_7412Y_2025(
         "corporate design",
         "design d images visuelles",
         "conception de la marque",
-        ""
+        
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
