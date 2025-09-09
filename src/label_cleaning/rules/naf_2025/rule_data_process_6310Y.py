@@ -30,6 +30,7 @@ def data_analysis_rule_6310Y_2025(
         "activite de service en analyse de données et gestion de programme",
         "infrastructure informatique traitement de donnees hebergement et activites connexes",
         "architecture de donnees",
+        "data architect",
         "architecture logicielle",
         "hebergement d applications",
         "cloud computing",

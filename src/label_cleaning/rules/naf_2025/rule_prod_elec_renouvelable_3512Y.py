@@ -27,15 +27,20 @@ def renewable_energy_production_rule_3512Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "photovoltaique",
-        "solaire",
-        "eolien",
-        "energie renouvelable",
-        "hydroelectricite",
-        "solaire thermique",
-        "geothermique",
-        "biocarburant gazeux",
-        "energie des marees",
+        "exploitation d installation photovoltaique",
+        "production d energie solaire",
+        "production d electricite utilisant l energie solaire",
+        "production d energie renouvelable",
+        "production d energie par hydroelectricite",
+        "exploitation d installation hydroelectricite",
+        "production d energie solaire thermique",
+        "exploitation d installation solaire thermique",
+        "production d energie geothermique",
+        "exploitation d installation geothermique",
+        "production d energie par biocarburant gazeux",
+        "exploitation d installation de production d electricite a partir de biocarburant gazeux",
+        "production d electricite par energie des marees",
+        "exploitation d installation de production d electricite a partir de l energie des marees",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

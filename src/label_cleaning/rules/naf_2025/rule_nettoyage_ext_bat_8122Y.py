@@ -47,7 +47,7 @@ def exterior_cleaning_rule_8122Y_2025(
         "nettoyage des canalisations d approvisionnement en eau",
         "nettoyage des conduits aerauliques",
         "nettoyage des nouveaux batiments immediatement apres leur construction",
-        "sablage",
+        "sablage pour l exterieur des batiments",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

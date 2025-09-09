@@ -26,12 +26,30 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def it_programming_rule_6210Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["similarity"])
+    # methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "conception de site web developpement vente de solutions informatiques",
         "la creation de sites internet",
         "programmeur",
-        "web master",
+        "webmaster",
+        "administrateur de site internet",
+        "architecte informatique",
+        "architecte logiciel",
+        "machine learning engineer",
+        "pentester",
+        "developpeur cybersecurite",
+        "ingenieur cybersecurite",
+        "chef de projet informatique",
+        "developpeur logiciels de systemes",
+        "developpeur logiciels et applications pour jeux video",
+        "developpeur applications de jeux",
+        "developpeur d intergiciels pour jeux video",
+        "developpeur d applications logicielles pour les entreprises et la finance",
+        "developpeur d applications d apprentissage automatique",
+        "developpeur d applications d intelligence vision artificielle",
+        "developpeur d applications de cybersécurite",
+        "developpeur d applications de registres distribues",
+        "administrateur de bases de données et pages web",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

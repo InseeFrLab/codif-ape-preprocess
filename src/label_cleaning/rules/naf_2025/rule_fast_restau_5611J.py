@@ -30,7 +30,10 @@ def fast_food_rule_5611J_2025(
         "restauration rapide sur place et a emporter",
         "preparation de plats cuisines a emporter",
         "fast food",
-        "restauration rapide",
+        "food truck",
+        "restauration rapide ambulante",
+        "restauration rapide sur place",
+        "restauration rapide a emporter",
         "principalement des repas à emporter",
     ]
 

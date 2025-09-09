@@ -29,9 +29,9 @@ def pet_services_rule_9699G_2025(
     terms = [
         "coach pour animaux de compagnie",
         "comportementaliste animalier cynologiste",
-        "education canine",
+        "petsitting",
         "physiotherapeute pour animaux masseur kinesitherapeute pour animaux",
-        "sur le corps des chevaux",
+        "des chevaux",
         "promenade d animaux de compagnie",
         "toilettage",
         "palfrenier soigneur",

@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,11 +26,15 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def other_independant_teaching_rule_8559H_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "accompagnement scolaire a domicile enseignant independant",
         "formateur independant a l art oratoire",
         "formateur independant a la securite",
         "formateur independant en informatique",
+        "formateur professionnel independant",
+        "formateur independant",
+        "formateur professionnel",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

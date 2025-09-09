@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,6 +26,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def seasonal_lmnp_rule_5590Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = ["loueur de meuble saisonnier",
              "lmnp saisonnier",
              "lmnp saisonniere",
@@ -33,7 +34,9 @@ def seasonal_lmnp_rule_5590Y_2025(
              "location meublee non professionnelle saisonniere",
              "lmnp location saisonniere",
              "location saisonniere",
-             "locations saisonnieres",]
+             "locations saisonnieres",
+             "lmnp de courte duree",
+             "location de courte duree",]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)

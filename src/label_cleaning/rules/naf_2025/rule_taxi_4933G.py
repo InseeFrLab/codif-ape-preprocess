@@ -28,8 +28,10 @@ def taxi_drivers_rule_4933G_2025(
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
-        "taxi",
+        "chauffeur de taxi",
         "artisan taxi",
+        "le transport de voyageurs par taxi dans un vehicule de moins de 9 personnes",
+        "conducteur de taxi",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

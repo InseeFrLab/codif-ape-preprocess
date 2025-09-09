@@ -29,8 +29,18 @@ def IT_consulting_rule_6220G_2025(
     methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
         "conseil informatique",
+        "conseil en cybersecurite",
         "conseil en analyse de donnees",
-        "conseil en data science",
+        "conseil en materiel, logiciels et systemes informatiques",
+        "developpement informatique conseil aux entreprises et aux particuliers",
+        "conseil en systeme et logiciels informatiques",
+        "planification et la conception de systemes informatiques",
+        "audit de certification des infrastructures informatiques",
+        "audit de certification des services informatiques",
+        "audit de certification du traitement des données",
+        "conseils sur les exigences logicielles",
+        "conseils sur l'acquisition des composants matériels",
+        "conseils sur les logiciels d'un système informatique",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

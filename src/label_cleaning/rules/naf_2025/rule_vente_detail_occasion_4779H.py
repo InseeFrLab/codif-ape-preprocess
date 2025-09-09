@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,11 +26,12 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def retailing_second_hand_goods_4779H_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "achat revente sur internet de livres d occasion",
         "achat vente de vinyles d'occasion en ligne",
         "vente de livres d occasion",
-        "vente de vêtements d occasion",
+        "vente de vetements d occasion",
         "vente d appareils domestiques d occasion",
         "vente d autres biens d occasion",
     ]
