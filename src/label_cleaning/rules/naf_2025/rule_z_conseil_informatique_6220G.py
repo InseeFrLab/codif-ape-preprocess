@@ -29,8 +29,9 @@ def IT_consulting_rule_6220G_2025(
     methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
         "conseil informatique",
+        "conseil en informatique",
+        "conseil en architecture logicielle"
         "conseil en cybersecurite",
-        "conseil en analyse de donnees",
         "conseil en materiel, logiciels et systemes informatiques",
         "developpement informatique conseil aux entreprises et aux particuliers",
         "conseil en systeme et logiciels informatiques",

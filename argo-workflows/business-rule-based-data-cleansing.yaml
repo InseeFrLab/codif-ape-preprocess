@@ -43,7 +43,7 @@ spec:
                   - key: nvidia.com/gpu.product
                     operator: In
                     values:
-                      - NVIDIA-A2
+                      - NVIDIA-H100-NVL
       container:
         image: inseefrlab/onyxia-vscode-pytorch:py3.12.11-gpu
         imagePullPolicy: IfNotPresent
@@ -58,8 +58,8 @@ spec:
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
             cd codif-ape-preprocess/
             uv sync
-            uv run python -m src.label_cleaning.tools.generate_cj_rules
-            uv run python -m src.label_cleaning.main --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
+            uv run -m src.label_cleaning.tools.generate_cj_rules
+            uv run -m src.label_cleaning.main --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm
