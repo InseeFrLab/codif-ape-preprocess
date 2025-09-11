@@ -27,7 +27,11 @@ def retailing_flowers_rule_4776Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["similarity"])
-    terms = ["achat revente de fleurs sur les marches"]
+    terms = ["achat revente de fleurs sur les marches",
+             "vente de fleurs",
+             "revente de fleurs",
+             "achat de fleurs",
+             ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)

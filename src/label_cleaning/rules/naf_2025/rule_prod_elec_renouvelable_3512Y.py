@@ -27,6 +27,7 @@ def renewable_energy_production_rule_3512Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
+        "photovoltaique",
         "exploitation d installation photovoltaique",
         "production d energie solaire",
         "production d electricite utilisant l energie solaire",

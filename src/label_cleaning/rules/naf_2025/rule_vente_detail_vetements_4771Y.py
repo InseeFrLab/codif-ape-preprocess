@@ -29,11 +29,17 @@ def retailing_clothers_4771Y_2025(
     methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "achat revente sur internet habillement accessoires et chaussures",
+        "vente d habillement",
         "vente de pret a porter",
         "vente de pret a porter a domicile",
         "vente de pret a porter et accessoires",
+        "vente sur internet de pret a porter",
+        "vente de pret a porter sur internet",
         "vente de vetements",
+        "vente de sous vetements",
         "vente de vetements en ligne",
+        "vente de vetements sur internet",
+        "vente sur internet de vetements",
         "vente de vetements et d objets personnalise",
         "vente pret a porter et produits de beaute",
     ]

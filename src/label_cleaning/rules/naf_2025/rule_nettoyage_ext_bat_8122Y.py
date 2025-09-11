@@ -26,10 +26,12 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def exterior_cleaning_rule_8122Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["fuzzy"])
+    methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
         "nettoyage des exterieurs d une maison a la vapeur basse pression",
         "nettoyage des toitures et des facades",
+        "nettoyage des toitures",
+        "nettoyage des facades",
         "nettoyage exterieur des batiments",
         "ramoneur",
         "activites de nettoyage specialise pour les entreprises",

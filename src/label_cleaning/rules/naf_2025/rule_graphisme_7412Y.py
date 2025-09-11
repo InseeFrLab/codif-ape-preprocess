@@ -40,6 +40,7 @@ def graphic_designing_rule_7412Y_2025(
         "graphiste conception de supports",
         "infographiste",
         "graphisme",
+        "graphiste",
         "conseil graphique",
         "creation graphique"
         "conception graphique",
