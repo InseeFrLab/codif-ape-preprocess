@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,6 +26,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def graphic_designing_rule_7412Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "conseil en creation graphique",
         "design ergonomie",
@@ -38,6 +39,10 @@ def graphic_designing_rule_7412Y_2025(
         "designer graphiste",
         "graphiste conception de supports",
         "infographiste",
+        "graphisme",
+        "conseil graphique",
+        "creation graphique"
+        "conception graphique",
         "web designer",
         "logo",
         "charte graphique",

@@ -26,7 +26,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def it_programming_rule_6210Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    # methods = filter_methods(methods, exclude=["similarity"])
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "conception de site web developpement vente de solutions informatiques",
         "la creation de sites internet",

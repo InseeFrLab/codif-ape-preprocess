@@ -32,6 +32,8 @@ def data_analysis_rule_6310Y_2025(
         "architecture de donnees",
         "data architect",
         "data engineer",
+        "analyse de donnees",
+        "data",
         "hebergement d applications",
         "cloud computing",
         ("prestation de services en analyse de donnees data science "

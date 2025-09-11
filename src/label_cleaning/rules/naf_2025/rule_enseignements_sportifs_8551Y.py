@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,16 +26,18 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def sport_instruction_rule_8551Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "professeur de yoga",
         "coaching sportif",
+        "coach sportif",
+        "moniteur d equitation",
+        "monitateur equitation",
+        "moniteur de ski",
+        "professeur de natation",
         ("service de coaching conseil sportifs et nutritionnels "
          "individuel ou collectif vente de programmes sportifs "
          "et alimentaires personnalises"),
-        # "moniteur d equitation",
-        # "monitateur equitation",
-        # "moniteur de ski",
-        # "professeur de natation",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

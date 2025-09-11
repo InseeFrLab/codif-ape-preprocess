@@ -43,6 +43,9 @@ from src.utils.io import download_data
 from src.constants.paths import URL_OUTPUT_NAF2025, URL_REPORT_NAF2025, URL_SIRENE4_NAF2025
 from src.constants.targets import NACE_REV2_1_COLUMN
 
+URL_SIRENE4_NAF_2025 ="s3://projet-ape/data/08112022_27102024/naf2025/artifacts/data_cleaning/raw_cleansed_report_regex.parquet"
+URL_OUTPUT_NAF_2025 = "s3://projet-ape/extractions/domain_specific_cleaned/delta_report_20241027_sirene4_nace2025"
+
 
 def plot_distribution_before_after(
     input_path=URL_SIRENE4_NAF2025, output_path=URL_OUTPUT_NAF2025

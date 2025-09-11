@@ -9,10 +9,10 @@ from tqdm import tqdm
 
 # Libellés exemples: idée --> trouver le libellé moyen comme query
 libelles = [
-    "lmnp",
-    "loueur en meuble non professionnel",
-    "loueur bailleur non professionnel",
-    "location meublee non professionnelle",
+    "conseil informatique conseil en data science",
+    "consultant en data science",
+    "conseiller en analyse de donnees",
+    "coupeur de feu",
     "loueur meuble non professionnel",
     "loueurs en meubles non professionnels",
     "loueur en meubl non professionnel",
@@ -30,7 +30,7 @@ libelles = [
 ]
 
 # Phrase requête à comparer
-query = "lmnp"
+query = "conseil en data science"
 
 # Choix du périphérique
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -70,7 +70,7 @@ for idx, score in tqdm(zip(indices[0], D[0])):
     print(f"  - {libelles[idx]:35s} → Similarité = {score:.2f}")
 
 # ✅ Seuil suggéré pour test de variantes
-THRESHOLD = 0.75
+THRESHOLD = 0.9
 start = time.time()
 matches = [(libelles[i], s) for i, s in zip(indices[0], D[0]) if s >= THRESHOLD]
 end = time.time()

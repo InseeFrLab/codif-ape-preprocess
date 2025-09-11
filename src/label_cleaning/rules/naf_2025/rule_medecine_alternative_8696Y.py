@@ -14,7 +14,7 @@ from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
+from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
 
 
 @rule(
@@ -26,13 +26,14 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def alternative_therapy_rule_8696Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
+    methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
         "hypnotherapeute",
         "kinesiologie",
         "reflexologie",
-        # "psycho energeticien",
-        # "energeticien",
-        # "enertigicienne",
+        "psycho energeticien",
+        "energeticien",
+        "energeticienne",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
