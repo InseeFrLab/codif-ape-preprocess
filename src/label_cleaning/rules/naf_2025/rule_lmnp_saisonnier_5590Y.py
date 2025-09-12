@@ -35,6 +35,8 @@ def seasonal_lmnp_rule_5590Y_2025(
              "location meublee non professionnelle saisonniere",
              "lmnp location saisonniere",
              "location saisonniere",
+             "location meublee saisonniere",
+             "location meuble saisonniere",
              "locations saisonnieres",
              "lmnp de courte duree",
              "location de courte duree",]

@@ -26,7 +26,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def touristic_rental_rule_5520Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["similarity"])
+    methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = ["location d une residence secondaire",
              "residence secondaire",
              "loueur residence secondaire",
