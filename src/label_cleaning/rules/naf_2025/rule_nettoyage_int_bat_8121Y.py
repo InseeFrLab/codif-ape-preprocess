@@ -23,7 +23,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
     description="Règle nettoyage extérieur version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def interior_cleaning_rule_8122Y_2025(
+def interior_cleaning_rule_8121Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["fuzzy, similarity"])
