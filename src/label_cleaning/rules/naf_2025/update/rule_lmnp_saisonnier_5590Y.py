@@ -28,6 +28,16 @@ def seasonal_lmnp_rule_5590Y_2025(
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["similarity"])
     terms = ["loueur de meuble saisonnier",
+             "loueur de meuble saisonniere",
+             "loueur en meuble saisonniere",
+             "meublee saisonniere",
+             "meuble saisonnier",
+             "meubles saisonniers",
+             "meublees saisonnieres",
+             "profesionnel saisonniere",
+             "professionnel saisonnier",
+             "professionnelle saisonnier",
+             "professionnelle saisoniere",
              "location de meuble saisonnier",
              "lmnp saisonnier",
              "lmnp saisonniere",

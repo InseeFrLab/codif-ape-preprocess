@@ -27,7 +27,8 @@ def lmnp_rule_6820G_5590Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-        "location de logementacquisition et mise en location d'un bien immobilier",
+        "location de logement",
+        "acquisition et mise en location d'un bien immobilier",
         "lmnp",
         "lmnp au regime reel simplifie d imposition",
         "loueur en meuble non professionnel",

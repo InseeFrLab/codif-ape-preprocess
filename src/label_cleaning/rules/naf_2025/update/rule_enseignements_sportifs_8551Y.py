@@ -29,7 +29,7 @@ def sport_instruction_rule_8551Y_2025(
     methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "professeur de yoga",
-        "moniteur de",
+        "moniteur sportif",
         "instructeur sportif",
         "coaching sportif",
         "coach sportif",

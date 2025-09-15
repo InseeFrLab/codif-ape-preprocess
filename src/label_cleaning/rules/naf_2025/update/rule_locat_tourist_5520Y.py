@@ -28,6 +28,11 @@ def touristic_rental_rule_5520Y_2025(
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = ["location d une residence secondaire",
+             "location touristique",
+             "location meuble de tourisme",
+             "meuble tourisme",
+             "meubles touristiques",
+             "residence touristique",
              "residence secondaire",
              "loueur residence secondaire",
              "hebergement touristique et autre hébergement de courte duree",
@@ -36,6 +41,8 @@ def touristic_rental_rule_5520Y_2025(
              "location de bungalows",
              "location d un gite",
              "location de gite",
+             "location meublee avec prestation para hoteliere"
+             "loueur de gite",
              "auberge de jeunesse",
              "bed and breakfast",
              "chambre d hote",

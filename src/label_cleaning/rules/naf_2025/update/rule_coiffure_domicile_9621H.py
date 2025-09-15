@@ -32,6 +32,11 @@ def home_hairdresser_rule_9621H_2025(
         "coiffeur mixte a domicile",
         "coiffeuse mixte a domicile",
         "coiffure hors salons",
+        "coiffure hors salon",
+        "coiffeur hors salon",
+        "coiffeuse hors salon",
+        "coiffeur hors salons",
+        "coiffeuse hors salons",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
