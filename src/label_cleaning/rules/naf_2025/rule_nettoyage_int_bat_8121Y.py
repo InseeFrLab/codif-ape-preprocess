@@ -18,15 +18,15 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="exterior_cleaning_assignment_2025",
+    name="interior_cleaning_assignment_2025",
     tags=["naf_2025"],
-    description="Règle nettoyage extérieur version NAF 2025",
+    description="Règle nettoyage intérieur version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
 def interior_cleaning_rule_8121Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["fuzzy, similarity"])
+    methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
         "nettoyage courant des batiments",
         "nettoyage des interieur des batiments",
