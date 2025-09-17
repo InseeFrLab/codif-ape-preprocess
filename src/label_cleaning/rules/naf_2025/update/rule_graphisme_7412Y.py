@@ -46,6 +46,8 @@ def graphic_designing_rule_7412Y_2025(
         "conception graphique",
         "web designer",
         "logo",
+        "logos",
+        "concepteur graphique",
         "charte graphique",
         "identite graphique",
         "pictogramme",
