@@ -26,7 +26,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def bovine_breeding_rule_0142Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["fuzzy"])
+    methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
         "elevage de bovin",
         "elevage bovin",
