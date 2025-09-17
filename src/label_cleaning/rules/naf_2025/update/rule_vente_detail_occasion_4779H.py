@@ -26,7 +26,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def retailing_second_hand_goods_4779H_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    # methods = filter_methods(methods, exclude=["similarity"])
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "achat revente sur internet de livres d occasion",
         "achat vente de vinyles d'occasion en ligne",

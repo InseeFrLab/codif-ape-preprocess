@@ -50,6 +50,8 @@ def alternative_therapy_rule_8696Y_2025(
         "osteopathie",
         "osteopathe",
         "cristallotheraphie",
+        "cristalotherapie",
+        "lithotherapie",
         "iridologie",
         "radionique",
         "guerisseur",
