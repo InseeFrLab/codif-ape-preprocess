@@ -1,8 +1,9 @@
-import pandas as pd
+# enable cudf pandas acceleration on gpu
+import cudf as pd
 import torch
 from rapidfuzz import fuzz
 from sentence_transformers import SentenceTransformer
-from pandarallel import pandarallel
+# from pandarallel import pandarallel: map --> parallel_map
 
 from src.constants.models import SENTENCE_MODEL_NAME, BATCH_SIZE
 from src.constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
@@ -11,7 +12,7 @@ from src.constants.thresholds import FUZZY_THRESHOLD, SIM_THRESHOLD
 _MODEL: SentenceTransformer | None = None
 
 # Initialize parallelization of pandas df
-pandarallel.initialize(nb_workers=30, verbose=2, use_memory_fs=False)
+# pandarallel.initialize(nb_workers=30, verbose=2, use_memory_fs=False)
 
 
 def _get_model(name):
@@ -40,7 +41,7 @@ def fuzzy_mask(
     series: pd.Series, terms: list[str], threshold=FUZZY_THRESHOLD
 ) -> pd.Series:
     """Mask where any term fuzzily matches above threshold."""
-    return series.fillna("").parallel_map(
+    return series.fillna("").map(
         lambda s: any(fuzz.QRatio(s, t) >= threshold for t in terms)
     )
 
