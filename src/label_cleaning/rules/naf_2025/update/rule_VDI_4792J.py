@@ -26,10 +26,10 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def distance_selling_4792J_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["similarity"])
+    methods = filter_methods(methods, exclude=["regex", "similarity"])
     terms = [
-        "vdi",
-        "vente a domicile",
+        "vendeur a domicile vdi",
+        "conseiller vdi mandataire au sein de vorwerk france",
         "vente a distance sur catalogue specialise",
     ]
 
