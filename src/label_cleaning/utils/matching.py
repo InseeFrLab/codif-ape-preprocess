@@ -1,5 +1,6 @@
 # enable cudf pandas acceleration on gpu
-import cudf as pd
+import cudf
+import pandas as pd
 import torch
 from rapidfuzz import fuzz
 from sentence_transformers import SentenceTransformer
@@ -34,6 +35,7 @@ def _get_model(name):
 
 def regex_mask(series: pd.Series, pattern: str) -> pd.Series:
     """Vectorised regex match."""
+    series = cudf.from_pandas(series)
     return series.str.contains(pattern, case=False, regex=True, na=False)
 
 
@@ -41,6 +43,7 @@ def fuzzy_mask(
     series: pd.Series, terms: list[str], threshold=FUZZY_THRESHOLD
 ) -> pd.Series:
     """Mask where any term fuzzily matches above threshold."""
+    series = cudf.from_pandas(series)
     return series.fillna("").map(
         lambda s: any(fuzz.QRatio(s, t) >= threshold for t in terms)
     )
