@@ -29,6 +29,8 @@ def distance_selling_4792J_2025(
     methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "vdi",
+        "vente a domicile",
+        "vente a distance sur catalogue specialise",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
