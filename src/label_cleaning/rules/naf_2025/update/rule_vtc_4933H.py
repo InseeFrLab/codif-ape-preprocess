@@ -12,9 +12,12 @@ import pandas as pd
 
 from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
-
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
+from src.label_cleaning.utils.rules import (
+    build_match_mask,
+    build_matcher_kwargs,
+    filter_methods,
+)
 
 
 @rule(
@@ -36,14 +39,18 @@ def tourists_driver_rule_4933H_2025(
         "location de voiture avec chauffeur",
         "vehicule avec chauffeur",
         "vehicules avec chauffeur",
+        "voiture avec chauffeur",
+        "voitures avec chauffeur",
         "location privee de voiture avec chauffeur",
         "voiture de tourisme avec chauffeur",
         "voiture de transport avec chauffeur",
         "vehicule de tourisme avec chauffeur",
         "autre transport de personnes sur demande par véhicule avec chauffeur",
         "vtc",
-        ("voiture avec chauffeur le trajet et "
-         "les conditions tarifaires etant fixees avant la course"),
+        (
+            "voiture avec chauffeur le trajet et "
+            "les conditions tarifaires etant fixees avant la course"
+        ),
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
