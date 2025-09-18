@@ -12,7 +12,6 @@ import pandas as pd
 
 from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
-
 from src.label_cleaning.core.decorators import rule, track_changes
 from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs
 
@@ -45,7 +44,7 @@ def lmnp_rule_6820G_5590Y_2025(
         "location en meuble",
         "location immobiliere en meuble",
         "location meublee",
-        "location meublee 6820A"
+        "location meublee 6820A",
         "location meublee en residence de services avec bail commercial",
         "location meublee non professionel",
         "location meublee non professionnelle",
