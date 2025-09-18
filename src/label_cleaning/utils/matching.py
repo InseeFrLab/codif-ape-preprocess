@@ -2,6 +2,7 @@
 # import cudf
 import pandas as pd
 import torch
+import torch.nn as nn
 from pandarallel import pandarallel
 from rapidfuzz import fuzz
 from sentence_transformers import SentenceTransformer
@@ -16,20 +17,18 @@ _MODEL: SentenceTransformer | None = None
 pandarallel.initialize(nb_workers=30, verbose=2, use_memory_fs=False)
 
 
-def _get_model(name):
-    global _MODEL, device
+def _get_model(model_name: str) -> nn.Module:
+    """Load model with automatic multi-GPU support."""
+    global _MODEL, _DEVICE
     if _MODEL is None:
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"🚀 Using device: {device}")
-
-        dtype = "float16" if device.type == "cuda" else "float32"
-        attn = "sdpa"  # fallback sûr, fonctionne sur CPU comme sur GPU
-
-        _MODEL = SentenceTransformer(
-            name,
-            device=str(device),
-            model_kwargs={"attn_implementation": attn, "torch_dtype": dtype},
-        )
+        _DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        model = SentenceTransformer(model_name)
+        if torch.cuda.device_count() > 1:
+            print(f"🚀 Using {torch.cuda.device_count()} GPUs")
+            model = nn.DataParallel(model)
+        else:
+            print(f"🚀 Using device: {_DEVICE}")
+        _MODEL = model.to(_DEVICE)
     return _MODEL
 
 
@@ -58,13 +57,18 @@ def similarity_mask(
 ) -> pd.Series:
     """Mask where max cosine similarity to any term ≥ threshold."""
     model = _get_model(model_name)
+    base_model = model.module if isinstance(model, nn.DataParallel) else model
+
     texts = series.fillna("").tolist()
-    term_vecs = model.encode(
+
+    term_vecs = base_model.encode(
         terms, convert_to_tensor=True, batch_size=batch_size, normalize_embedding=True
-    ).to(device)
-    text_vecs = model.encode(
+    ).to(_DEVICE)
+
+    text_vecs = base_model.encode(
         texts, convert_to_tensor=True, batch_size=batch_size, normalize_embedding=True
-    ).to(device)
-    sims = (text_vecs @ term_vecs.T).max(axis=1).values
+    ).to(_DEVICE)
+
+    sims = (text_vecs @ term_vecs.T).max(dim=1).values
     torch.cuda.empty_cache()
     return pd.Series(sims.cpu().numpy() >= threshold, index=series.index)
