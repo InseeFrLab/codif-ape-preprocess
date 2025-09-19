@@ -12,9 +12,12 @@ import pandas as pd
 
 from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
 from src.constants.targets import NACE_REV2_1_COLUMN
-
 from src.label_cleaning.core.decorators import rule, track_changes
-from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwargs, filter_methods
+from src.label_cleaning.utils.rules import (
+    build_match_mask,
+    build_matcher_kwargs,
+    filter_methods,
+)
 
 
 @rule(
@@ -26,11 +29,19 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 def business_finders_rule_8240Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["fuzzy"])
-    terms = ["apporteur d affaires",
-             ("mise en relation des clients et des prestataires de services moyennant"
-              " des honoraires ou des commissions"),
-             ]
+    methods = filter_methods(methods, exclude=["regex"])
+    terms = [
+        "apporteur d affaires",
+        "apporteur d affaire",
+        "apporteur et suivie d affaires",
+        "apporteur d affaires conseils",
+        "apporteur d affaire mise en relation commerciale",
+        "rapporteur d affaires",
+        (
+            "mise en relation des clients et des prestataires de services moyennant"
+            " des honoraires ou des commissions"
+        ),
+    ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
