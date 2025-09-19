@@ -29,7 +29,7 @@ from src.label_cleaning.utils.rules import (
 def distance_selling_4792J_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
-    methods = filter_methods(methods, exclude=["regex", "similarity"])
+    methods = filter_methods(methods, exclude=["similarity"])
     terms = [
         "vendeur a domicile vdi",
         "conseiller vdi mandataire au sein de vorwerk france",
