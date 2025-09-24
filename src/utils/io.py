@@ -12,6 +12,7 @@ from qdrant_client import QdrantClient, models
 from src.constants import (
     CATEGORICAL_FEATURES,
     COL_RENAMING,
+    COLLECTION_NAME,
     NACE_REV2_1_COLUMN,
     NACE_REV2_COLUMN,
     SURFACE_COLS,
@@ -19,7 +20,6 @@ from src.constants import (
     TEXTUAL_FEATURES,
     URL_MAPPINGS,
     URL_SHARED_CONSTANTS,
-    COLLECTION_NAME,
 )
 from src.utils.logger import get_logger
 
@@ -56,7 +56,6 @@ def download_parquet(
             pq.write_table(pa.Table.from_pandas(data), path)
         return ds.dataset(path, format="parquet", filesystem=fs).to_table().to_pandas()
     else:
-        print(path)
         return pd.read_parquet(path, filesystem=fs)
 
 
@@ -218,9 +217,9 @@ def get_qdrant_client() -> QdrantClient:
     )
 
 
-def ensure_collection_exists(client: QdrantClient,
-                             collection_name: str = COLLECTION_NAME,
-                             vector_size: int = 384):
+def ensure_collection_exists(
+    client: QdrantClient, collection_name: str = COLLECTION_NAME, vector_size: int = 384
+):
     """
     Ensures a Qdrant collection exists with the specified configuration.
 
@@ -237,16 +236,20 @@ def ensure_collection_exists(client: QdrantClient,
     except Exception:
         client.recreate_collection(
             collection_name=collection_name,
-            vectors_config=models.VectorParams(size=vector_size, distance=models.Distance.COSINE)
+            vectors_config=models.VectorParams(
+                size=vector_size, distance=models.Distance.COSINE
+            ),
         )
         logger.info(f"✨ Collection '{collection_name}' created successfully.")
 
 
-def import_points(client: QdrantClient,
-                  embeddings: list,
-                  ids: list,
-                  texts: list,
-                  collection_name: str = COLLECTION_NAME):
+def import_points(
+    client: QdrantClient,
+    embeddings: list,
+    ids: list,
+    texts: list,
+    collection_name: str = COLLECTION_NAME,
+):
     """
     Imports embeddings, their IDs, and associated text (payload) into the collection.
 
@@ -258,17 +261,19 @@ def import_points(client: QdrantClient,
         collection_name (str): The name of the collection to import to.
     """
     points = [
-        models.PointStruct(id=i, vector=vec, payload={'text': text})
+        models.PointStruct(id=i, vector=vec, payload={"text": text})
         for i, vec, text in zip(ids, embeddings, texts)
     ]
     client.upsert(collection_name=collection_name, points=points)
-    logger.info(f"✅ {len(points)} points successfully imported"
-                " into collection '{collection_name}'.")
+    logger.info(
+        f"✅ {len(points)} points successfully imported"
+        " into collection '{collection_name}'."
+    )
 
 
-def get_all_vectors_with_payload(client: QdrantClient,
-                                 collection_name: str = COLLECTION_NAME,
-                                 limit: int = 2000000) -> tuple[list, list, list]:
+def get_all_vectors_with_payload(
+    client: QdrantClient, collection_name: str = COLLECTION_NAME, limit: int = 2000000
+) -> tuple[list, list, list]:
     """
     Retrieves all vectors, their IDs, and text payload from a collection.
 
@@ -286,14 +291,16 @@ def get_all_vectors_with_payload(client: QdrantClient,
         collection_name=collection_name,
         limit=limit,
         with_vectors=True,
-        with_payload=True
+        with_payload=True,
     )
     vectors = [point.vector for point in all_points]
     ids = [point.id for point in all_points]
-    texts = [point.payload.get('text') for point in all_points]
+    texts = [point.payload.get("text") for point in all_points]
 
-    logger.info(f"✅ {len(vectors)} vectors, IDs, and payloads"
-                " retrieved from collection '{collection_name}'.")
+    logger.info(
+        f"✅ {len(vectors)} vectors, IDs, and payloads"
+        " retrieved from collection '{collection_name}'."
+    )
 
     return vectors, ids, texts
 
@@ -325,9 +332,9 @@ def get_text_to_id_mapping(client: QdrantClient, collection_name: str) -> dict:
     return _TEXT_TO_ID_MAPPING
 
 
-def get_embeddings_by_text(series: pd.Series,
-                           client: QdrantClient,
-                           collection_name: str) -> pd.Series:
+def get_embeddings_by_text(
+    series: pd.Series, client: QdrantClient, collection_name: str
+) -> pd.Series:
     """
     Given a pd.Series of strings, returns a pd.Series containing the associated embeddings
     from the Qdrant collection.
@@ -344,13 +351,17 @@ def get_embeddings_by_text(series: pd.Series,
     """
     text_to_id_mapping = get_text_to_id_mapping(client, collection_name)
 
-    target_ids = [text_to_id_mapping[text] for text in series if text in text_to_id_mapping]
+    target_ids = [
+        text_to_id_mapping[text] for text in series if text in text_to_id_mapping
+    ]
 
     if not target_ids:
         print("❌ None of the provided texts were found in the collection.")
-        return pd.Series(dtype='object')
+        return pd.Series(dtype="object")
 
-    points = client.retrieve(collection_name=collection_name, ids=target_ids, with_vectors=True)
+    points = client.retrieve(
+        collection_name=collection_name, ids=target_ids, with_vectors=True
+    )
 
     embeddings = [point.vector for point in points]
     result_series = pd.Series(embeddings, index=target_ids)
