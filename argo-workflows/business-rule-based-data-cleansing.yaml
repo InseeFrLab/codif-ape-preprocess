@@ -44,6 +44,8 @@ spec:
                     operator: In
                     values:
                       - NVIDIA-H100-NVL
+                      - NVIDIA-H100-PCIe
+                      - NVIDIA-A2
       container:
         image: inseefrlab/onyxia-vscode-pytorch:py3.12.11-gpu
         imagePullPolicy: IfNotPresent
@@ -51,7 +53,7 @@ spec:
           limits:
             nvidia.com/gpu: 1
           requests:
-            cpu: "30" 
+            cpu: "10" 
         command: ["/bin/bash", -c]
         args:
           - |
