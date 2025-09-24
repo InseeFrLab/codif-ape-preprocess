@@ -87,14 +87,14 @@ def split(revision, test_size=0.2):
         df,
         test_size=test_size,
         random_state=0,
-        shuffle=False,
+        shuffle=True,
     )
 
     df_train, df_val = train_test_split(
         df_train,
         test_size=test_size,
         random_state=0,
-        shuffle=False,
+        shuffle=True,
     )
 
     df_train = pd.concat([df_train, df_naf], axis=0)
