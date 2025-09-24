@@ -1,3 +1,5 @@
+"""Run using uv run -m src.preprocessing.preprocess --revision NAF2025 from root"""
+
 import argparse
 
 from src.constants.paths import FOLDER, PREFIX
