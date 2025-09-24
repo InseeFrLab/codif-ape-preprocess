@@ -6,6 +6,8 @@ COL_RENAMING = {
     "activ_perm_et": "CRT",  # specific to sirene 4
     "activ_sec_agri_et_clean": "AGRI",  # specific to sirene 4 - textual feature
     "activ_nat_lib_et_clean": "NAT_LIB",  # specific to sirene 4 - textual feature
+    "activ_sec_agri_et_cleaned": "AGRI",
+    "activ_nat_lib_et_cleaned": "NAT_LIB",
 }
 
 SURFACE_COLS = ["SRF"]
