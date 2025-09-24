@@ -32,20 +32,23 @@ def split(revision, test_size=0.2):
     else:
         raise ValueError("Revision must be either 'NAF2008' or 'NAF2025'.")
 
+    Y = NACE_REV2_COLUMN if revision == "NAF2008" else NACE_REV2_1_COLUMN
+
     fs = get_filesystem()
 
     logger.info(f"🔎 Reading raw cleansed data from {path_raw_cleansed}")
     df = pq.read_table(path_raw_cleansed, filesystem=fs).to_pandas()
 
     df = df.rename(columns=COL_RENAMING)
+    df[Y] = df[Y].str.upper()  # Uppercase the NACE code
 
     df_naf = download_parquet(
         URL_DF_NAF2008 if revision == "NAF2008" else URL_DF_NAF2025
     )
 
-    Y = NACE_REV2_COLUMN if revision == "NAF2008" else NACE_REV2_1_COLUMN
-
+    # Keep only relevant columns
     df = df[[Y, TEXT_FEATURE] + TEXTUAL_FEATURES + CATEGORICAL_FEATURES]
+
     df_naf = clean_df_naf(
         df_naf,
         text_feature=TEXT_FEATURE,
@@ -57,14 +60,18 @@ def split(revision, test_size=0.2):
     if TEXTUAL_FEATURES is not None:
         variables += TEXTUAL_FEATURES
         for feature in TEXTUAL_FEATURES:
-            df[feature] = df[feature].fillna(value="")
+            df[feature] = df[feature].fillna(
+                value=""
+            )  # empty string - will be concatenated to the main text feature
     if CATEGORICAL_FEATURES is not None:
         variables += CATEGORICAL_FEATURES
         for feature in CATEGORICAL_FEATURES:
             if feature not in SURFACE_COLS:
                 df[feature] = df[feature].fillna(value="NaN")
 
-    df = df.dropna(subset=[Y] + [TEXT_FEATURE], axis=0)
+    df = df.dropna(
+        subset=[Y] + [TEXT_FEATURE], axis=0
+    )  # drop rows where Y or main text feature is NaN
 
     for col in SURFACE_COLS:
         if col in df.columns:
@@ -73,10 +80,11 @@ def split(revision, test_size=0.2):
 
     df[TEXT_FEATURE] = df[TEXT_FEATURE] + df[TEXTUAL_FEATURES].apply(
         lambda x: " ".join(x), axis=1
-    )  # drop the textual additional var as they are already concatenated to the libelle
+    )  # concatenate all textual features into the main text feature
+    df = df.drop(columns=TEXTUAL_FEATURES)  # drop them
 
     df_train, df_test = train_test_split(
-        df.drop(columns=TEXTUAL_FEATURES),
+        df,
         test_size=test_size,
         random_state=0,
         shuffle=False,
@@ -90,6 +98,17 @@ def split(revision, test_size=0.2):
     )
 
     df_train = pd.concat([df_train, df_naf], axis=0)
+
+    for dff, name in zip(
+        [df_train, df_val, df_test], ["df_train", "df_val", "df_test"]
+    ):
+        assert len(set(dff[Y].unique()) - set(df_naf[Y].unique())) == 0, (
+            f"Some NACE codes in {name} are not in df_naf: {set(dff[Y].unique()) - set(df_naf[Y].unique())}"
+        )
+
+    assert len(set(df_naf[Y].unique()) - set(df_train[Y].unique())) == 0, (
+        f"Some NACE codes in df_naf are not in df_train: {set(df_naf[Y].unique()) - set(df_train[Y].unique())}"
+    )
 
     # # Adding the true labels to the training set
     logger.info("✅ Data split into train, val and test sets.")
