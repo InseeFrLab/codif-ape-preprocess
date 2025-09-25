@@ -30,7 +30,7 @@ def distance_selling_4778H_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["regex", "similarity"])
-    TEXTUAL_INPUTS_CLEANED.remove("NAT_LIB")
+    TEXTUAL_INPUTS_CLEANED.remove("activ_nat_lib_et_clean")
     terms = [
         "vente a distance",
         "vente a distance via internet",
