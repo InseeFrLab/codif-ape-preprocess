@@ -36,6 +36,8 @@ def retailing_clothers_4771Y_2025(
         "vente sur internet de pret a porter",
         "vente de pret a porter sur internet",
         "vente de vetements",
+        "vente a distance de vetements",
+        "vente a domicile de vetements",
         "vente de sous vetements",
         "vente de vetements en ligne",
         "vente de vetements sur internet",

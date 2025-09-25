@@ -1,5 +1,5 @@
 """
-Assign NAF 2025 codes for distance selling.
+Assign NAF 2025 codes for door-to-door selling.
 
 Matching configuration and mask logic are delegated to utils/rules.py
 for reusability. See:
@@ -21,12 +21,12 @@ from src.label_cleaning.utils.rules import (
 
 
 @rule(
-    name="distance_selling_2025",
+    name="door2door_selling_2025",
     tags=["naf_2025"],
-    description="Règle vente à distance version NAF 2025",
+    description="Règle vente à domicile indépendant version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def distance_selling_4792J_2025(
+def door2door_selling_4792J_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["similarity"])
@@ -45,6 +45,9 @@ def distance_selling_4792J_2025(
         "vdi mandataire pour monat france",
         "conseillere vdi mandataire au sein de happymix",
         "vente a domicile sous statut vdi",
+        "vente a domicile",
+        "vendeur a domicile",
+        "vendeur a domicile independant",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
