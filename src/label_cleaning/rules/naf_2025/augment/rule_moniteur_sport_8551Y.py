@@ -55,7 +55,7 @@ def augment_sport_education_8551Y(df: pd.DataFrame, methods=None, methods_params
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug8551Y{i}S",
+            "liasse_numero": f"Jaug8551Y{i}",
             "libelle": label,
             NACE_REV2_1_COLUMN: "8551Y",
         })

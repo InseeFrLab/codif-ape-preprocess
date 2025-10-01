@@ -30,6 +30,7 @@ def door2door_selling_4792J_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["similarity"])
+    TEXTUAL_INPUTS_CLEANED.remove("activ_nat_lib_et_cleaned")
     terms = [
         "vendeur a domicile vdi",
         "conseiller vdi mandataire au sein de vorwerk france",

@@ -21,6 +21,14 @@ from src.constants.targets import NACE_REV2_1_COLUMN
 def augment_distant_selling_4778H(df: pd.DataFrame, methods=None, methods_params=None, n=1000):
     base_labels = [
         "vente à distance",
+        "vente a distance via internet",
+        "activite de vente a distance",
+        "vente a distance des produits diversifies",
+        "vente a distance sur catalogue",
+        "vente a distance sur catalogue general",
+        "vente a distance catalogue general",
+        "vente a distance sur catalogue specialise",
+        "vente a distance specialise",
     ]
 
     # synthetic generation
@@ -28,7 +36,7 @@ def augment_distant_selling_4778H(df: pd.DataFrame, methods=None, methods_params
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug4778H{i}S",
+            "liasse_numero": f"Jaug4778H{i}",
             "libelle": label,
             NACE_REV2_1_COLUMN: "4778H",
         })

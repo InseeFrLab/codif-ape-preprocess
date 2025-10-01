@@ -49,7 +49,7 @@ def augment_package_delivery_6820G(df: pd.DataFrame, methods=None, methods_param
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug5320G{i}S",
+            "liasse_numero": f"Jaug5320G{i}",
             "libelle": label,
             NACE_REV2_1_COLUMN: "5320G",
         })

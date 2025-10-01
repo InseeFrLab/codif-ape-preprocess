@@ -59,7 +59,7 @@ def augment_meal_delivery_5320H(df: pd.DataFrame, methods=None, methods_params=N
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug5320H{i}S",
+            "liasse_numero": f"Jaug5320H{i}",
             "libelle": label,
             NACE_REV2_1_COLUMN: "5320H",
         })

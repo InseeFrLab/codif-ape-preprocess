@@ -70,7 +70,7 @@ def augment_services2individuals_9699H(df: pd.DataFrame, methods=None, methods_p
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug9699H{i}S",
+            "liasse_numero": f"Jaug9699H{i}",
             "libelle": label,
             NACE_REV2_1_COLUMN: "9699H",
         })
