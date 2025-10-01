@@ -126,7 +126,16 @@ def track_new(extra_cols=None, column: str = "nace2025"):
         @wraps(func)
         def wrapper(df: pd.DataFrame, *args, **kwargs):
             old_len = len(df)
-            df_out = func(df, *args, **kwargs)
+            result = func(df, *args, **kwargs)
+            if isinstance(result, tuple) and len(result) == 2:
+                df_out, mask = result
+            elif isinstance(result, pd.DataFrame):
+                df_out = result
+            else:
+                raise ValueError(
+                    "Rule decorated with @track_new must return a pd.DataFrame "
+                    "or a tuple (pd.DataFrame, pd.Series/list/np.array)."
+                )
 
             new_idx = list(range(old_len, len(df_out)))
             if not new_idx:

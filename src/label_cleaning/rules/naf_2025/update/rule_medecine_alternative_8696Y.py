@@ -59,6 +59,8 @@ def alternative_therapy_rule_8696Y_2025(
         "reiki",
         "guerison par les cristaux",
         "choromotherapie",
+        "medecine traditionnelle",
+        "medecine traditionnelle chinoise"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
