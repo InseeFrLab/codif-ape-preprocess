@@ -15,10 +15,10 @@ from src.constants.targets import NACE_REV2_1_COLUMN
 
 
 @rule(name="augment_sport_education",
-      tags=["naf_2008"],
+      tags=["naf_2025"],
       description="Oversample synthetic rows for sport education => 8551Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_sport_education_8551Y(df: pd.DataFrame, methods=None, methods_params=None, n=100):
+def augment_sport_education_8551Y(df: pd.DataFrame, methods=None, methods_params=None, n=1000):
     base_labels = [
         "moniteur de ski",
         "moniteur de tennis",

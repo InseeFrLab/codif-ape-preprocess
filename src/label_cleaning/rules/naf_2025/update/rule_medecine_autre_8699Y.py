@@ -1,5 +1,5 @@
 """
-Assign NAF 2025 codes for handymen.
+Assign NAF 2025 codes for other medicine.
 
 Matching configuration and mask logic are delegated to utils/rules.py
 for reusability. See:
@@ -18,31 +18,31 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="handymen_assignment_2025",
+    name="other_medicine_assignment_2025",
     tags=["naf_2025"],
-    description="Règle hommes toutes mains version NAF 2025",
+    description="Règle médecine autre version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def handymen_rule_8110Y_2025(
+def specialty_medicine_other_8699Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["similarity"])
     terms = [
-        "homme toutes mains",
-        "homme tout main",
-        "hommes a toutes mains",
-        "multiservice",
-        "multiservices",
-        "multi service",
-        "multi services",
-        "petits bricolages",
-        "petit bricolage",
-        "petit bricolages",
-        "petits bricolage",
+        "psychomotricien",
+        "psychomotricienne",
+        ("psychomotricienne diplomee d etat realisant des bilans "
+         "psychomoteurs puis proposant une prise en charge en lien"),
+        "psychomotricite",
+        "orthophonie",
+        "orthophoniste",
+        "orthophoniste liberale",
+        "orthophoniste liberal",
+        "orthophoniste remplacant",
+        "orthophoniste remplacante",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8110Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8699Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

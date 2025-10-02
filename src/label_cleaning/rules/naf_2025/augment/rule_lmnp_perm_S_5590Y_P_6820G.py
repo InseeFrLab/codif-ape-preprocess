@@ -72,6 +72,12 @@ def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=
             "activ_perm_et": "P",
             NACE_REV2_1_COLUMN: "6820G",
         })
+        new_rows.append({
+            "liasse_numero": f"JaugLMNP{i}",
+            "libelle": label,
+            "activ_perm_et": "NaN",
+            NACE_REV2_1_COLUMN: "6820G",
+        })
 
     new_df = pd.DataFrame(new_rows)
     print(new_df)
