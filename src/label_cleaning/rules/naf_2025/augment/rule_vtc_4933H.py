@@ -18,7 +18,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_2025"],
       description="Oversample synthetic rows for car rentals with driver => 4933H")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_vtc_4933H(df: pd.DataFrame, methods=None, methods_params=None, n=10000):
+def augment_vtc_4933H(df: pd.DataFrame, methods=None, methods_params=None, n=100000):
     base_labels = [
        "location de voiture avec chauffeur",
        "location de voitures avec chauffeur",

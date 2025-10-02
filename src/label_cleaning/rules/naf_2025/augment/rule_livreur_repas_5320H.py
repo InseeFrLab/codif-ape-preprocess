@@ -18,7 +18,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_2025"],
       description="Oversample synthetic rows for meal delivery => 5320H")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_meal_delivery_5320H(df: pd.DataFrame, methods=None, methods_params=None, n=1000):
+def augment_meal_delivery_5320H(df: pd.DataFrame, methods=None, methods_params=None, n=10000):
     base_labels = [
         "livreur uber eat",
         "livreur uber east",

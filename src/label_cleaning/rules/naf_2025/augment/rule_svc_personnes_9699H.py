@@ -18,7 +18,10 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_2025"],
       description="Oversample synthetic rows for sport education => 9699H")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_services2individuals_9699H(df: pd.DataFrame, methods=None, methods_params=None, n=1000):
+def augment_services2individuals_9699H(df: pd.DataFrame,
+                                       methods=None,
+                                       methods_params=None,
+                                       n=10000):
     base_labels = [
         "Wedding planner",
         "Activité de voyance, tarologie, conseils spirituels auprès de particuliers",

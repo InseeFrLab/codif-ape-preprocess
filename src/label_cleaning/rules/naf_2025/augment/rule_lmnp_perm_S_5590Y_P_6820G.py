@@ -19,7 +19,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_2025"],
       description="Oversample synthetic rows for LMNP - perm=S => 5590Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=None, n=10000):
+def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=None, n=100000):
     base_labels = [
         "location de logement",
         "acquisition et mise en location d'un bien immobilier",
@@ -35,6 +35,8 @@ def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=
         "location d un logement meuble",
         "location de logements meubles",
         "location de logements meubles non professionelle de longue duree",
+        "location de logements meubles non professionel",
+        "location de logements meubles non professionelle",
         "location d un meuble",
         "location en meuble",
         "location immobiliere en meuble",
@@ -73,9 +75,8 @@ def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=
             NACE_REV2_1_COLUMN: "6820G",
         })
         new_rows.append({
-            "liasse_numero": f"JaugLMNP{i}",
+            "liasse_numero": f"JaugLMNP{i}P",
             "libelle": label,
-            "activ_perm_et": "NaN",
             NACE_REV2_1_COLUMN: "6820G",
         })
 

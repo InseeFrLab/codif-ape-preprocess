@@ -49,7 +49,9 @@ def seasonal_lmnp_rule_5590Y_2025(
              "location meuble saisonniere",
              "locations saisonnieres",
              "lmnp de courte duree",
-             "location de courte duree",]
+             "location de courte duree"
+             "5590Y",
+             ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)

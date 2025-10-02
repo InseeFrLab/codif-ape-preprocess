@@ -1,5 +1,5 @@
 """
-    Generate n synthetic rows with cleaning-related labels for oversampling 4778H.
+    Generate n synthetic rows with cleaning-related labels for oversampling 8110Y.
 
     Args:
         df (pd.DataFrame): Input dataset.
@@ -14,21 +14,24 @@ from src.label_cleaning.core.decorators import rule, track_new
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 
-@rule(name="augment_sport_events",
+@rule(name="augment_handymen",
       tags=["naf_2025"],
-      description="Oversample synthetic rows for distant selling => 4778H")
+      description="Oversample synthetic rows for handymen => 8110Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_distant_selling_4778H(df: pd.DataFrame, methods=None, methods_params=None, n=10000):
+def augment_handymen_8110Y(df: pd.DataFrame, methods=None, methods_params=None, n=10000):
     base_labels = [
-        "vente à distance",
-        "vente a distance via internet",
-        "activite de vente a distance",
-        "vente a distance des produits diversifies",
-        "vente a distance sur catalogue",
-        "vente a distance sur catalogue general",
-        "vente a distance catalogue general",
-        "vente a distance sur catalogue specialise",
-        "vente a distance specialise",
+        "homme toutes mains",
+        "homme tout main",
+        "hommes a toutes mains",
+        "multiservice",
+        "multiservices",
+        "multi service",
+        "multi services",
+        "petits bricolages",
+        "petit bricolage",
+        "petit bricolages",
+        "petits bricolage",
+        "travaux de petit bricolage",
     ]
 
     # synthetic generation
@@ -36,9 +39,9 @@ def augment_distant_selling_4778H(df: pd.DataFrame, methods=None, methods_params
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug4778H{i}",
+            "liasse_numero": f"Jaug8110Y{i}",
             "libelle": label,
-            NACE_REV2_1_COLUMN: "4778H",
+            NACE_REV2_1_COLUMN: "8110Y",
         })
 
     new_df = pd.DataFrame(new_rows)
