@@ -57,4 +57,4 @@ def apply_rules(training_data, tag, methods=None, methods_params=None):
     all_journals = mods_journals + create_journals
     final_journal = pd.concat(all_journals, ignore_index=True) if all_journals else pd.DataFrame()
 
-    return training_data, final_journal
+    return training_data, final_journal, mods_journals, create_journals

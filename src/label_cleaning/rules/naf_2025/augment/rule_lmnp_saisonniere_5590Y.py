@@ -1,6 +1,6 @@
 """
     Generate n synthetic rows with cleaning-related labels
-    for oversampling LMNP with PERM S and PERM P.
+    for oversampling seasonal LMNP .
 
     Args:
         df (pd.DataFrame): Input dataset.
@@ -19,13 +19,14 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_2025"],
       description="Oversample synthetic rows for LMNP - saisonniere => 5590Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_LMNP_saisonniere_5590Y_(df: pd.DataFrame, methods=None, methods_params=None, n=100000):
+def augment_seasonal_LMNP_5590Y(df: pd.DataFrame, methods=None, methods_params=None, n=200000):
     base_labels = [
         "location de logement saisonniere",
         "acquisition et mise en location d'un bien immobilier saisonnier",
         "lmnp saisonniere",
         "lmnp saisonniere au regime reel simplifie d imposition",
         "loueur en meuble non professionnel saisonniere",
+        "loeur meuble non professionnel saisonniere",
         "loueur bailleur non professionnel saisonniere",
         "location meublee non professionnelle saisonniere",
         "loueur meuble non professionnel saisonniere",
@@ -51,11 +52,16 @@ def augment_LMNP_saisonniere_5590Y_(df: pd.DataFrame, methods=None, methods_para
         "loueur de meuble dans le cadre de l'economie collaborative saisonniere",
         "loueur en meuble saisonnier",
         "loueur en meuble non profesionnel saisonnier",
-        "loueur en meuble non professionnel",
-        "loueur en meuble non professionnel - code APE 5590Y",
+        "loueur en meuble non professionnel saisonniere",
+        "loueur en meuble non professionnel - code APE 5590Z",
         "loueur en meublee non professionnel saisonniere",
         "loueur en meublee non professionnel en residence de services saisonniere",
         "loueur meuble non professionnel saisonniere",
+        "loueur en meublee non professionnelle saisonniere",
+        "loueur meuble non professionnel saisonniere",
+        "loueur meublee non professionnel saisonniere",
+        "5590Z autres hebergements",
+        "foyers de travailleurs",
     ]
 
     # synthetic generation

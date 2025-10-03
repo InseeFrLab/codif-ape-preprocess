@@ -14,14 +14,15 @@ from src.label_cleaning.core.decorators import rule, track_new
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 
-@rule(name="augment_physiotherapist",
+@rule(name="augment_alternative_medicine",
       tags=["naf_2025"],
-      description="Oversample synthetic rows for sport education => 8695Y")
+      description="Oversample synthetic rows for alternative medecine => 8696Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_physiotherapist_8695Y(df: pd.DataFrame, methods=None, methods_params=None, n=100000):
+def augment_alt_medecine_8696Y(df: pd.DataFrame, methods=None, methods_params=None, n=30000):
     base_labels = [
         "hypnotherapeute",
         "kinesiologie",
+        "kinesiologue",
         "reflexologie",
         "naprapathie",
         "psycho energeticien",

@@ -14,7 +14,7 @@ from src.label_cleaning.core.decorators import rule, track_new
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 
-@rule(name="augment_meal delivery",
+@rule(name="augment_meal_delivery",
       tags=["naf_2025"],
       description="Oversample synthetic rows for meal delivery => 5320H")
 @track_new(column=NACE_REV2_1_COLUMN)
