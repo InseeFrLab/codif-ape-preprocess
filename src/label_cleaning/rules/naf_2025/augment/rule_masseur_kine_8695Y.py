@@ -1,5 +1,5 @@
 """
-    Generate n synthetic rows with cleaning-related labels for oversampling 8551Y.
+    Generate n synthetic rows with cleaning-related labels for oversampling 8695Y.
 
     Args:
         df (pd.DataFrame): Input dataset.
@@ -22,6 +22,8 @@ def augment_physiotherapist_8695Y(df: pd.DataFrame, methods=None, methods_params
     base_labels = [
         "activite de masseur kinesitherapeute",
         "activite de masseur kinesotherapeute liberal",
+        "kine",
+        "kinesi"
         "masseur kine",
         "masseuse kine",
         "masseur kine en collaboration",

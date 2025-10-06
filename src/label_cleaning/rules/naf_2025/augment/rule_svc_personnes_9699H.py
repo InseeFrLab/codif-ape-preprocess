@@ -21,7 +21,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
 def augment_services2individuals_9699H(df: pd.DataFrame,
                                        methods=None,
                                        methods_params=None,
-                                       n=100000):
+                                       n=10000):
     base_labels = [
         "Wedding planner",
         "Activité de voyance, tarologie, conseils spirituels auprès de particuliers",

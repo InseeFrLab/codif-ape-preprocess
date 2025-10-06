@@ -1,5 +1,5 @@
 """
-    Generate n synthetic rows with cleaning-related labels for oversampling 8551Y.
+    Generate n synthetic rows with cleaning-related labels for oversampling 4933G.
 
     Args:
         df (pd.DataFrame): Input dataset.
@@ -14,23 +14,13 @@ from src.label_cleaning.core.decorators import rule, track_new
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 
-@rule(name="augment_other_medicine",
+@rule(name="augment_taxi",
       tags=["naf_2025"],
-      description="Oversample synthetic rows for other medecine => 8699Y")
+      description="Oversample synthetic rows for car rentals with taxi driver => 4933G")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_other_medecine_8699Y(df: pd.DataFrame, methods=None, methods_params=None, n=100000):
+def augment_taxi_4933G(df: pd.DataFrame, methods=None, methods_params=None, n=10000):
     base_labels = [
-        "psychomotricien",
-        "psychomotricienne",
-        ("psychomotricienne diplomee d etat realisant des bilans "
-         "psychomoteurs puis proposant une prise en charge en lien"),
-        "psychomotricite",
-        "orthophonie",
-        "orthophoniste",
-        "orthophoniste liberale",
-        "orthophoniste liberal",
-        "orthophoniste remplacant",
-        "orthophoniste remplacante",
+       "artisan taxi",
     ]
 
     # synthetic generation
@@ -38,9 +28,9 @@ def augment_other_medecine_8699Y(df: pd.DataFrame, methods=None, methods_params=
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug8699Y{i}",
+            "liasse_numero": f"Jaug4933G{i}",
             "libelle": label,
-            NACE_REV2_1_COLUMN: "8699Y",
+            NACE_REV2_1_COLUMN: "4933G",
         })
 
     new_df = pd.DataFrame(new_rows)

@@ -19,7 +19,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_2025"],
       description="Oversample synthetic rows for LMNP - saisonniere => 5590Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_seasonal_LMNP_5590Y(df: pd.DataFrame, methods=None, methods_params=None, n=200000):
+def augment_seasonal_LMNP_5590Y(df: pd.DataFrame, methods=None, methods_params=None, n=300000):
     base_labels = [
         "location de logement saisonniere",
         "acquisition et mise en location d'un bien immobilier saisonnier",
@@ -33,12 +33,18 @@ def augment_seasonal_LMNP_5590Y(df: pd.DataFrame, methods=None, methods_params=N
         "loueurs saisonniers en meubles non professionnels",
         "loueur saisonnier en meubl non professionnel saisonniere",
         "loueur en meubles non professionnel saisonniere",
-        "location saisonniere d un logement meuble ",
+        "location saisonniere d un logement meuble",
         "location saisonniere de logements meubles",
         "location saisonniere de logements meubles non professionelle de longue duree",
         "location saisonniere de logements meubles non professionel",
         "location saisonniere de logements meubles non professionelle",
         "location saisonniere d un meuble",
+        "location d un logement meuble saisonniere",
+        "location de logements meubles saisonniere",
+        "location de logements meubles non professionelle de longue duree saisonniere",
+        "location de logements meubles non professionel saisonniere",
+        "location de logements meubles non professionelle saisonniere",
+        "location d un meuble saisonniere",
         "location en meuble saisonniere",
         "location immobiliere en meuble saisonniere",
         "location meublee saisonniere",

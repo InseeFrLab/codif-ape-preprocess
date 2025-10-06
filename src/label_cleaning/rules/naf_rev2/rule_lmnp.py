@@ -25,7 +25,8 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 @track_changes(column=NACE_REV2_COLUMN)
 def lmnp_rule_rev2(df: pd.DataFrame, methods=None, methods_params=None) -> pd.DataFrame:
     terms = [
-        "location de logementacquisition et mise en location d'un bien immobilier",
+        "location de logement",
+        "acquisition et mise en location d'un bien immobilier",
         "lmnp",
         "lmnp au regime reel simplifie d imposition",
         "loueur en meuble non professionnel",

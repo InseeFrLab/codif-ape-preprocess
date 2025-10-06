@@ -31,6 +31,8 @@ def architecture_rule_7111Y_2025(
         "architecte interieur",
         "architecture interieur",
         "design architectural",
+        "archtecture design",
+        "architectural design",
         "architectural",
         "dessinateur projeteur du batiment",
         "conseil architechtural en conception de batiments",

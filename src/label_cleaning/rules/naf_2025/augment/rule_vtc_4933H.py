@@ -24,6 +24,7 @@ def augment_vtc_4933H(df: pd.DataFrame, methods=None, methods_params=None, n=100
        "location de voitures avec chauffeur",
        "voiture avec chauffeur",
        "vehicule avec chauffeur",
+       "avec chauffeur",
        ("Mettre à disposition d'une clientèle une voiture avec chauffeur, "
         "le trajet et les conditions tarifaires étant fixées avant la course.")
     ]
