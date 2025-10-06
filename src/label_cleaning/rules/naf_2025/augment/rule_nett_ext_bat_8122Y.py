@@ -21,7 +21,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
 def augment_building_exterior_cleaning_8122Y(df: pd.DataFrame,
                                              methods=None,
                                              methods_params=None,
-                                             n=20000):
+                                             n=50000):
     base_labels = [
         "nettoyage des exterieurs d une maison a la vapeur basse pression",
         "nettoyage des toitures et des facades",

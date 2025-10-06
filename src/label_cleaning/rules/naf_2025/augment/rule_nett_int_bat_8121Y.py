@@ -14,24 +14,23 @@ from src.label_cleaning.core.decorators import rule, track_new
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 
-@rule(name="augment_other_medicine",
+@rule(name="augment_building_interior_cleaning",
       tags=["naf_2025"],
-      description="Oversample synthetic rows for other medecine => 8699Y")
+      description="Oversample synthetic rows for interior cleaning => 8121Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_other_medecine_8699Y(df: pd.DataFrame, methods=None, methods_params=None, n=50000):
+def augment_building_interior_cleaning_8121Y(df: pd.DataFrame,
+                                             methods=None,
+                                             methods_params=None,
+                                             n=10000):
     base_labels = [
-        "psychomotricien",
-        "psychomotricienne",
-        ("psychomotricienne diplomee d etat realisant des bilans "
-         "psychomoteurs puis proposant une prise en charge en lien"),
-        "psychomotricite",
-        "orthophonie",
-        "orthophoniste",
-        "orthophoniste liberale",
-        "orthophoniste liberal",
-        "orthophoniste remplacant",
-        "orthophoniste remplacante",
-        "dieteticienne",
+        "nettoyage intérieur des batiment",
+        "nettoyage intérieur de batiments",
+        "nettoyage interieur des batiment",
+        "nettoyage interieur de batiments",
+        "nettoyage courant de batiment",
+        "nettoyage courant de batiments",
+        "nettoyage courant des batiments",
+        "nettoyage courant des batiment",
     ]
 
     # synthetic generation
@@ -39,9 +38,9 @@ def augment_other_medecine_8699Y(df: pd.DataFrame, methods=None, methods_params=
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"Jaug8699Y{i}",
+            "liasse_numero": f"Jaug8121Y{i}",
             "libelle": label,
-            NACE_REV2_1_COLUMN: "8699Y",
+            NACE_REV2_1_COLUMN: "8121Y",
         })
 
     new_df = pd.DataFrame(new_rows)
