@@ -21,7 +21,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
 def augment_building_interior_cleaning_8121Y(df: pd.DataFrame,
                                              methods=None,
                                              methods_params=None,
-                                             n=10000):
+                                             n=100):
     base_labels = [
         "nettoyage intérieur des batiment",
         "nettoyage intérieur de batiments",

@@ -18,7 +18,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_2025"],
       description="Oversample synthetic rows for alternative medecine => 8696Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_alt_medecine_8696Y(df: pd.DataFrame, methods=None, methods_params=None, n=60000):
+def augment_alt_medecine_8696Y(df: pd.DataFrame, methods=None, methods_params=None, n=50000):
     base_labels = [
         "sophrologie",
         "sophrologue",
