@@ -1,6 +1,6 @@
 """
     Generate n synthetic rows with cleaning-related labels
-    for oversampling LMNP with PERM S and PERM P.
+    for oversampling LMNP.
 
     Args:
         df (pd.DataFrame): Input dataset.
@@ -15,11 +15,11 @@ from src.label_cleaning.core.decorators import rule, track_new
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 
-@rule(name="augment_LMNP_perm_P_S",
-      tags=["naf_2025"],
-      description="Oversample synthetic rows for LMNP - perm=S => 5590Y")
+@rule(name="augment_LMNP_6820A",
+      tags=["naf_rev2"],
+      description="Oversample synthetic rows for LMNP - perm=S => 6820A")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=None, n=100000):
+def augment_LMNP_6820A(df: pd.DataFrame, methods=None, methods_params=None, n=10000):
     base_labels = [
         "location de logement",
         "acquisition et mise en location d'un bien immobilier",
@@ -77,21 +77,39 @@ def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=
     for i in range(n):
         label = base_labels[i % len(base_labels)]
         new_rows.append({
-            "liasse_numero": f"JaugLMNP{i}S",
+            "liasse_numero": f"Jaug6820A{i}",
             "libelle": label,
-            "activ_perm_et": "S",
-            NACE_REV2_1_COLUMN: "5590Y",
+            NACE_REV2_1_COLUMN: "6820A",
         })
         new_rows.append({
-            "liasse_numero": f"JaugLMNP{i}P",
+            "liasse_numero": f"Jaug6820A{i}",
             "libelle": label,
-            "activ_perm_et": "P",
-            NACE_REV2_1_COLUMN: "6820G",
+            "liasse_type": "E",
+            NACE_REV2_1_COLUMN: "6820A",
         })
         new_rows.append({
-            "liasse_numero": f"JaugLMNP{i}",
+            "liasse_numero": f"Jaug6820A{i}",
             "libelle": label,
-            NACE_REV2_1_COLUMN: "6820G",
+            "liasse_type": "L",
+            NACE_REV2_1_COLUMN: "6820A",
+        })
+        new_rows.append({
+            "liasse_numero": f"Jaug6820A{i}",
+            "libelle": label,
+            "liasse_type": "S",
+            NACE_REV2_1_COLUMN: "6820A",
+        })
+        new_rows.append({
+            "liasse_numero": f"Jaug6820A{i}",
+            "libelle": label,
+            "liasse_type": "X",
+            NACE_REV2_1_COLUMN: "6820A",
+        })
+        new_rows.append({
+            "liasse_numero": f"Jaug6820A{i}",
+            "libelle": label,
+            "liasse_type": "I",
+            NACE_REV2_1_COLUMN: "6820A",
         })
 
     new_df = pd.DataFrame(new_rows)
