@@ -19,7 +19,7 @@ from src.constants.targets import NACE_REV2_1_COLUMN
       tags=["naf_rev2"],
       description="Oversample synthetic rows for LMNP - perm=S => 6820A")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_LMNP_6820A(df: pd.DataFrame, methods=None, methods_params=None, n=100000):
+def augment_LMNP_6820A(df: pd.DataFrame, methods=None, methods_params=None, n=60000):
     base_labels = [
         "location de logement",
         "acquisition et mise en location d'un bien immobilier",
@@ -45,6 +45,11 @@ def augment_LMNP_6820A(df: pd.DataFrame, methods=None, methods_params=None, n=10
         "loueur bailleur non professionnel",
         "location meublee non professionnelle",
         "loueur meuble non professionnelle",
+        "loueur meuble non professionnel",
+        "loueur meuble non professionnel",
+        "loueur meuble non professionnel",
+        "loueur meuble non professionnel",
+        "loueur meuble non professionnel",
         "loueur meuble non professionnel",
         "loueurs en meubles non professionnels",
         "loueur en meubl non professionnel",
