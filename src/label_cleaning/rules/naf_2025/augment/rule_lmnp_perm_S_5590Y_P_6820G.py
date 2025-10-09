@@ -31,6 +31,7 @@ def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=
         "loueur bailleur non professionnel",
         "location meublee non professionnelle",
         "loueur meuble non professionnel",
+        "loueur meuble non professionnelle",
         "loueurs en meubles non professionnels",
         "loueur en meubl non professionnel",
         "loueur en meubles non professionnel",
