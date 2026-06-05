@@ -1,5 +1,5 @@
 PREFIX = "s3://projet-ape/data/"
-FOLDER = "08112022_27102024/"
+FOLDER = "03062026/"
 ARTIFACTS_FOLDER = "artifacts/data_cleaning/"
 
 URL_SIRENE4_NAFREV2 = PREFIX + FOLDER + "naf2008/" + "raw.parquet"

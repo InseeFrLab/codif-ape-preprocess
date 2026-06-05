@@ -10,6 +10,7 @@ import os
 import pandas as pd
 
 from src.utils.io import download_json
+from src.constants import NACE_REV2_1_COLUMN, NACE_REV2_COLUMN
 
 CJ_JSON_PATH = "s3://projet-ape/data/cj.json"
 OUTPUT_DIR = "./src/label_cleaning/rules/naf_2025"
@@ -23,13 +24,13 @@ from src.label_cleaning.core.decorators import rule, track_new
     tags=["naf_2025"],
     description="Ensure presence of CJ modality {code} (NAF 2025)",
 )
-@track_new(column='nace2025')
+@track_new(column='{target2025}')
 def add_cj_{code}_modality_2025(df: pd.DataFrame,methods=None, methods_params=None) -> pd.DataFrame:
     new_row = {{
         "liasse_numero": "J00addCJ{code}",
         "cj": "{code}",
         "libelle": "LMNP",
-        "nace2025": "6820G",
+        "{target2025}": "6820G",
     }}
     return pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 """
@@ -43,13 +44,13 @@ from src.label_cleaning.core.decorators import rule, track_new
     tags=["naf_rev2"],
     description="Ensure presence of CJ modality {code} (NAF rev 2)",
 )
-@track_new(column='apet_finale')
+@track_new(column='{target2008}')
 def add_cj_{code}_modality_rev2(df: pd.DataFrame,methods=None, methods_params=None) -> pd.DataFrame:
     new_row = {{
         "liasse_numero": "J00addCJ{code}",
         "cj": "{code}",
         "libelle": "LMNP",
-        "nace2025": "6820A",
+        "{target2008}": "6820A",
     }}
     return pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 """
@@ -65,7 +66,9 @@ def main():
     for code in df_codes["code"].dropna():
         file_name = f"ensure_cj_{code}_present_2025.py"
         file_path = os.path.join(OUTPUT_DIR, file_name)
-        content_2025 = TEMPLATE_2025.format(code=code)
+        content_2025 = TEMPLATE_2025.format(code=code,
+                                            target2025=NACE_REV2_1_COLUMN,
+                                            target2008=NACE_REV2_COLUMN)
 
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content_2025)
