@@ -14,7 +14,8 @@ spec:
     parameters:
       - name: params-conf-list
         value: '[
-          {"NAF": "naf_2025", "METHODS": "similarity regex fuzzy"}
+          {"NAFversion": "NAF2025", "NAF": "naf_2025", "METHODS": "regex fuzzy"},
+          {"NAFversion": "NAF2008", "NAF": "naf_rev2", "METHODS": "regex fuzzy"}
           ]'
 
   templates:
@@ -27,6 +28,8 @@ spec:
               parameters:
                 - name: NAF
                   value: "{{item.NAF}}"
+                - name: NAFversion
+                  value: "{{item.NAFversion}}"
                 - name: METHODS
                   value: "{{item.METHODS}}"
             withParam: "{{workflow.parameters.params-conf-list}}"
@@ -34,6 +37,7 @@ spec:
       inputs:
         parameters:
           - name: NAF
+          - name: NAFversion
           - name: METHODS
       affinity:
         nodeAffinity:
@@ -62,7 +66,7 @@ spec:
             uv sync
             uv run -m src.label_cleaning.tools.generate_cj_rules
             uv run -m src.label_cleaning.main --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
-            uv run -m src.preprocessing.preprocess --revision {{inputs.parameters.NAF}}
+            uv run -m src.preprocessing.preprocess --revision {{inputs.parameters.NAFversion}}
         volumeMounts:
           - mountPath: /dev/shm
             name: dshm
