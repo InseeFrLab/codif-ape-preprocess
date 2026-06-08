@@ -77,7 +77,9 @@ def main():
 
         file_name = f"ensure_cj_{code}_present_rev2.py"
         file_path = os.path.join(OUTPUT_DIR, file_name)
-        content_rev2 = TEMPLATE_REV2.format(code=code)
+        content_rev2 = TEMPLATE_REV2.format(code=code,
+                                            target2025=NACE_REV2_1_COLUMN,
+                                            target2008=NACE_REV2_COLUMN)
 
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content_rev2)
