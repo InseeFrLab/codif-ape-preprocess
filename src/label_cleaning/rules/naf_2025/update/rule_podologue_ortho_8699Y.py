@@ -28,7 +28,7 @@ def chiropodist_rule_8699Y_2025(
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["regex"])
     terms = [
-        "peridure podologue",
+        "pedicure podologue",
         "pedicure podologue remplacant",
         "pedicure podologue remplacante",
         "podologue",

@@ -63,11 +63,40 @@ def lmnp_rule_rev2(df: pd.DataFrame, methods=None, methods_params=None) -> pd.Da
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_COLUMN] = np.where(
-        match_mask & df["liasse_type"].isin(["E", "L", "S", "X", "I"])
-        | df["liasse_type"].isnull(),
+    # On définit les listes pour garder le code propre
+    types_urssaf_impots = ["E", "L", "S", "X", "I"]
+    types_commerce_greffe = ["C", "R", "G", "D", "Y"]
+
+    # 2. Définition des conditions
+    conditions = [
+        # CAS 1 : CJ=1000 ET Activité non-professionnelle ET (Urssaf/Impôt OU Manquant)
+        (df["cj"] == 1000) &
+        (df["liasse_type"].isin(types_urssaf_impots) | df["liasse_type"].isna()),
+
+        # CAS 2 : CJ=1000 ET Activité non-professionnelle ET Commerce/Greffe
+        (df["cj"] == 1000) &
+        (df["liasse_type"].isin(types_commerce_greffe)),
+
+        # CAS 3 : Autre (CJ != 1000 ou Activité pro) ET Activité Permanente
+        (~((df["cj"] == 1000) & (df["activ_perm_et"] == "P"))),
+
+        # CAS 4 : Autre (CJ != 1000 ou Activité pro) ET Activité Saisonnière
+        (~((df["cj"] == 1000) & (df["activ_perm_et"] == "S")))
+    ]
+
+    # 3. Définition des codes cibles correspondantes
+    choices = [
         "6820A",
-        df[NACE_REV2_COLUMN],
+        "5520Z",
+        "6820A",
+        "5520Z"
+    ]
+
+    # 4. Application
+    df[NACE_REV2_COLUMN] = np.select(
+        conditions,
+        choices,
+        default=df[NACE_REV2_COLUMN]
     )
 
     return df, match_mask

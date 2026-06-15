@@ -18,12 +18,12 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="seasonal_lmnp_assignment_2025",
+    name="seasonal_location_assignment_2025",
     tags=["naf_2025"],
-    description="Règle LMNP saisonnier version NAF 2025",
+    description="Règle location saisonnier version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def seasonal_lmnp_rule_5590Y_2025(
+def seasonal_location_rule_5520Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["similarity"])
@@ -51,15 +51,16 @@ def seasonal_lmnp_rule_5590Y_2025(
              "locations saisonnieres",
              "lmnp de courte duree",
              "location de courte duree"
-             "5590Y",
+             "5520Y",
              ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
     df[NACE_REV2_1_COLUMN] = np.where(
-        match_mask & ((df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull())),
-        "5590Y",
+        match_mask & ((~(df["cj"] == 1000)) &
+                      (df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull())),
+        "5520Y",
         df[NACE_REV2_1_COLUMN],
     )
     return df, match_mask

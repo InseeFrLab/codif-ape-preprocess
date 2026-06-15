@@ -29,7 +29,6 @@ def independant_facilitator_rule_9392Y_2025(
     terms = [
         "animateur culturel independant",
         "animateur independant intervenant dans des structures maisons de retraite etc",
-        "animateur sportif independant",
         "animateur independant",
     ]
 

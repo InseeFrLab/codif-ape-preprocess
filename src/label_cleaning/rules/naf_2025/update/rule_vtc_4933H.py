@@ -41,7 +41,6 @@ def tourists_driver_rule_4933H_2025(
         "vehicules avec chauffeur",
         "voiture avec chauffeur",
         "voitures avec chauffeur",
-        "tourisme avec chauffeur",
         "location privee de voiture avec chauffeur",
         "voiture de tourisme avec chauffeur",
         "voiture de transport avec chauffeur",

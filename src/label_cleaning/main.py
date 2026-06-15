@@ -114,20 +114,20 @@ def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
         STEP1_RULE_PATTERNS,
         STEP2_RULE_PATTERNS,
     )
-    df_out, log_df, log_df_update, log_df_create = apply_rules(df,
-                                                               naf_tag,
-                                                               methods,
-                                                               DEFAULT_METHOD_PARAMS)
+    df_out, log_df, log_df_update = apply_rules(df,   # , log_df_create
+                                                naf_tag,
+                                                methods,
+                                                DEFAULT_METHOD_PARAMS)
 
     if dry_run:
         print("🚫 Dry run enabled — no output files will be saved.")
         print(df_out)
         print(log_df)
         print(log_df_update)
-        print(log_df_create)
+        # print(log_df_create)
     else:
         df_out.drop(columns=TEXTUAL_INPUTS_CLEANED)
-        save_outputs(df_out, log_df, log_df_update, log_df_create, naf_tag, methods)
+        save_outputs(df_out, log_df, log_df_update, naf_tag, methods)   # , log_df_create
 
     # if show:
         # run_plot()

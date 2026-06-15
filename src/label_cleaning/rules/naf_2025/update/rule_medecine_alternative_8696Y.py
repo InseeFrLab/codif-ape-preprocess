@@ -59,6 +59,7 @@ def alternative_therapy_rule_8696Y_2025(
         "reiki",
         "guerison par les cristaux",
         "choromotherapie",
+        "choromothérapie",
         "medecine traditionnelle",
         "medecine traditionnelle chinoise"
     ]
