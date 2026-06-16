@@ -1,5 +1,5 @@
 """
-Assign NAF 2025 codes for passive holding.
+Assign NAF 2025 codes for active holding.
 
 Matching configuration and mask logic are delegated to utils/rules.py
 for reusability. See:
@@ -18,24 +18,26 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="passive_holding_assignment_2025",
+    name="active_holding_assignment_2025",
     tags=["naf_2025"],
-    description="Règle Holding passive version NAF 2025",
+    description="Règle Holding active version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def passive_holding_rule_6421Y_2025(
+def active_holding_rule_7010Z_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
-      "détention de participations",
-      "prise de participations",
-      "prise de participation",
-      "détention de titres de participation",
-      "holding passive",
+      "gestion des filiales",
+      "direction de groupe",
+      "siège social opérationnel",
+      "holding animatrice",
+      "holding active",
+      "administration de participations",
+      "pilotage stratégique de filiales",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "6421Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "7010Z", df[NACE_REV2_1_COLUMN])
     return df, match_mask

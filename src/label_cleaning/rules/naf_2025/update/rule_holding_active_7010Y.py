@@ -33,8 +33,8 @@ def active_holding_rule_7010Y_2025(
       "holding animatrice",
       "holding active",
       "administration de participations",
-      "pilotage stratégique de filiales"
-    ],
+      "pilotage stratégique de filiales",
+    ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)

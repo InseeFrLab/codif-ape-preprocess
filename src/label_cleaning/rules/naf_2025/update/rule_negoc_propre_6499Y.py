@@ -32,8 +32,8 @@ def active_holding_rule_6499Y_2025(
       "négociation en valeurs mobilières",
       "trading financier en compte propre",
       "trading financier pour compte propre",
-      "achat et vente de titres pour compte propre"
-    ],
+      "achat et vente de titres pour compte propre",
+    ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
