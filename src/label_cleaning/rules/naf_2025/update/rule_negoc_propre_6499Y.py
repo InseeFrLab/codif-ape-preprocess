@@ -23,7 +23,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
     description="Règle Investissement pour compte propre active version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def active_holding_rule_6499Y_2025(
+def sec_brokers_rule_6499Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [

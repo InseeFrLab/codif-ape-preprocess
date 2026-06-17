@@ -28,10 +28,9 @@ def passive_holding_rule_6421Y_2025(
 ) -> pd.DataFrame:
     terms = [
       "détention de participations",
-      "prise de participations",
-      "prise de participation",
       "détention de titres de participation",
       "holding passive",
+      "holding pure",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

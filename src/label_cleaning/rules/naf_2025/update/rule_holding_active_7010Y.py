@@ -32,8 +32,8 @@ def active_holding_rule_7010Y_2025(
       "siège social opérationnel",
       "holding animatrice",
       "holding active",
-      "administration de participations",
       "pilotage stratégique de filiales",
+      "activité des sièges sociaux"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
