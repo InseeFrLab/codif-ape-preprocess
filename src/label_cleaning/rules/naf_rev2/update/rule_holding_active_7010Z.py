@@ -19,7 +19,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 @rule(
     name="active_holding_assignment_2025",
-    tags=["naf_2025"],
+    tags=["naf_rev2"],
     description="Règle Holding active version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)

@@ -19,7 +19,7 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 @rule(
     name="passive_holding_assignment_2025",
-    tags=["naf_2025"],
+    tags=["naf_rev2"],
     description="Règle Holding passive version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
@@ -28,7 +28,8 @@ def passive_holding_rule_6420Z_2025(
 ) -> pd.DataFrame:
     terms = [
       "détention de participations",
-      "prise de participation dans des sociétés",
+      "prise de participations",
+      "prise de participation",
       "détention de titres de participation",
       "holding passive",
     ]
