@@ -41,8 +41,7 @@ def load_dataset(path):
 def save_outputs(
     training_data,
     log_rules_applied_training_data,
-    log_rules_applied_training_data_update,
-    log_rules_applied_training_data_augment,
+    log_rules_applied_training_data_update,  # log_rules_applied_training_data_augment,
     naf_tag,
     methods,
     add_suffix=False
@@ -80,22 +79,22 @@ def save_outputs(
         if add_suffix
         else f"{base_log_name}_update{ext_log}"
     )
-    log_path_augment = (
-        f"{base_log_name}_augment{suffix}{ext_log}"
-        if add_suffix
-        else f"{base_log_name}_augment{ext_log}"
-    )
+    # log_path_augment = (
+    #     f"{base_log_name}_augment{suffix}{ext_log}"
+    #     if add_suffix
+    #     else f"{base_log_name}_augment{ext_log}"
+    # )
 
     print(f"💾 Saving outputs with suffix '{suffix}':")
     print(f"  - data -> {data_path}")
     print(f"  - log  -> {log_path}")
     print(f"  - log of updates -> {log_path_update}")
-    print(f"  - log of augmented -> {log_path_augment}")
+    # print(f"  - log of augmented -> {log_path_augment}")
 
     io.upload_data(training_data, data_path)
     io.upload_data(log_rules_applied_training_data, log_path)
     io.upload_data(log_rules_applied_training_data_update, log_path_update)
-    io.upload_data(log_rules_applied_training_data_augment, log_path_augment)
+    # io.upload_data(log_rules_applied_training_data_augment, log_path_augment)
 
     print("✅ All done!")
 
