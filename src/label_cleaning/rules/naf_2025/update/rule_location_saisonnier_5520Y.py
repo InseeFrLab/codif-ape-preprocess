@@ -10,7 +10,7 @@ for reusability. See:
 import numpy as np
 import pandas as pd
 
-from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
+from src.constants.inputs import TEXTUAL_INPUTS_CLEANED, CATEGORICAL_INPUTS
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
@@ -57,10 +57,24 @@ def seasonal_location_rule_5520Y_2025(
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
+    # On prend les inputs textuels ET catégorielles, mais on retire les variables de contrôle
+    cols_to_remove = CATEGORICAL_INPUTS
+    cols_to_exclude = ["cj", "liasse_type", "activ_perm_et"]  # Variables de décision
+
+    cols_to_remove = [c for c in cols_to_remove if c not in cols_to_exclude]
+
+    condition = match_mask & ((~(df["cj"] == 1000)) &
+                              (df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull()))
+
     df[NACE_REV2_1_COLUMN] = np.where(
-        match_mask & ((~(df["cj"] == 1000)) &
-                      (df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull())),
+        condition,
         "5520Y",
         df[NACE_REV2_1_COLUMN],
     )
+
+    # On identifie les lignes impactées par l'une des conditions
+    impacted_mask = np.logical_or.reduce(condition)
+    # On vide les colonnes d'entrée uniquement pour ces lignes
+    df.loc[impacted_mask, cols_to_remove] = ""
+
     return df, match_mask

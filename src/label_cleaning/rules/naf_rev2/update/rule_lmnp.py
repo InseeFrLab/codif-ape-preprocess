@@ -10,7 +10,7 @@ for reusability. See:
 import numpy as np
 import pandas as pd
 
-from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
+from src.constants.inputs import TEXTUAL_INPUTS_CLEANED, CATEGORICAL_INPUTS
 from src.constants.targets import NACE_REV2_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
@@ -67,6 +67,13 @@ def lmnp_rule_rev2(df: pd.DataFrame, methods=None, methods_params=None) -> pd.Da
     types_urssaf_impots = ["E", "L", "S", "X", "I"]
     types_commerce_greffe = ["C", "R", "G", "D", "Y"]
 
+    # 1. Définition des colonnes à vide
+    # On prend les inputs textuels ET catégorielles, mais on retire les variables de contrôle
+    cols_to_remove = CATEGORICAL_INPUTS
+    cols_to_exclude = ["cj", "liasse_type", "activ_perm_et"]  # Variables de décision
+
+    cols_to_remove = [c for c in cols_to_remove if c not in cols_to_exclude]
+
     # 2. Définition des conditions
     conditions = [
         # CAS 1 : CJ=1000 ET Activité non-professionnelle ET (Urssaf/Impôt OU Manquant)
@@ -102,5 +109,11 @@ def lmnp_rule_rev2(df: pd.DataFrame, methods=None, methods_params=None) -> pd.Da
         choices,
         default=df[NACE_REV2_COLUMN]
     )
+
+    # 5. Mise à blanc sélective
+    # On identifie les lignes impactées par l'une des conditions
+    impacted_mask = np.logical_or.reduce(conditions)
+    # On vide les colonnes d'entrée uniquement pour ces lignes
+    df.loc[impacted_mask, cols_to_remove] = ""
 
     return df, match_mask
