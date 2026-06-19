@@ -32,14 +32,16 @@ def augment_distant_selling_4778H(df: pd.DataFrame, methods=None, methods_params
     ]
 
     # synthetic generation
-    new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"Jaug4778H{i}",
+    new_rows = [
+        {
+            "liasse_numero": f"Jaug4778H_{i}",  # ID unique par label
             "libelle": label,
+            "cj": "",
             NACE_REV2_1_COLUMN: "4778H",
-        })
+            "WEIGHT": n,
+        }
+        for i, label in enumerate(base_labels)
+    ]
 
     new_df = pd.DataFrame(new_rows)
     df_out = pd.concat([df, new_df], ignore_index=True)

@@ -82,14 +82,16 @@ def augment_seasonal_LMNP_5590Y(df: pd.DataFrame, methods=None, methods_params=N
     ]
 
     # synthetic generation
-    new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"JaugLogSais{i}",
+    new_rows = [
+        {
+            "liasse_numero": f"JaugLogSais_{i}",  # ID unique par label
             "libelle": label,
-            NACE_REV2_1_COLUMN: "5590Y",
-        })
+            "cj": "",
+            NACE_REV2_1_COLUMN: "5520Y",
+            "WEIGHT": n,
+        }
+        for i, label in enumerate(base_labels)
+    ]
 
     new_df = pd.DataFrame(new_rows)
     print(new_df)

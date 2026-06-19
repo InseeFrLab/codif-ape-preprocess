@@ -41,7 +41,8 @@ def load_dataset(path):
 def save_outputs(
     training_data,
     log_rules_applied_training_data,
-    log_rules_applied_training_data_update,  # log_rules_applied_training_data_augment,
+    log_rules_applied_training_data_update,
+    log_rules_applied_training_data_augment,
     naf_tag,
     methods,
     add_suffix=False
@@ -79,22 +80,22 @@ def save_outputs(
         if add_suffix
         else f"{base_log_name}_update{ext_log}"
     )
-    # log_path_augment = (
-    #     f"{base_log_name}_augment{suffix}{ext_log}"
-    #     if add_suffix
-    #     else f"{base_log_name}_augment{ext_log}"
-    # )
+    log_path_augment = (
+        f"{base_log_name}_augment{suffix}{ext_log}"
+        if add_suffix
+        else f"{base_log_name}_augment{ext_log}"
+    )
 
     print(f"💾 Saving outputs with suffix '{suffix}':")
     print(f"  - data -> {data_path}")
     print(f"  - log  -> {log_path}")
     print(f"  - log of updates -> {log_path_update}")
-    # print(f"  - log of augmented -> {log_path_augment}")
+    print(f"  - log of augmented -> {log_path_augment}")
 
     io.upload_data(training_data, data_path)
     io.upload_data(log_rules_applied_training_data, log_path)
     io.upload_data(log_rules_applied_training_data_update, log_path_update)
-    # io.upload_data(log_rules_applied_training_data_augment, log_path_augment)
+    io.upload_data(log_rules_applied_training_data_augment, log_path_augment)
 
     print("✅ All done!")
 
@@ -113,10 +114,10 @@ def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
         STEP1_RULE_PATTERNS,
         STEP2_RULE_PATTERNS,
     )
-    df_out, log_df, log_df_update = apply_rules(df,   # , log_df_create
-                                                naf_tag,
-                                                methods,
-                                                DEFAULT_METHOD_PARAMS)
+    df_out, log_df, log_df_update, log_df_create = apply_rules(df,
+                                                               naf_tag,
+                                                               methods,
+                                                               DEFAULT_METHOD_PARAMS)
 
     if dry_run:
         print("🚫 Dry run enabled — no output files will be saved.")
@@ -126,7 +127,7 @@ def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
         # print(log_df_create)
     else:
         df_out.drop(columns=TEXTUAL_INPUTS_CLEANED)
-        save_outputs(df_out, log_df, log_df_update, naf_tag, methods)   # , log_df_create
+        save_outputs(df_out, log_df, log_df_update, log_df_create, naf_tag, methods) 
 
     # if show:
         # run_plot()

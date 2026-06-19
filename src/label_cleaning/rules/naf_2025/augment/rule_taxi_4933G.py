@@ -24,14 +24,16 @@ def augment_taxi_4933G(df: pd.DataFrame, methods=None, methods_params=None, n=10
     ]
 
     # synthetic generation
-    new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"Jaug4933G{i}",
+    new_rows = [
+        {
+            "liasse_numero": f"Jaug4933G_{i}",  # ID unique par label
             "libelle": label,
+            "cj": "",
             NACE_REV2_1_COLUMN: "4933G",
-        })
+            "WEIGHT": n,
+        }
+        for i, label in enumerate(base_labels)
+    ]
 
     new_df = pd.DataFrame(new_rows)
     df_out = pd.concat([df, new_df], ignore_index=True)

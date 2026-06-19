@@ -14,14 +14,14 @@ from src.label_cleaning.core.decorators import rule, track_new
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 
-@rule(name="augment_services2individuals",
+@rule(name="augment_otherservices2individuals",
       tags=["naf_2025"],
-      description="Oversample synthetic rows for sport education => 9699H")
+      description="Oversample synthetic rows for other services to individuals => 9699H")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_services2individuals_9699H(df: pd.DataFrame,
-                                       methods=None,
-                                       methods_params=None,
-                                       n=10000):
+def augment_otherservices2individuals_9699H(df: pd.DataFrame,
+                                            methods=None,
+                                            methods_params=None,
+                                            n=10000):
     base_labels = [
         "Wedding planner",
         "Activité de voyance, tarologie, conseils spirituels auprès de particuliers",
@@ -71,14 +71,16 @@ def augment_services2individuals_9699H(df: pd.DataFrame,
 
     ]
     # synthetic generation
-    new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"Jaug9699H{i}",
+    new_rows = [
+        {
+            "liasse_numero": f"Jaug9699H_{i}",  # ID unique par label
             "libelle": label,
+            "cj": "",
             NACE_REV2_1_COLUMN: "9699H",
-        })
+            "WEIGHT": n,
+        }
+        for i, label in enumerate(base_labels)
+    ]
 
     new_df = pd.DataFrame(new_rows)
     df_out = pd.concat([df, new_df], ignore_index=True)
