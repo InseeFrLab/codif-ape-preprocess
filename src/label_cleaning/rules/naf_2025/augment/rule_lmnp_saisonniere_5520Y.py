@@ -17,9 +17,9 @@ from src.constants.targets import NACE_REV2_1_COLUMN
 
 @rule(name="augment_LMNP_saisonniere",
       tags=["naf_2025"],
-      description="Oversample synthetic rows for LMNP - saisonniere => 5590Y")
+      description="Oversample synthetic rows for LMNP - saisonniere => 5520Y")
 @track_new(column=NACE_REV2_1_COLUMN)
-def augment_seasonal_LMNP_5590Y(df: pd.DataFrame, methods=None, methods_params=None, n=300000):
+def augment_seasonal_LMNP_5520Y(df: pd.DataFrame, methods=None, methods_params=None, n=300000):
     base_labels = [
         "location de logement saisonniere",
         "acquisition et mise en location d'un bien immobilier saisonnier",
@@ -82,15 +82,25 @@ def augment_seasonal_LMNP_5590Y(df: pd.DataFrame, methods=None, methods_params=N
     ]
 
     # synthetic generation
+    # 1. Définition des couples (Code CJ, Ratio (pondération) %)
+    configurations = [
+        ("6540", 46.39), ("5710", 17.99), ("2110", 12.26), ("5499", 7.82),
+        ("4290", 4.29),  ("3650", 3.65),  ("2980", 2.98), ("1660", 1.66),
+        ("6400", 0.64),  ("4100", 0.41),  ("2700", 0.27), ("2400", 0.24),
+        ("1300", 0.13),  ("1300", 0.13),  ("1100", 0.11)
+    ]
+
+    # 2. Génération ultra-rapide avec double boucle (Labels x Configurations)
     new_rows = [
         {
-            "liasse_numero": f"JaugLogSais_{i}",  # ID unique par label
+            "liasse_numero": f"JaugLogSais_{i}_{cj}",  # ID unique combinant index et CJ
             "libelle": label,
-            "cj": "",
+            "cj": cj,
             NACE_REV2_1_COLUMN: "5520Y",
-            "WEIGHT": n,
+            "WEIGHT": (ratio / 100.0) * n  # Conversion du % en poids réel
         }
         for i, label in enumerate(base_labels)
+        for cj, ratio in configurations
     ]
 
     new_df = pd.DataFrame(new_rows)
