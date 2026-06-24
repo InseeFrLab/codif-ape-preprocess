@@ -72,9 +72,4 @@ def seasonal_location_rule_5520Y_2025(
         df[NACE_REV2_1_COLUMN],
     )
 
-    # On identifie les lignes impactées par l'une des conditions
-    impacted_mask = np.logical_or.reduce(condition)
-    # On vide les colonnes d'entrée uniquement pour ces lignes
-    df.loc[impacted_mask, cols_to_remove] = ""
-
     return df, match_mask

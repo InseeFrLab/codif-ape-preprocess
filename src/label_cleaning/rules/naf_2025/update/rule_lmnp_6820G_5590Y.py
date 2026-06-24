@@ -112,10 +112,4 @@ def lmnp_rule_6820G_5590Y_2025(
         default=df[NACE_REV2_1_COLUMN]
     )
 
-    # 5. Mise à blanc sélective
-    # On identifie les lignes impactées par l'une des conditions
-    impacted_mask = np.logical_or.reduce(conditions)
-    # On vide les colonnes d'entrée uniquement pour ces lignes
-    df.loc[impacted_mask, cols_to_remove] = ""
-
     return df, match_mask
