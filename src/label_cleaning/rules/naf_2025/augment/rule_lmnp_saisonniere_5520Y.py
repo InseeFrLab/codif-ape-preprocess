@@ -84,10 +84,9 @@ def augment_seasonal_LMNP_5520Y(df: pd.DataFrame, methods=None, methods_params=N
     # synthetic generation
     # 1. Définition des couples (Code CJ, Ratio (pondération) %)
     configurations = [
-        ("6540", 46.39), ("5710", 17.99), ("2110", 12.26), ("5499", 7.82),
-        ("4290", 4.29),  ("3650", 3.65),  ("2980", 2.98), ("1660", 1.66),
-        ("6400", 0.64),  ("4100", 0.41),  ("2700", 0.27), ("2400", 0.24),
-        ("1300", 0.13),  ("1300", 0.13),  ("1100", 0.11)
+        ("6540", 46.39), ("5710", 17.99), ("2110", 12.26),
+        ("5499", 7.82), ("6400", 0.64),  ("2700", 0.27),
+        ("2400", 0.24),
     ]
 
     # 2. Génération ultra-rapide avec double boucle (Labels x Configurations)
