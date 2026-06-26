@@ -10,7 +10,7 @@ for reusability. See:
 import numpy as np
 import pandas as pd
 
-from src.constants.inputs import TEXTUAL_INPUTS_CLEANED
+from src.constants.inputs import TEXTUAL_INPUTS_CLEANED, CATEGORICAL_INPUTS
 from src.constants.targets import NACE_REV2_1_COLUMN
 
 from src.label_cleaning.core.decorators import rule, track_changes
@@ -18,12 +18,12 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="seasonal_lmnp_assignment_2025",
+    name="seasonal_location_assignment_2025",
     tags=["naf_2025"],
-    description="Règle LMNP saisonnier version NAF 2025",
+    description="Règle location saisonnier version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def seasonal_lmnp_rule_5590Y_2025(
+def seasonal_location_rule_5520Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["similarity"])
@@ -51,15 +51,25 @@ def seasonal_lmnp_rule_5590Y_2025(
              "locations saisonnieres",
              "lmnp de courte duree",
              "location de courte duree"
-             "5590Y",
+             "5520Y",
              ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
+    # On prend les inputs textuels ET catégorielles, mais on retire les variables de contrôle
+    cols_to_remove = CATEGORICAL_INPUTS
+    cols_to_exclude = ["cj", "liasse_type", "activ_perm_et"]  # Variables de décision
+
+    cols_to_remove = [c for c in cols_to_remove if c not in cols_to_exclude]
+
+    condition = match_mask & ((~(df["cj"] == 1000)) &
+                              (df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull()))
+
     df[NACE_REV2_1_COLUMN] = np.where(
-        match_mask & ((df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull())),
-        "5590Y",
+        condition,
+        "5520Y",
         df[NACE_REV2_1_COLUMN],
     )
+
     return df, match_mask

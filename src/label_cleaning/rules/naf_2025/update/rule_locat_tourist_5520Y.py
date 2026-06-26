@@ -49,7 +49,6 @@ def touristic_rental_rule_5520Y_2025(
              "refuge de montagne",
              "refuge de milieux naturels",
              "location de mobil homes",
-             "location de camping cars",
              "location de chalets",
              "location d habitation de loisirs",
              ]

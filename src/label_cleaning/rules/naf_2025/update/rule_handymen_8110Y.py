@@ -31,14 +31,10 @@ def handymen_rule_8110Y_2025(
         "homme toutes mains",
         "homme tout main",
         "hommes a toutes mains",
-        "multiservice",
-        "multiservices",
-        "multi service",
-        "multi services",
-        "petits bricolages",
-        "petit bricolage",
-        "petit bricolages",
-        "petits bricolage",
+        "travaux de petits bricolages",
+        "travaux de petit bricolage",
+        "travaux d petit bricolages",
+        "travaux d petits bricolage",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

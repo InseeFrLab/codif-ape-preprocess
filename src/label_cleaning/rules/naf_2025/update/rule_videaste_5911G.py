@@ -35,7 +35,6 @@ def video_maker_5911G_2025(
              "stream",
              "streaming",
              "dailymotion",
-             "podcast",
              "vlog",
              "videaste",
              "contenus audiovisuels sur internet",

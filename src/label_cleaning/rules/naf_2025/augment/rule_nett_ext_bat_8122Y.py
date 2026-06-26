@@ -55,14 +55,15 @@ def augment_building_exterior_cleaning_8122Y(df: pd.DataFrame,
     ]
 
     # synthetic generation
-    new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"Jaug8122Y{i}",
+    new_rows = [
+        {
+            "liasse_numero": f"Jaug8122Y_{i}",  # ID unique par label
             "libelle": label,
             NACE_REV2_1_COLUMN: "8122Y",
-        })
+            "WEIGHT": n,
+        }
+        for i, label in enumerate(base_labels)
+    ]
 
     new_df = pd.DataFrame(new_rows)
     df_out = pd.concat([df, new_df], ignore_index=True)

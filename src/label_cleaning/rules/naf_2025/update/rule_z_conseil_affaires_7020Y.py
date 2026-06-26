@@ -28,8 +28,6 @@ def business_consulting_rule_7020Y_2025(
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
-        "activite de conseil",
-        "conseil aux entreprises",
         "conseil en gestion",
         "conseil en management",
         "conseil en marketing",

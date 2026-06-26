@@ -74,26 +74,13 @@ def augment_LMNP_S_5590Y_P_6820G(df: pd.DataFrame, methods=None, methods_params=
     ]
 
     # synthetic generation
+    template_C05_C = {"liasse_type": "C", "cj": "1000", NACE_REV2_1_COLUMN: "5520Y", "WEIGHT": n}
+    template_C05_I = {"liasse_type": "I", "cj": "1000", NACE_REV2_1_COLUMN: "6820G", "WEIGHT": n}
+
     new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"JaugLMNP{i}S",
-            "libelle": label,
-            "activ_perm_et": "S",
-            NACE_REV2_1_COLUMN: "5590Y",
-        })
-        new_rows.append({
-            "liasse_numero": f"JaugLMNP{i}P",
-            "libelle": label,
-            "activ_perm_et": "P",
-            NACE_REV2_1_COLUMN: "6820G",
-        })
-        new_rows.append({
-            "liasse_numero": f"JaugLMNP{i}",
-            "libelle": label,
-            NACE_REV2_1_COLUMN: "6820G",
-        })
+    for i, label in enumerate(base_labels):
+        new_rows.append({"liasse_numero": f"JaugLMNP_C05C_{i}", "libelle": label, **template_C05_C})
+        new_rows.append({"liasse_numero": f"JaugLMNP_C05I{i}", "libelle": label, **template_C05_I})
 
     new_df = pd.DataFrame(new_rows)
     df_out = pd.concat([df, new_df], ignore_index=True)

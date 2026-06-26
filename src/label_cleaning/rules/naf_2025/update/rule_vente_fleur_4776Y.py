@@ -30,7 +30,6 @@ def retailing_flowers_rule_4776Y_2025(
     terms = ["achat revente de fleurs sur les marches",
              "vente de fleurs",
              "revente de fleurs",
-             "achat de fleurs",
              ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

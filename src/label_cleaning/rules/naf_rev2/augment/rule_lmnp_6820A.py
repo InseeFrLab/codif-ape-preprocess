@@ -92,45 +92,17 @@ def augment_LMNP_6820A(df: pd.DataFrame, methods=None, methods_params=None, n=60
         "loueur meuble non professionnel",
     ]
 
+    if "WEIGHT" not in df.columns:
+        df["WEIGHT"] = 1
+
     # synthetic generation
+    template_C05_C = {"liasse_type": "C", "cj": "1000", NACE_REV2_1_COLUMN: "5520Z", "WEIGHT": n}
+    template_C05_I = {"liasse_type": "I", "cj": "1000", NACE_REV2_1_COLUMN: "6820A", "WEIGHT": n}
+
     new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"Jaug6820A{i}",
-            "libelle": label,
-            NACE_REV2_1_COLUMN: "6820A",
-        })
-        new_rows.append({
-            "liasse_numero": f"Jaug6820A{i}",
-            "libelle": label,
-            "liasse_type": "E",
-            NACE_REV2_1_COLUMN: "6820A",
-        })
-        new_rows.append({
-            "liasse_numero": f"Jaug6820A{i}",
-            "libelle": label,
-            "liasse_type": "L",
-            NACE_REV2_1_COLUMN: "6820A",
-        })
-        new_rows.append({
-            "liasse_numero": f"Jaug6820A{i}",
-            "libelle": label,
-            "liasse_type": "S",
-            NACE_REV2_1_COLUMN: "6820A",
-        })
-        new_rows.append({
-            "liasse_numero": f"Jaug6820A{i}",
-            "libelle": label,
-            "liasse_type": "X",
-            NACE_REV2_1_COLUMN: "6820A",
-        })
-        new_rows.append({
-            "liasse_numero": f"Jaug6820A{i}",
-            "libelle": label,
-            "liasse_type": "I",
-            NACE_REV2_1_COLUMN: "6820A",
-        })
+    for i, label in enumerate(base_labels):
+        new_rows.append({"liasse_numero": f"JaugLMNP_C05C_{i}", "libelle": label, **template_C05_C})
+        new_rows.append({"liasse_numero": f"JaugLMNP_C05I{i}", "libelle": label, **template_C05_I})
 
     new_df = pd.DataFrame(new_rows)
     df_out = pd.concat([df, new_df], ignore_index=True)

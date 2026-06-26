@@ -55,14 +55,15 @@ def augment_meal_delivery_5320H(df: pd.DataFrame, methods=None, methods_params=N
     ]
 
     # synthetic generation
-    new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"Jaug5320H{i}",
+    new_rows = [
+        {
+            "liasse_numero": f"Jaug5320H_{i}",  # ID unique par label
             "libelle": label,
             NACE_REV2_1_COLUMN: "5320H",
-        })
+            "WEIGHT": n,
+        }
+        for i, label in enumerate(base_labels)
+    ]
 
     new_df = pd.DataFrame(new_rows)
     print(new_df)

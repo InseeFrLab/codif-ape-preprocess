@@ -30,14 +30,14 @@ def art_teaching_rule_8552Y_2025(
     terms = [
         ("accompagner developper et valoriser la creation artistique "
          "multi techniques autour des arts visuels par la mise en place d ateliers"),
-        "animation d atelier artistique et pedagogique pour tout publiques",
+        "animation d atelier artistique et pedagogique pour tout public",
         "enseignement des arts du spectacle vivant",
-        "formation au chant choral pratique en atelier et en spectacle",
+        "formation au chant choral",
         "professeur de musique",
         "professeur de danse",
         "professeur de musique",
         "professeur de piano",
-        "repetition de theatre hebdomadaire",
+        "repetition de theatre",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

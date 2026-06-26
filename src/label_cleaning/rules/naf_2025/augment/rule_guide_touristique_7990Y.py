@@ -29,14 +29,15 @@ def augment_touristic_guides_7990Y(df: pd.DataFrame, methods=None, methods_param
     ]
 
     # synthetic generation
-    new_rows = []
-    for i in range(n):
-        label = base_labels[i % len(base_labels)]
-        new_rows.append({
-            "liasse_numero": f"Jaug7990Y{i}",
+    new_rows = [
+        {
+            "liasse_numero": f"Jaug7990Y_{i}",  # ID unique par label
             "libelle": label,
             NACE_REV2_1_COLUMN: "7990Y",
-        })
+            "WEIGHT": n,
+        }
+        for i, label in enumerate(base_labels)
+    ]
 
     new_df = pd.DataFrame(new_rows)
     df_out = pd.concat([df, new_df], ignore_index=True)

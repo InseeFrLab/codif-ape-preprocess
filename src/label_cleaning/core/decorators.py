@@ -116,11 +116,11 @@ def track_new(extra_cols=None, column: str = "nace2025"):
 
     Args:
         extra_cols (list, optional): Additional columns to include in the audit log.
-                                     Defaults to ["liasse_numero", "libelle", "cj"].
+                                     Defaults to ["liasse_numero", "libelle", "cj", "liasse_type"].
         column (str): Column from which to log the "after" value for new rows.
     """
     if extra_cols is None:
-        extra_cols = ["liasse_numero", "libelle", "cj"]
+        extra_cols = ["liasse_numero", "libelle", "cj", "liasse_type"]
 
     def decorator(func):
         @wraps(func)

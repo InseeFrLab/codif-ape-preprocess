@@ -31,7 +31,7 @@ def sheep_breeding_rule_0145Y_2025(
         "elevage d ovin",
         "elevage ovin",
         "elevage ovins",
-        "elvage d ovins",
+        "elevage d ovins",
         ("activite de elevage ovins en prairies "
          "seconde activite d elevage equin "
          "preparation et entrainement des equides domestiques "
@@ -39,6 +39,10 @@ def sheep_breeding_rule_0145Y_2025(
         "elevage moutons",
         "elevage brebis",
         "elevage caprins",
+        "elevage de chèvres",
+        "elevage de chevres",
+        "elevage de chevre",
+        "éleveur de chèvres",
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
