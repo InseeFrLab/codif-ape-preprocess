@@ -75,7 +75,6 @@ def augment_otherservices2individuals_9699H(df: pd.DataFrame,
         {
             "liasse_numero": f"Jaug9699H_{i}",  # ID unique par label
             "libelle": label,
-            "cj": "",
             NACE_REV2_1_COLUMN: "9699H",
             "WEIGHT": n,
         }

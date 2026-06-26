@@ -39,7 +39,6 @@ def augment_other_medecine_8699Y(df: pd.DataFrame, methods=None, methods_params=
         {
             "liasse_numero": f"Jaug8699Y_{i}",  # ID unique par label
             "libelle": label,
-            "cj": "",
             NACE_REV2_1_COLUMN: "8699Y",
             "WEIGHT": n,
         }

@@ -28,7 +28,6 @@ def augment_taxi_4933G(df: pd.DataFrame, methods=None, methods_params=None, n=10
         {
             "liasse_numero": f"Jaug4933G_{i}",  # ID unique par label
             "libelle": label,
-            "cj": "",
             NACE_REV2_1_COLUMN: "4933G",
             "WEIGHT": n,
         }

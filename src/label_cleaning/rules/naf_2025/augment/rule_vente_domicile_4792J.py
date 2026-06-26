@@ -44,7 +44,6 @@ def augment_vdi_4792J(df: pd.DataFrame, methods=None, methods_params=None, n=100
         {
             "liasse_numero": f"Jaug4792J_{i}",  # ID unique par label
             "libelle": label,
-            "cj": "",
             NACE_REV2_1_COLUMN: "4792J",
             "WEIGHT": n,
         }

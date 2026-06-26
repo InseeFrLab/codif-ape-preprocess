@@ -59,7 +59,6 @@ def augment_building_exterior_cleaning_8122Y(df: pd.DataFrame,
         {
             "liasse_numero": f"Jaug8122Y_{i}",  # ID unique par label
             "libelle": label,
-            "cj": "",
             NACE_REV2_1_COLUMN: "8122Y",
             "WEIGHT": n,
         }
