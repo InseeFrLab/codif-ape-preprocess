@@ -47,7 +47,10 @@ def split(revision, test_size=0.2):
     )
 
     # Keep only relevant columns
-    df = df[[Y, TEXT_FEATURE] + TEXTUAL_FEATURES + CATEGORICAL_FEATURES]
+    df = df[[Y, TEXT_FEATURE] + TEXTUAL_FEATURES + CATEGORICAL_FEATURES + ["WEIGHT"]]
+
+    # codif-ape-train expects a sample_weight column (src/datasets/datamodule.py, L107)
+    df = df.rename(columns={"WEIGHT": "sample_weight"})
 
     df_naf = clean_df_naf(
         df_naf,
