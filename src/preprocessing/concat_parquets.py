@@ -54,7 +54,7 @@ def concatenate_parquets(path1: str, path2: str, output_path: str):
 
 if __name__ == "__main__":
     # Default paths based on constants
-    DEFAULT_PATH_REPRISE = PREFIX + FOLDER + "raw_reprise.parquet"
+    DEFAULT_PATH_REPRISE = PREFIX + FOLDER + "naf2025/" + "raw_reprise.parquet"
     DEFAULT_OUTPUT = PREFIX + FOLDER + "concat_synthetic_reprise.parquet"
 
     parser = argparse.ArgumentParser(description="Concatenate two Parquet files on S3.")
