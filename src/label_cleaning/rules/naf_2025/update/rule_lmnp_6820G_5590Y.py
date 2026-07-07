@@ -79,21 +79,21 @@ def lmnp_rule_6820G_5590Y_2025(
     # 2. Définition des conditions
     conditions = [
         # CAS 1 : CJ=1000 ET Activité non-professionnelle ET (Urssaf/Impôt OU Manquant)
-        (match_mask) &
+        ((match_mask) | (df["furnished_rental"] is True)) &
         (df["cj"] == "1000") &
         (df["liasse_type"].isin(types_urssaf_impots) | df["liasse_type"].isna()),
 
         # CAS 2 : CJ=1000 ET Activité non-professionnelle ET Commerce/Greffe
-        (match_mask) &
+        ((match_mask) | (df["furnished_rental"] is True)) &
         (df["cj"] == "1000") &
         (df["liasse_type"].isin(types_commerce_greffe)),
 
         # CAS 3 : Autre (CJ != 1000 ou Activité pro) ET Activité Permanente
-        (match_mask) &
+        ((match_mask) | (df["furnished_rental"] is True)) &
         (~((df["cj"] == "1000") & (df["activ_perm_et"] == "P"))),
 
         # CAS 4 : Autre (CJ != 1000 ou Activité pro) ET Activité Saisonnière
-        (match_mask) &
+        ((match_mask) | (df["furnished_rental"] is True)) &
         (~((df["cj"] == "1000") & (df["activ_perm_et"] == "S")))
     ]
 

@@ -107,6 +107,11 @@ def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
         )
 
     df = load_dataset(input_data)
+
+    # Init WEIGHT column
+    if "WEIGHT" not in df.columns:
+        df["WEIGHT"] = 1
+
     df = clean_dataset(
         df,
         TEXTUAL_INPUTS,

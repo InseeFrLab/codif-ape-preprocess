@@ -92,9 +92,6 @@ def augment_LMNP_6820A(df: pd.DataFrame, methods=None, methods_params=None, n=60
         "loueur meuble non professionnel",
     ]
 
-    if "WEIGHT" not in df.columns:
-        df["WEIGHT"] = 1
-
     # synthetic generation
     template_C05_C = {"liasse_type": "C", "cj": "1000", NACE_REV2_1_COLUMN: "5520Z", "WEIGHT": n}
     template_C05_I = {"liasse_type": "I", "cj": "1000", NACE_REV2_1_COLUMN: "6820A", "WEIGHT": n}
