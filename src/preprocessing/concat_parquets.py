@@ -34,6 +34,16 @@ def concatenate_parquets(path1: str, path2: str, output_path: str):
         df1 = download_data(path1)
         df2 = download_data(path2)
 
+        # Rename nace2025 to apet2025 in path1 dataframe if column exists
+        # We check for existence to avoid errors if the column name has already changed or is different
+        if 'nace2025' in df1.columns:
+            logger.info("🔄 Renaming column 'nace2025' to 'apet2025' in df1...")
+            df1 = df1.rename(columns={'nace2025': 'apet2025'})
+        elif 'apet2025' in df1.columns:
+            logger.info("ℹ️ Column 'apet2025' already exists in df1, skipping rename.")
+        else:
+            logger.warning("⚠️ Column 'nace2025' not found in df1 for renaming.")
+
         logger.info(f"📊 File 1 shape: {df1.shape}")
         logger.info(f"📊 File 2 shape: {df2.shape}")
 
@@ -84,3 +94,4 @@ if __name__ == "__main__":
         path2=args.path2,
         output_path=args.output
     )
+

@@ -66,6 +66,7 @@ spec:
             uv sync
             uv run -m src.label_cleaning.tools.generate_cj_rules
             uv run -m src.label_cleaning.main --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
+            v run -m src.preprocessing.concat_parquets
             uv run -m src.preprocessing.preprocess --revision {{inputs.parameters.NAFversion}}
         volumeMounts:
           - mountPath: /dev/shm
