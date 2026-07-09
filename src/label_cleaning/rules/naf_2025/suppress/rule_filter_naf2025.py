@@ -7,7 +7,7 @@ from src.utils.io import download_data
 
 @rule(
     name="filter_naf2025_reference",
-    tags=["naf_2025", "delete"],
+    tags=["naf_2025"],
     description="Supprime les lignes dont le code NAF n'est pas présent dans la table de référence NAF 2025."
 )
 @track_deletions(extra_cols=["liasse_numero", "libelle", "cj", "liasse_type", NACE_REV2_1_COLUMN])
