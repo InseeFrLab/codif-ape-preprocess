@@ -8,7 +8,7 @@ from src.utils.io import download_data
     tags=["naf_2025", "delete"],
     description="Supprime les lignes dont le code NAF n'est pas présent dans la table de référence NAF 2025."
 )
-@track_deletions(extra_cols=["liasse_numero", "libelle", "cj", "liasse_type"])
+@track_deletions(extra_cols=["liasse_numero", "libelle", "cj", "liasse_type", NACE_REV2_1_COLUMN])
 def rule_filter_naf2025(df):
     """
     Supprime les lignes du DataFrame si leur code NAF n'est pas présent dans le fichier
