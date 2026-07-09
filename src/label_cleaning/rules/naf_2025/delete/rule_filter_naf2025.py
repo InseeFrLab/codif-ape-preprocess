@@ -1,3 +1,5 @@
+import pandas as pd
+
 from src.constants import URL_DF_NAF2025, NACE_REV2_1_COLUMN
 from src.label_cleaning.core.decorators import rule, track_deletions
 from src.utils.io import download_data
@@ -9,7 +11,7 @@ from src.utils.io import download_data
     description="Supprime les lignes dont le code NAF n'est pas présent dans la table de référence NAF 2025."
 )
 @track_deletions(extra_cols=["liasse_numero", "libelle", "cj", "liasse_type", NACE_REV2_1_COLUMN])
-def rule_filter_naf2025(df):
+def rule_filter_naf2025(df: pd.DataFrame, methods=None, methods_params=None):
     """
     Supprime les lignes du DataFrame si leur code NAF n'est pas présent dans le fichier
     de référence chargé depuis URL_DF_NAF2025.
