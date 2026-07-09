@@ -18,25 +18,26 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 
 @rule(
-    name="interior_cleaning_assignment_2025",
+    name="home_help_assignment_2025",
     tags=["naf_2025"],
     description="Règle nettoyage intérieur version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def interior_cleaning_rule_8121Y_2025(
+def home_help_rule_9691Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     methods = filter_methods(methods, exclude=["fuzzy", "similarity"])
     terms = [
-        "nettoyage courant des batiments",
-        "nettoyage des interieur des batiments",
-        "nettoyage interieur de batiments",
-        "nettoyage interieur des batiments",
-        "nettoyage de batiment interieur",
+        "aide à domicile",
+        "aide à domicile, ",
+        "aide à domicile ,",
+        "service a la personne ;",
+        "service a la personne; ",
+        "service à la personne, "
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "8121Y", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "9691Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

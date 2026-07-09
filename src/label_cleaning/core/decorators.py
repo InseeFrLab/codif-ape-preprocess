@@ -7,6 +7,7 @@ Available decorators:
 - @rule: Registers a transformation rule in the central registry.
 - @track_changes: Tracks modifications made to a specific column.
 - @track_new: Tracks creation of new rows.
+- @track_deletions: Tracks deletion of specific rows.
 
 These decorators are mainly intended for rule fixing, not for general
 data cleaning or preprocessing for model training.
@@ -150,6 +151,50 @@ def track_new(extra_cols=None, column: str = "nace2025"):
                 journal["APE_AFTER"] = df_out.loc[new_idx, column]
                 journal["_log_rules_applied"] = func.__name__
                 journal["_change_type"] = "creation"
+
+            return df_out, journal
+
+        return wrapper
+
+    return decorator
+
+
+def track_deletions(extra_cols=None):
+    """
+    Decorator to track deleted rows.
+    The wrapped function must return the modified DataFrame.
+    New rows are detected by comparing DataFrame length before and after execution.
+
+    A journal DataFrame is created containing:
+        - extra_cols: user-defined columns for context
+        - '_log_rules_applied': name of the applied rule
+        - '_change_type': always "deletion"
+
+    Args:
+        extra_cols (list, optional): Additional columns to include in the audit log.
+                                     Defaults to ["liasse_numero", "libelle", "cj", "liasse_type"].
+    """
+    if extra_cols is None:
+        extra_cols = ["liasse_numero", "libelle", "cj", "liasse_type"]
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(df: pd.DataFrame, *args, **kwargs):
+            before_df = df.copy()
+            df_out = func(df, *args, **kwargs)
+
+            # Identify indices that were in before_df but are not in df_out
+            deleted_indices = before_df.index.difference(df_out.index)
+
+            if deleted_indices.empty:
+                journal = pd.DataFrame(
+                    columns=extra_cols
+                    + ["_log_rules_applied", "_change_type"]
+                )
+            else:
+                journal = before_df.loc[deleted_indices, extra_cols].copy()
+                journal["_log_rules_applied"] = func.__name__
+                journal["_change_type"] = "deletion"
 
             return df_out, journal
 
