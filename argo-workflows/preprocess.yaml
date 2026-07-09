@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: run-rule-based-data-cleansing
+  generateName: run-preprocess
 spec:
   serviceAccountName: workflow
   volumes:
@@ -14,8 +14,8 @@ spec:
     parameters:
       - name: params-conf-list
         value: '[
-          {"NAFversion": "NAF2025", "NAF": "naf_2025", "METHODS": "regex fuzzy"},
-          {"NAFversion": "NAF2008", "NAF": "naf_rev2", "METHODS": "regex fuzzy"}
+          {"NAFversion": "NAF2025", "NAF": "naf_2025", "METHODS": "regex fuzzy similarity"},
+          {"NAFversion": "NAF2008", "NAF": "naf_rev2", "METHODS": "regex fuzzy similarity"}
           ]'
 
   templates:
@@ -64,6 +64,7 @@ spec:
             git clone https://github.com/InseeFrLab/codif-ape-preprocess.git
             cd codif-ape-preprocess/
             uv sync
+            uv run -m src.preprocessing.concat_parquets
             uv run -m src.label_cleaning.tools.generate_cj_rules
             uv run -m src.label_cleaning.main --naf_version {{inputs.parameters.NAF}} --methods {{inputs.parameters.METHODS}}
             uv run -m src.preprocessing.preprocess --revision {{inputs.parameters.NAFversion}}

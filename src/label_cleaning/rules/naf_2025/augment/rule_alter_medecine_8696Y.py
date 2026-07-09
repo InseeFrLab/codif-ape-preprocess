@@ -60,10 +60,6 @@ def augment_alt_medecine_8696Y(df: pd.DataFrame, methods=None, methods_params=No
         "medecine traditionnelle chinoise"
     ]
 
-    # Init WEIGHT column
-    if "WEIGHT" not in df.columns:
-        df["WEIGHT"] = 1
-
     # synthetic generation
     new_rows = [
         {

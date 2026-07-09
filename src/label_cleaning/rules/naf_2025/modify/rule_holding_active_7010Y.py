@@ -19,11 +19,11 @@ from src.label_cleaning.utils.rules import build_match_mask, build_matcher_kwarg
 
 @rule(
     name="active_holding_assignment_2025",
-    tags=["naf_rev2"],
+    tags=["naf_2025"],
     description="Règle Holding active version NAF 2025",
 )
 @track_changes(column=NACE_REV2_1_COLUMN)
-def active_holding_rule_7010Z_2025(
+def active_holding_rule_7010Y_2025(
     df: pd.DataFrame, methods=None, methods_params=None
 ) -> pd.DataFrame:
     terms = [
@@ -40,5 +40,5 @@ def active_holding_rule_7010Z_2025(
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)
     match_mask = build_match_mask(df, TEXTUAL_INPUTS_CLEANED, methods, matcher_kwargs)
 
-    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "7010Z", df[NACE_REV2_1_COLUMN])
+    df[NACE_REV2_1_COLUMN] = np.where(match_mask, "7010Y", df[NACE_REV2_1_COLUMN])
     return df, match_mask

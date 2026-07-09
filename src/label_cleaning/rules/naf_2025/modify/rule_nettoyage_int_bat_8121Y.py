@@ -33,8 +33,6 @@ def interior_cleaning_rule_8121Y_2025(
         "nettoyage interieur de batiments",
         "nettoyage interieur des batiments",
         "nettoyage de batiment interieur",
-        "service à la personne",
-        "SAP"
     ]
 
     matcher_kwargs = build_matcher_kwargs(methods, methods_params, terms)

@@ -63,8 +63,9 @@ def seasonal_location_rule_5520Y_2025(
 
     cols_to_remove = [c for c in cols_to_remove if c not in cols_to_exclude]
 
-    condition = match_mask & ((~(df["cj"] == 1000)) &
-                              (df["activ_perm_et"] == "S") | (df["activ_perm_et"].isnull()))
+    condition = (match_mask | (df["furnished_rental"] is True)) & ((~(df["cj"] == 1000)) &
+                                                                   (df["activ_perm_et"] == "S") |
+                                                                   (df["activ_perm_et"].isnull()))
 
     df[NACE_REV2_1_COLUMN] = np.where(
         condition,

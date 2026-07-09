@@ -3,7 +3,7 @@ FOLDER = "25062026/"
 ARTIFACTS_FOLDER = "artifacts/data_cleaning/"
 
 URL_SIRENE4_NAFREV2 = PREFIX + FOLDER + "naf2008/" + "raw.parquet"
-URL_SIRENE4_NAF2025 = PREFIX + FOLDER + "naf2025/" + "raw.parquet"
+URL_SIRENE4_NAF2025 = PREFIX + FOLDER + "naf2025/" + "concat_synthetic_reprise.parquet"
 
 URL_OUTPUT_NAF2025 = PREFIX + FOLDER + "naf2025/" + "raw_cleansed.parquet"
 URL_REPORT_NAF2025 = (
@@ -17,6 +17,9 @@ URL_REPORT_NAFREV2 = (
 URL_DF_NAF2008 = PREFIX + "naf2008_extended.parquet"
 URL_DF_NAF2025 = PREFIX + "naf2025_extended.parquet"
 URL_DF_CJ = PREFIX + "cj.json"
+
+URL_RELABEL_LLM_NAF2025 = ('s3://projet-ape/NAF-revision/workflow_relabel/'
+                           'run-relabel-6fpqh/final/sirene4_nace2025.parquet')
 
 URL_MAPPINGS = PREFIX + "mappings.json"
 
