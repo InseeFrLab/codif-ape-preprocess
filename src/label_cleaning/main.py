@@ -140,7 +140,7 @@ def main(input_data, methods, naf_tag="default", dry_run=False, show=False):
         print(log_df_create)
         print(log_df_delete)
     else:
-        df_out.drop(columns=TEXTUAL_INPUTS_CLEANED, inplace=True)
+        df_out.drop(columns=TEXTUAL_INPUTS_CLEANED)
         save_outputs(df_out, log_df, log_df_update, log_df_create, log_df_delete, naf_tag, methods)
 
     # if show:
