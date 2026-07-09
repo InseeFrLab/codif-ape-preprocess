@@ -72,7 +72,7 @@ def track_changes(column: str, extra_cols=None):
                       "libelle",
                       "activ_sec_agri_et",
                       "activ_nat_lib_et",
-                      "cj"]
+                      "cj", "liasse_type"]
 
     def decorator(func):
         @wraps(func)
