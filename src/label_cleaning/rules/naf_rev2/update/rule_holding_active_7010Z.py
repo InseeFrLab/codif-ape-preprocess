@@ -31,6 +31,7 @@ def active_holding_rule_7010Z_2025(
       "direction de groupe",
       "siège social opérationnel",
       "holding animatrice",
+      "holding de management",
       "holding active",
       "pilotage stratégique de filiales",
       "activité des sièges sociaux"
