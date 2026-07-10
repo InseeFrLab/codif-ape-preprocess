@@ -33,4 +33,3 @@ def rule_filter_naf2025(df: pd.DataFrame, methods=None, methods_params=None):
     # 3. Retourner le DataFrame filtré.
     # Le décorateur @track_deletions comparera les index pour générer le journal.
     return df[mask_to_keep].copy()
-
